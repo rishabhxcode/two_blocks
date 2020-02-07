@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:two_blocks/all.dart';
 
-class PlayGround extends StatefulWidget {
+class TwoBlocksGround extends StatefulWidget {
   @override
-  _PlayGroundState createState() => _PlayGroundState();
+  _TwoBlocksGroundState createState() => _TwoBlocksGroundState();
 }
 
-class _PlayGroundState extends State<PlayGround> {
+class _TwoBlocksGroundState extends State<TwoBlocksGround> {
   @override
   Widget build(BuildContext context) {
     return Column(

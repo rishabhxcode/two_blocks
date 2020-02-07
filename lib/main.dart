@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:two_blocks/screens/drawer.dart';
-import 'package:two_blocks/screens/home.dart';
-import 'package:two_blocks/screens/playground.dart';
+import 'package:two_blocks/screens/home_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,11 +9,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: '2 blocks',
       theme: ThemeData(
-        
-        primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+        primarySwatch: Colors.teal,
+        primaryColor: Colors.grey.shade200,
       ),
+      darkTheme: ThemeData(brightness: Brightness.dark),
       home: MyHomePage(),
     );
   }
@@ -28,12 +29,47 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: AppDrawer(),
-        appBar: AppBar(
-          title: Text('2 Blocks'),
+    return Container(
+      color: Colors.indigo,
+      child: SafeArea(
+        child: Scaffold(
+          body: Column(
+            children: <Widget>[
+              Expanded(
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 150,
+                      child: AppBar(
+                        backgroundColor: Colors.grey.shade200,
+                      ),
+                    ),
+                    Center(
+                      child: Material(
+                        borderRadius: BorderRadius.circular(10),
+                        elevation: 5.0,
+                        child: Container(
+                          height: 250,
+                          width: 280,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Container(),
+              )
+            ],
+          ),
+          drawer: AppDrawer(),
         ),
-        body:HomeScreen()
-        );
+      ),
+    );
   }
 }

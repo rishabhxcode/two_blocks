@@ -17,11 +17,19 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             title: Text('Dark mode'),
-            leading: Icon(Icons.brightness_2, color: Colors.deepPurple.shade900,),
+            leading: Icon(
+              Icons.brightness_2,
+              color: Colors.deepPurple.shade900,
+            ),
             trailing: Switch(
               value: true,
-              onChanged: (bool){},
+              onChanged: (bool) {},
             ),
+          ),
+          ListTile(
+            title: Text('Language'),
+            leading: Icon(Icons.language),
+            onTap: (){},
           )
         ],
       ),
