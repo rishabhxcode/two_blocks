@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:two_blocks/screens/drawer.dart';
-import 'package:two_blocks/screens/home_screen.dart';
+import 'package:two_blocks/widgets/neo_button.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: '2 blocks',
       theme: ThemeData(
         brightness: Brightness.light,
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.green,
         primaryColor: Colors.grey.shade200,
       ),
       darkTheme: ThemeData(brightness: Brightness.dark),
@@ -33,43 +33,38 @@ class _MyHomePageState extends State<MyHomePage> {
       color: Colors.indigo,
       child: SafeArea(
         child: Scaffold(
-          body: Column(
-            children: <Widget>[
-              Expanded(
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 150,
-                      child: AppBar(
-                        backgroundColor: Colors.grey.shade200,
-                      ),
-                    ),
-                    Center(
-                      child: Material(
-                        borderRadius: BorderRadius.circular(10),
-                        elevation: 5.0,
-                        child: Container(
-                          height: 250,
-                          width: 280,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(),
-              )
-            ],
+          backgroundColor: Colors.grey[200],
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            iconTheme: IconThemeData(color: Colors.grey[800]),
+            
           ),
           drawer: AppDrawer(),
+          body: Center(
+            child: NeoButton(
+              fillColor: Colors.grey.shade200,
+              height: 50,
+              width: 150,
+              onTap: () {},
+              border: Border.all(color: Colors.yellow.shade700.withOpacity(0.5), width: 2.0),
+              child: Text('1 Block', style: TextStyle(color: Colors.grey.shade700, fontSize: 18),),
+              highLightColor: Colors.transparent,
+              //  gradient: LinearGradient(
+              // begin: Alignment.centerLeft,
+              // end: Alignment.centerRight,
+              // colors: [
+              //    Colors.grey[300],
+              //   Colors.grey[200],
+              //   Colors.grey[200],
+              //   Colors.grey[300],
+              //   Colors.grey[300]
+              // ])
+            ),
+          ),
         ),
       ),
     );
   }
 }
+
