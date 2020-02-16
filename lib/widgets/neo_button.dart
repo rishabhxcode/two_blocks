@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class NeoButton extends StatefulWidget {
+class NeoButton extends StatelessWidget {
   final Color fillColor;
   final double height;
   final double width;
@@ -13,6 +13,11 @@ class NeoButton extends StatefulWidget {
   final Color highLightColor;
   final Function onTap;
   final BoxBorder border;
+  final Duration duration;
+  final Curve curve;
+  final Function(TapUpDetails) onTapUp;
+  final Function(TapDownDetails) onTapDown;
+  final Function onTapCancel;
 
   const NeoButton({
     Key key,
@@ -28,44 +33,53 @@ class NeoButton extends StatefulWidget {
     this.highLightColor,
     this.onTap,
     this.border,
+    this.duration,
+    this.onTapUp,
+    this.onTapDown,
+    this.onTapCancel,
+    this.curve,
   }) : super(key: key);
-  @override
-  _NeoButtonState createState() => _NeoButtonState();
-}
 
-class _NeoButtonState extends State<NeoButton> {
   @override
   Widget build(BuildContext context) {
-    return Ink(
-        height: widget.height ?? 40,
-        width: widget.width ?? 100,
-        decoration: BoxDecoration(
-          border: widget.border,
-          shape: widget.shape ?? BoxShape.rectangle,
-          borderRadius:
-              widget.borderRadius ?? BorderRadius.all(Radius.circular(4)),
-          color: widget.fillColor ?? Theme.of(context).accentColor,
-          gradient: widget.gradient,
-          boxShadow: widget.shadows ??
-              [
-                BoxShadow(
-                    offset: Offset(4, 4),
-                    spreadRadius: 3,
-                    blurRadius: 6,
-                    color: Colors.grey.shade400),
-                BoxShadow(
-                    offset: Offset(-3, -3),
-                    spreadRadius: 3,
-                    blurRadius: 6,
-                    color: Colors.white),
-              ],
-        ),
-        child: InkWell(
-            borderRadius:
-                widget.borderRadius ?? BorderRadius.all(Radius.circular(4)),
-            highlightColor: widget.highLightColor ?? Colors.grey[300],
-            splashColor: widget.splashColor ?? Colors.grey[400],
-            onTap: widget.onTap,
-            child: Center(child: widget.child)));
+    return GestureDetector(
+      onTapUp: onTapUp,
+      onTapDown: onTapDown,
+      onTapCancel: onTapCancel,
+      child: AnimatedContainer(
+          duration: duration ?? Duration(milliseconds: 100),
+          curve: curve ?? Curves.ease,
+          height: height ?? 40,
+          width: width ?? 100,
+          decoration: BoxDecoration(
+            border: border,
+            shape: shape ?? BoxShape.rectangle,
+            borderRadius: borderRadius ?? BorderRadius.all(Radius.circular(4)),
+            gradient: gradient,
+            boxShadow: shadows ??
+                [
+                  BoxShadow(
+                      offset: Offset(4, 4),
+                      spreadRadius: 3,
+                      blurRadius: 6,
+                      color: Colors.grey.shade400),
+                  BoxShadow(
+                      offset: Offset(-3, -3),
+                      spreadRadius: 3,
+                      blurRadius: 6,
+                      color: Colors.white),
+                ],
+          ),
+          child: Material(
+            color: fillColor ?? Theme.of(context).accentColor,
+            child: InkWell(
+                borderRadius:
+                    borderRadius ?? BorderRadius.all(Radius.circular(4)),
+                highlightColor: highLightColor ?? null,
+                splashColor: splashColor ?? null,
+                onTap: onTap ?? null,
+                child: Center(child: child)),
+          )),
+    );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:two_blocks/widgets/neo_button.dart';
+import 'package:two_blocks/widgets/neo_container.dart';
 
 class OneBlockPlayGround extends StatefulWidget {
   @override
@@ -11,6 +13,18 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Playground'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Container(
+            color: Colors.cyan.shade100,
+            height: 50,
+            child: Row(
+              children: <Widget>[],
+            ),
+          ),
+          NeoContainer()
+        ],
       ),
     );
   }
