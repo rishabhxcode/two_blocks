@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:two_blocks/screens/drawer.dart';
-import 'package:two_blocks/screens/one_block_playground.dart';
-import 'package:two_blocks/widgets/neo_button.dart';
+import 'package:two_blocks/screens/home_screen.dart';
+import 'package:two_blocks/widgets/neu_button.dart';
 
 void main() => runApp(MyApp());
 
@@ -43,27 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
             iconTheme: IconThemeData(color: Colors.grey[800]),
           ),
           drawer: AppDrawer(),
-          body: Center(
-            child: NeoButton(
-              fillColor: Colors.grey.shade200,
-              height: 50,
-              width: 150,
-              onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => OneBlockPlayGround()),
-                // );
-              },
-              border: Border.all(
-                  color: Colors.yellow.shade700.withOpacity(0.5), width: 2.0),
-              child: Text(
-                '1 Block',
-                style: TextStyle(color: Colors.grey.shade700, fontSize: 18),
-              ),
-              highLightColor: Colors.white,
-              splashColor: Colors.transparent,
-            ),
-          ),
+          body: HomeScreen()
         ),
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class NeoContainer extends StatelessWidget {
+class NeuContainer extends StatelessWidget {
   final Color fillColor;
   final BorderRadius borderRadius;
   final double height;
@@ -11,7 +11,7 @@ class NeoContainer extends StatelessWidget {
   final Widget child;
   final Gradient gradient;
   final List<BoxShadow> boxShadow;
-  const NeoContainer(
+  const NeuContainer(
       {Key key,
       this.fillColor,
       this.borderRadius,
@@ -22,7 +22,8 @@ class NeoContainer extends StatelessWidget {
       this.child,
       this.margin,
       this.gradient,
-      this.boxShadow})
+      this.boxShadow,
+      })
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -34,20 +35,21 @@ class NeoContainer extends StatelessWidget {
       margin: margin,
       alignment: alignment ?? Alignment.center,
       decoration: BoxDecoration(
-          boxShadow: boxShadow?? [
+          boxShadow: boxShadow ??
+              [
                 BoxShadow(
                     offset: Offset(2, 2),
-                    spreadRadius: 0,
-                    blurRadius: 2,
-                    color: Colors.grey.shade300),
+                    spreadRadius: 2,
+                    blurRadius: 4,
+                    color: Colors.grey[400]),
                 BoxShadow(
                     offset: Offset(-2, -2),
-                    spreadRadius: 0,
-                    blurRadius: 2,
+                    spreadRadius: 2,
+                    blurRadius: 4,
                     color: Colors.white),
               ],
           color: fillColor ?? Theme.of(context).accentColor,
-          borderRadius: borderRadius ?? BorderRadius.circular(2),
+          borderRadius: borderRadius ?? BorderRadius.circular(4),
           gradient: gradient),
     );
   }
