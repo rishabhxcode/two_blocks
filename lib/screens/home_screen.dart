@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:two_blocks/widgets/neu_button.dart';
+import 'package:two_blocks/widgets/neu_button_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -30,14 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
             alignment: WrapAlignment.center,
             direction: Axis.vertical,
             children: <Widget>[
-              NeuButton(
+              NeuButtonWidget(
                 padding: EdgeInsets.all(4),
                 height: 50,
                 width: 166,
                 border: Border.all(width: 2, color: Colors.yellow.shade800),
                 highLightColor: Colors.white,
                 splashColor: Colors.amber,
-                borderRadius: BorderRadius.circular(4),
                 child: Row(
                   children: <Widget>[
                     SizedBox(width: 6),
@@ -59,8 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 20,
               ),
-              NeuButton(
-                borderRadius: BorderRadius.circular(4),
+              NeuButtonWidget(
                 border: Border.all(width: 2, color: Colors.pinkAccent.shade100),
                 highLightColor: Colors.white,
                 padding: EdgeInsets.all(4),
@@ -87,30 +85,12 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 20,
               ),
-              NeuButton2(
+              NeuButtonWidget(
                 border: Border.all(width: 2, color: Colors.blue.shade300),
                 highLightColor: Colors.white,
                 splashColor: Colors.transparent,
-                height: h1,
-                width: w1,
-                onTap: (){
-                  setState(() {
-                    w1=166;
-                    h1 = 50;
-                  });
-                },
-                onTapDown: (tapDownDetails) {
-                  setState(() {
-                    h1 = 46;
-                    w1 = 160;
-                  });
-                },
-                onTapCancel: (){
-                  setState(() {
-                    w1 = 166;
-                    h1 = 50;
-                  });
-                },
+                height: 50,
+                width: 166,
                 child: Row(
                   children: <Widget>[
                     SizedBox(width: 14),
