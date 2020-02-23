@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:two_blocks/widgets/neu_button_widget.dart';
-import 'package:two_blocks/widgets/num_button.dart';
 
 class OneBlockPlayGround extends StatefulWidget {
   @override
@@ -30,28 +29,14 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  NumButton(
-                    height: 100,
-                  ),
-                  NumButton(
-                    height: 100,
-                  )
-                ],
+                children: <Widget>[],
               ),
               SizedBox(
                 height: 30,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  NumButton(
-                    height: 100,
-                  ),
-                  NumButton(
-                    height: 100,
-                  )
-                ],
+                children: <Widget>[],
               )
             ],
           ),

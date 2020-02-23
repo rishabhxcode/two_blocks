@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/screens/drawer.dart';
 import 'package:two_blocks/screens/home_screen.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primarySwatch: Colors.green,
         primaryColor: Colors.grey[100],
-        accentColor: Colors.grey[200],
+        accentColor: Constants.AccentColor,
       ),
       darkTheme: ThemeData(brightness: Brightness.dark),
       home: MyHomePage(),
@@ -35,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
       color: Theme.of(context).accentColor,
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: Theme.of(context).accentColor,
+          backgroundColor: Constants.AccentColor,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,

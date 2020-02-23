@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:two_blocks/animations/routing_animation_widget.dart';
+import 'package:two_blocks/screens/one_block_playground.dart';
 import 'package:two_blocks/widgets/neu_button_widget.dart';
+import 'package:two_blocks/widgets/neu_container.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -19,12 +22,14 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          AnimatedContainer(
-            duration: Duration(milliseconds: 100),
+          NeuContainer(
             height: 200,
             width: 200,
-            decoration: BoxDecoration(
-                border: Border.all(), borderRadius: BorderRadius.circular(20)),
+            borderRadius: BorderRadius.circular(10),
+            child: Text(
+              'LOGO',
+              style: TextStyle(fontSize: 30),
+            ),
           ),
           Wrap(
             alignment: WrapAlignment.center,
@@ -36,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 166,
                 border: Border.all(width: 2, color: Colors.yellow.shade800),
                 highLightColor: Colors.white,
-                splashColor: Colors.amber,
+                splashColor: Colors.transparent,
                 child: Row(
                   children: <Widget>[
                     SizedBox(width: 6),
@@ -54,6 +59,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
+                onTap: () {
+                  Navigator.push(context, ScaleRoute(to: OneBlockPlayGround()));
+                },
               ),
               SizedBox(
                 height: 20,
@@ -61,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
               NeuButtonWidget(
                 border: Border.all(width: 2, color: Colors.pinkAccent.shade100),
                 highLightColor: Colors.white,
+                splashColor: Colors.transparent,
                 padding: EdgeInsets.all(4),
                 height: 50,
                 width: 166,
@@ -76,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 4,
                     ),
                     Text(
-                      '2 Block',
+                      '2 Blocks',
                       style: TextStyle(fontSize: 18),
                     ),
                   ],

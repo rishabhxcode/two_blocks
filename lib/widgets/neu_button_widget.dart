@@ -62,17 +62,16 @@ class NeuButtonWidget extends StatelessWidget {
           gradient: gradient,
           border: border,
           borderRadius: boundaryRadius ?? BorderRadius.circular(6),
-          boxShadow: shadows ??
-              [
+          boxShadow: shadows ??  [
                 BoxShadow(
-                    offset: Offset(4, 4),
-                    spreadRadius: 3,
-                    blurRadius: 6,
-                    color: Colors.grey.shade400),
+                    offset: Offset(2, 2),
+                    spreadRadius: 2,
+                    blurRadius: 4,
+                    color: Colors.grey[400]),
                 BoxShadow(
-                    offset: Offset(-3, -3),
-                    spreadRadius: 3,
-                    blurRadius: 6,
+                    offset: Offset(-2, -2),
+                    spreadRadius: 2,
+                    blurRadius: 4,
                     color: Colors.white),
               ],
         ),
