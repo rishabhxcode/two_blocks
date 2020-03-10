@@ -92,7 +92,6 @@ class NeuButtonWidget extends StatelessWidget {
                 width: width ?? 100,
                 child: child,
               )
-
               /// keep color of child transparent to show the Splash and HightLight Color ///
               ),
         ));

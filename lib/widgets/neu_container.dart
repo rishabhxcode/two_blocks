@@ -41,11 +41,13 @@ class NeuContainer extends StatelessWidget {
                     offset: Offset(2, 2),
                     spreadRadius: 2,
                     blurRadius: 4,
-                    color: Colors.grey[400]),
+                    color: Color(0xffc9c9c9)
+                    // color: Colors.grey[300]
+                    ),
                 BoxShadow(
                     offset: Offset(-2, -2),
-                    spreadRadius: 1,
-                    blurRadius: 8,
+                    spreadRadius: 2,
+                    blurRadius: 4,
                     color: Colors.white),
               ],
           color: fillColor ?? Theme.of(context).accentColor,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/screens/drawer.dart';
 import 'package:two_blocks/screens/home_screen.dart';
+import 'package:two_blocks/screens/one_block_playground.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,8 +16,8 @@ class MyApp extends StatelessWidget {
         fontFamily: 'varela',
         brightness: Brightness.light,
         primarySwatch: Colors.green,
-        primaryColor: Colors.grey[100],
-        accentColor: Constants.AccentColor,
+        primaryColor: Constants.BGColor,
+        accentColor: Constants.BGColor,
       ),
       darkTheme: ThemeData(brightness: Brightness.dark),
       home: MyHomePage(),
@@ -33,18 +34,17 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).accentColor,
+      color: Constants.BGColor,
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: Constants.AccentColor,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            iconTheme: IconThemeData(color: Colors.grey[800]),
-          ),
-          drawer: AppDrawer(),
-          body: HomeScreen()
-        ),
+            backgroundColor: Constants.BGColor,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              iconTheme: IconThemeData(color: Colors.grey[800]),
+            ),
+            drawer: AppDrawer(),
+            body: HomeScreen()),
       ),
     );
   }

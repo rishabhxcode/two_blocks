@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:two_blocks/animations/routing_animation_widget.dart';
+import 'package:two_blocks/constants.dart';
+import 'package:two_blocks/main.dart';
+import 'package:two_blocks/screens/highscores_screen.dart';
 import 'package:two_blocks/screens/one_block_playground.dart';
 import 'package:two_blocks/widgets/neu_button_widget.dart';
 import 'package:two_blocks/widgets/neu_container.dart';
@@ -15,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   double w1 = 166;
   @override
   Widget build(BuildContext context) {
+    print('build::HomeScreen()');
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -25,11 +29,24 @@ class _HomeScreenState extends State<HomeScreen> {
           NeuContainer(
             height: 200,
             width: 200,
+            fillColor: Constants.BGColor,
             borderRadius: BorderRadius.circular(10),
             child: Text(
               'LOGO',
               style: TextStyle(fontSize: 30),
             ),
+            // boxShadow: [
+            //   BoxShadow(
+            //       blurRadius: 4,
+            //       spreadRadius: 2,
+            //       color: Colors.grey[300],
+            //       offset: Offset(3, 3)),
+            //   BoxShadow(
+            //       blurRadius: 4,
+            //       spreadRadius: 2,
+            //       color: Colors.white,
+            //       offset: Offset(-3, -3))
+            // ],
           ),
           Wrap(
             alignment: WrapAlignment.center,
@@ -45,17 +62,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   children: <Widget>[
                     SizedBox(width: 6),
-                    Icon(
-                      Icons.play_arrow,
-                      size: 36,
-                      color: Colors.purple,
-                    ),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Text(
-                      '1 Block',
-                      style: TextStyle(fontSize: 18),
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.play_arrow,
+                          size: 36,
+                          color: Colors.purple,
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          '1 Block',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -117,6 +138,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
+                onTap: () {
+                  Navigator.push(context, PageSlideRoute(
+                    from: MyApp(),
+                    to: HighScoresScreen()
+                  ));
+                },
               ),
               SizedBox(
                 height: 30,
