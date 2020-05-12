@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  static const Color white = Colors.white;
+  
   double h1 = 50;
   double w1 = 166;
   @override

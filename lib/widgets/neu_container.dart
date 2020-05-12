@@ -11,29 +11,28 @@ class NeuContainer extends StatelessWidget {
   final Widget child;
   final Gradient gradient;
   final List<BoxShadow> boxShadow;
-  const NeuContainer(
-      {Key key,
-      this.fillColor,
-      this.borderRadius,
-      this.height,
-      this.width,
-      this.padding,
-      this.alignment,
-      this.child,
-      this.margin,
-      this.gradient,
-      this.boxShadow,
-      })
-      : super(key: key);
+  const NeuContainer({
+    Key key,
+    this.fillColor,
+    this.borderRadius,
+    this.height = 60,
+    this.width = 60,
+    this.padding,
+    this.alignment = Alignment.center,
+    this.child,
+    this.margin,
+    this.gradient,
+    this.boxShadow,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height ?? 60,
-      width: width ?? 60,
+      height: height,
+      width: width,
       padding: padding,
       child: child,
       margin: margin,
-      alignment: alignment ?? Alignment.center,
+      alignment: alignment,
       decoration: BoxDecoration(
           boxShadow: boxShadow ??
               [

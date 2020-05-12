@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:two_blocks/constants.dart';
-import 'package:two_blocks/questions/one_block_questions.dart';
 import 'package:two_blocks/widgets/flat_num_button.dart';
 import 'package:two_blocks/widgets/neu_container.dart';
 
