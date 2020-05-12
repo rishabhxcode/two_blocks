@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/screens/drawer.dart';
 import 'package:two_blocks/screens/home_screen.dart';
-import 'package:two_blocks/screens/one_block_playground.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,6 +12,20 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '2 blocks',
       theme: ThemeData(
+        colorScheme: ColorScheme(
+            primary: Colors.black,
+            primaryVariant: Colors.black,
+            secondary: Colors.black,
+            secondaryVariant: Colors.black,
+            surface: Colors.black,
+            background: Colors.black,
+            error: Colors.black,
+            onPrimary: Colors.black,
+            onSecondary: Colors.black,
+            onSurface: Colors.black,
+            onBackground: Colors.black,
+            onError: Colors.black,
+            brightness: Brightness.dark),
         fontFamily: 'varela',
         brightness: Brightness.light,
         primarySwatch: Colors.green,

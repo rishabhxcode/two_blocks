@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 class DefaultRoute extends MaterialPageRoute {
   final Widget to;
@@ -89,4 +90,24 @@ class PageSlideRoute extends PageRouteBuilder {
                 ],
               );
             });
+}
+
+class RotateRoute extends PageRouteBuilder {
+  static AnimationController animationController;
+  final Widget from;
+  final Widget to;
+  RotateRoute({this.from, this.to})
+      : super(pageBuilder: (BuildContext context, Animation<double> animation,
+            Animation<double> secondaryAnimation) {
+          return to;
+        }, transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return Stack(children: <Widget>[
+            Transform(
+              transform: Matrix4.identity()
+                ..rotateY(math.pi / 4 * animationController.value),
+              alignment: Alignment.centerLeft,
+              child: from,
+            )
+          ]);
+        });
 }

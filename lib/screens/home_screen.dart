@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Text(
                           '1 Block',
-                          style: TextStyle(fontSize: 18),
+                          style: Constants.textStyle1,
                         ),
                       ],
                     ),
@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Text(
                       '2 Blocks',
-                      style: TextStyle(fontSize: 18),
+                      style: Constants.textStyle1,
                     ),
                   ],
                 ),
@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Text(
                       'High scores',
-                      style: TextStyle(fontSize: 18),
+                      style: Constants.textStyle1,
                     ),
                   ],
                 ),
