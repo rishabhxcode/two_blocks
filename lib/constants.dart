@@ -8,8 +8,13 @@ class Constants {
   static const String add = '\u002B';
   static const String minus = '\u002D';
   static const String equals = '\u003D';
+
+  //
+  static const List<String> symbols = [add, minus, multiply, divide];
+  //
   /*TextStyles*/
   static const TextStyle textStyle1 =
       TextStyle(fontSize: 14, color: Colors.black);
-  static const TextStyle textStyleL1 = TextStyle(fontSize: 50);
+
+  static const TextStyle textStyle2 = TextStyle(fontSize: 50);
 }

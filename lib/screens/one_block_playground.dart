@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/questions/one_block_questions.dart';
+import 'package:two_blocks/widgets/choice_container.dart';
 import 'package:two_blocks/widgets/flat_num_button.dart';
 import 'package:two_blocks/widgets/neu_container.dart';
 
@@ -10,10 +11,32 @@ class OneBlockPlayGround extends StatefulWidget {
 }
 
 class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
-  int var1 = 0;
-  int var2 = 0;
+  OneBlockQuestions oneBlock = OneBlockQuestions();
+
+  int var1;
+  int var2;
+  int choice;
+  String operation;
+  int answer;
+
+  generate() {
+    var1 = oneBlock.var1Generator();
+    var2 = oneBlock.var2Generator();
+    choice = oneBlock.choiceGenerator();
+    operation = oneBlock.operationGenerator();
+  }
+
+  int answerGenerator() {
+    if (operation == Constants.add)
+      return var1 + var2;
+    else
+      return var1 - var2;
+  }
+
   @override
   void initState() {
+    generate();
+    answer = answerGenerator();
     super.initState();
   }
 
@@ -45,6 +68,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
+          ///// HEADER ////////////////
           Container(
             height: 50,
             child: Row(
@@ -83,18 +107,27 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
               ],
             ),
           ),
+          /////////////////////////////////
           FittedBox(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  '$var1',
-                  style: Constants.textStyle1,
-                ),
-                Text(Constants.divide, style: Constants.textStyle1),
-                Text('$var2', style: Constants.textStyle1),
-                Text('=', style: Constants.textStyle1),
-                Text('56', style: Constants.textStyle1)
+                choice == 0
+                    ? ChoiceContainer()
+                    : Text(
+                        '$var1',
+                        style: Constants.textStyle2,
+                      ),
+                choice == 1
+                    ? ChoiceContainer()
+                    : Text(operation, style: Constants.textStyle2),
+                choice == 2
+                    ? ChoiceContainer()
+                    : Text('$var2', style: Constants.textStyle2),
+                Text('=', style: Constants.textStyle2),
+                choice == 3
+                    ? ChoiceContainer()
+                    : Text('$answer', style: Constants.textStyle2)
               ],
             ),
           ),
