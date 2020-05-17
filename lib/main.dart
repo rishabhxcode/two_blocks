@@ -12,20 +12,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '2 blocks',
       theme: ThemeData(
-        colorScheme: ColorScheme(
-            primary: Colors.black,
-            primaryVariant: Colors.black,
-            secondary: Colors.black,
-            secondaryVariant: Colors.black,
-            surface: Colors.black,
-            background: Colors.black,
-            error: Colors.black,
-            onPrimary: Colors.black,
-            onSecondary: Colors.black,
-            onSurface: Colors.black,
-            onBackground: Colors.black,
-            onError: Colors.black,
-            brightness: Brightness.dark),
+        buttonTheme: ButtonThemeData(
+          textTheme: ButtonTextTheme.normal,
+        ),
         fontFamily: 'varela',
         brightness: Brightness.light,
         primarySwatch: Colors.green,

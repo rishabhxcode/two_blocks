@@ -25,18 +25,18 @@ class NeuButtonWidget extends StatelessWidget {
   const NeuButtonWidget(
       {Key key,
       this.fillColor,
-      this.height,
-      this.width,
+      this.height = 40,
+      this.width = 100,
       this.gradient,
       this.shadows,
-      this.shape,
+      this.shape = BoxShape.rectangle,
       this.borderRadius,
       this.splashColor,
       this.highLightColor,
       this.onTap,
       this.border,
       this.duration,
-      this.curve,
+      this.curve = Curves.ease,
       this.onTapDown,
       this.onTapCancel,
       this.padding,
@@ -49,20 +49,21 @@ class NeuButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-        curve: curve ?? Curves.ease,
-        height: height ?? 40,
-        width: width ?? 100,
+        curve: curve,
+        height: height,
+        width: width,
         padding: EdgeInsets.all(0),
         alignment: Alignment.center,
         duration: duration ?? Duration(milliseconds: 50),
         decoration: BoxDecoration(
-          shape: shape ?? BoxShape.rectangle,
+          shape: shape,
           color: Colors.transparent,
-          image: image ?? null,
+          image: image,
           gradient: gradient,
           border: border,
           borderRadius: boundaryRadius ?? BorderRadius.circular(6),
-          boxShadow: shadows ??  [
+          boxShadow: shadows ??
+              [
                 BoxShadow(
                     offset: Offset(2, 2),
                     spreadRadius: 2,
@@ -88,10 +89,11 @@ class NeuButtonWidget extends StatelessWidget {
               onTapCancel: onTapCancel,
               onTapDown: onTapDown,
               child: SizedBox(
-                height: height ?? 40,
-                width: width ?? 100,
+                height: height,
+                width: width,
                 child: child,
               )
+
               /// keep color of child transparent to show the Splash and HightLight Color ///
               ),
         ));
