@@ -1,37 +1,31 @@
 import 'package:flutter/material.dart';
 
 class FlatNumButton extends StatelessWidget {
-  final String number;
-  final double topLeftBorder;
-  final double bottomLeftBorder;
-  final double topRightBorder;
-  final double bottomRightBorder;
+  final double height;
+  final double width;
+  final String text;
   final Function onTap;
+  final Color borderColor;
   const FlatNumButton(
       {Key key,
-      this.number,
-      this.topLeftBorder,
-      this.bottomLeftBorder,
-      this.topRightBorder,
-      this.bottomRightBorder, this.onTap})
+      this.height,
+      this.width,
+      this.text,
+      this.onTap,
+      this.borderColor})
       : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      width: 100,
-      child: FlatButton(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.white,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(topLeftBorder),
-                topRight: Radius.circular(topRightBorder),
-                bottomLeft: Radius.circular(bottomLeftBorder),
-                bottomRight: Radius.circular(bottomRightBorder)),
-            side: BorderSide(
-                color: Colors.grey[300], style: BorderStyle.solid, width: 0.5)),
-        child: Text(number ?? '?'),
+    return SizedBox(
+      height: height ?? 100,
+      width: width ?? 100,
+      child: OutlineButton(
+        borderSide: BorderSide(width: 3, color: borderColor ?? Colors.transparent),
+        child: Text(
+          text ?? '?',
+          style: TextStyle(fontSize: 30),
+        ),
         onPressed: onTap,
       ),
     );

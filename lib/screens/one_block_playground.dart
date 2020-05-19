@@ -13,30 +13,57 @@ class OneBlockPlayGround extends StatefulWidget {
 class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
   OneBlockQuestions oneBlock = OneBlockQuestions();
 
+  String operation;
   int var1;
   int var2;
+  int result;
   int choice;
-  String operation;
-  int answer;
-
+  dynamic answer;
+  int buttonSelected;
+  dynamic opt1;
+  dynamic opt2;
+//
+  Color borderColor0;
+  Color borderColor1;
   generate() {
-    var1 = oneBlock.var1Generator();
-    var2 = oneBlock.var2Generator();
-    choice = oneBlock.choiceGenerator();
-    operation = oneBlock.operationGenerator();
+    setState(() {
+      operation = oneBlock.operationGenerator();
+      var1 = oneBlock.var1Generator();
+      var2 = oneBlock.var2Generator();
+      result = oneBlock.resultGenerator(var1, var2, operation);
+      choice = oneBlock.choiceGenerator();
+      // choice = 1;
+      buttonSelected = oneBlock.ansButtonSelector();
+      answer = oneBlock.answerGenerator(choice, var1, operation, var2, result);
+      opt1 = oneBlock.opt1Generator(choice, answer, buttonSelected);
+      opt2 = oneBlock.opt2Generator(choice, answer, buttonSelected, opt1);
+      //
+      borderColor0 = Colors.transparent;
+      borderColor1 = Colors.transparent;
+    });
+    print('operation: $operation');
+    print('button: $buttonSelected');
+    print('opt1: $opt1');
+    print('opt2: $opt2');
   }
 
-  int answerGenerator() {
-    if (operation == Constants.add)
-      return var1 + var2;
-    else
-      return var1 - var2;
+  answerChecker(opt, answer, Color color) {
+    if (opt == answer) {
+      setState(() {
+        color = Colors.green;
+        print('GREEN');
+      });
+      generate();
+    } else
+      setState(() {
+        color = Colors.red;
+        print('RED');
+      });
   }
 
   @override
   void initState() {
     generate();
-    answer = answerGenerator();
     super.initState();
   }
 
@@ -127,39 +154,35 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                 Text('=', style: Constants.textStyle2),
                 choice == 3
                     ? ChoiceContainer()
-                    : Text('$answer', style: Constants.textStyle2)
+                    : Text('$result', style: Constants.textStyle2)
               ],
             ),
           ),
+
           NeuContainer(
-            height: 200,
             width: 200,
-            margin: EdgeInsets.only(bottom: 100),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    FlatNumButton(
-                      topLeftBorder: 4,
-                    ),
-                    FlatNumButton(
-                      topRightBorder: 4,
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    FlatNumButton(
-                      bottomLeftBorder: 4,
-                    ),
-                    FlatNumButton(
-                      bottomRightBorder: 4,
-                    )
-                  ],
-                ),
+            height: 100,
+            child: Row(
+              children: [
+                FlatNumButton(
+                    text: '$opt1',
+                    borderColor: borderColor0,
+                    onTap: () {
+                      answerChecker(opt1, answer, borderColor0);
+                    }),
+                FlatNumButton(
+                  text: '$opt2',
+                  borderColor: borderColor1,
+                  onTap: () {
+                    answerChecker(opt2, answer, borderColor1);
+                  },
+                )
               ],
             ),
           ),
+          SizedBox(
+            height: 40,
+          )
         ],
       ),
     );
