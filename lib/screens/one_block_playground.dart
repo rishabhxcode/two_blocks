@@ -23,8 +23,8 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
   dynamic opt1;
   dynamic opt2;
 //
-  Color borderColor0;
-  Color borderColor1;
+  BorderColor borderColor0 = BorderColor();
+  BorderColor borderColor1 = BorderColor();
   generate() {
     setState(() {
       operation = oneBlock.operationGenerator();
@@ -38,8 +38,8 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
       opt1 = oneBlock.opt1Generator(choice, answer, buttonSelected);
       opt2 = oneBlock.opt2Generator(choice, answer, buttonSelected, opt1);
       //
-      borderColor0 = Colors.transparent;
-      borderColor1 = Colors.transparent;
+      borderColor0.set(Colors.transparent);
+      borderColor1.set(Colors.transparent);
     });
     print('operation: $operation');
     print('button: $buttonSelected');
@@ -47,16 +47,16 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
     print('opt2: $opt2');
   }
 
-  answerChecker(opt, answer, Color color) {
+  answerChecker(opt, answer, BorderColor color) async {
     if (opt == answer) {
       setState(() {
-        color = Colors.green;
+        color.set(Colors.green);
         print('GREEN');
       });
-      generate();
+      await Future.delayed(Duration(milliseconds: 200), generate);
     } else
       setState(() {
-        color = Colors.red;
+        color.set(Colors.red);
         print('RED');
       });
   }
@@ -166,13 +166,13 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
               children: [
                 FlatNumButton(
                     text: '$opt1',
-                    borderColor: borderColor0,
+                    borderColor: borderColor0.get(),
                     onTap: () {
                       answerChecker(opt1, answer, borderColor0);
                     }),
                 FlatNumButton(
                   text: '$opt2',
-                  borderColor: borderColor1,
+                  borderColor: borderColor1.get(),
                   onTap: () {
                     answerChecker(opt2, answer, borderColor1);
                   },
@@ -187,4 +187,10 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
       ),
     );
   }
+}
+
+class BorderColor {
+  Color _border;
+  void set(Color color) => _border = color;
+  Color get() => _border;
 }
