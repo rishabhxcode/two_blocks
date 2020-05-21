@@ -23,8 +23,8 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
   dynamic opt1;
   dynamic opt2;
 //
-  Color borderColor0;
-  Color borderColor1;
+  BorderColor borderColor0 = BorderColor();
+  BorderColor borderColor1 = BorderColor();
   generate() {
     setState(() {
       operation = oneBlock.operationGenerator();
@@ -36,23 +36,23 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
       answer = oneBlock.answerGenerator(choice, var1, operation, var2, result);
       opt1 = oneBlock.opt1Generator(choice, answer, buttonSelected);
       opt2 = oneBlock.opt2Generator(choice, answer, buttonSelected, opt1);
-      borderColor0 = Colors.transparent;
-      borderColor1 = Colors.transparent;
+      //
+      borderColor0.set(Colors.transparent);
+      borderColor1.set(Colors.transparent);
     });
   }
 
-  answerChecker(opt, answer, color1, color2) {
+  answerChecker(opt, answer, BorderColor color) async {
     if (opt == answer) {
       setState(() {
-        color1 = Colors.green;
+        color.set(Colors.green);
+        print('GREEN');
       });
-      Future.delayed(const Duration(milliseconds: 500), () {
-        generate();
-      });
+      await Future.delayed(Duration(milliseconds: 200), generate);
     } else
       setState(() {
-        color1 = Colors.red;
-        color2 = Colors.green;
+        color.set(Colors.red);
+        print('RED');
       });
   }
 
@@ -160,20 +160,16 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
             child: Row(
               children: [
                 FlatNumButton(
-                  text: '$opt1',
-                  borderColor: borderColor0,
-                  // onTap:                      answerChecker(opt1, answer, borderColor0, borderColor1),
-                  onTap: () {
-                    answerChecker(opt1, answer, borderColor0, borderColor1);
-                    print(borderColor0);
-                  }
-                ),
+                    text: '$opt1',
+                    borderColor: borderColor0.get(),
+                    onTap: () {
+                      answerChecker(opt1, answer, borderColor0);
+                    }),
                 FlatNumButton(
                   text: '$opt2',
-                  borderColor: borderColor1,
-                  // onTap:                      answerChecker(opt2, answer, borderColor1, borderColor0),
+                  borderColor: borderColor1.get(),
                   onTap: () {
-                    answerChecker(opt2, answer, borderColor1, borderColor0);
+                    answerChecker(opt2, answer, borderColor1);
                     print(borderColor0);
                   },
                 )
@@ -187,4 +183,10 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
       ),
     );
   }
+}
+
+class BorderColor {
+  Color _border;
+  void set(Color color) => _border = color;
+  Color get() => _border;
 }
