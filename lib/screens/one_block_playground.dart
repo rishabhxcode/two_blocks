@@ -32,32 +32,27 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
       var2 = oneBlock.var2Generator();
       result = oneBlock.resultGenerator(var1, var2, operation);
       choice = oneBlock.choiceGenerator();
-      // choice = 1;
       buttonSelected = oneBlock.ansButtonSelector();
       answer = oneBlock.answerGenerator(choice, var1, operation, var2, result);
       opt1 = oneBlock.opt1Generator(choice, answer, buttonSelected);
       opt2 = oneBlock.opt2Generator(choice, answer, buttonSelected, opt1);
-      //
       borderColor0 = Colors.transparent;
       borderColor1 = Colors.transparent;
     });
-    print('operation: $operation');
-    print('button: $buttonSelected');
-    print('opt1: $opt1');
-    print('opt2: $opt2');
   }
 
-  answerChecker(opt, answer, Color color) {
+  answerChecker(opt, answer, color1, color2) {
     if (opt == answer) {
       setState(() {
-        color = Colors.green;
-        print('GREEN');
+        color1 = Colors.green;
       });
-      generate();
+      Future.delayed(const Duration(milliseconds: 500), () {
+        generate();
+      });
     } else
       setState(() {
-        color = Colors.red;
-        print('RED');
+        color1 = Colors.red;
+        color2 = Colors.green;
       });
   }
 
@@ -165,16 +160,21 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
             child: Row(
               children: [
                 FlatNumButton(
-                    text: '$opt1',
-                    borderColor: borderColor0,
-                    onTap: () {
-                      answerChecker(opt1, answer, borderColor0);
-                    }),
+                  text: '$opt1',
+                  borderColor: borderColor0,
+                  // onTap:                      answerChecker(opt1, answer, borderColor0, borderColor1),
+                  onTap: () {
+                    answerChecker(opt1, answer, borderColor0, borderColor1);
+                    print(borderColor0);
+                  }
+                ),
                 FlatNumButton(
                   text: '$opt2',
                   borderColor: borderColor1,
+                  // onTap:                      answerChecker(opt2, answer, borderColor1, borderColor0),
                   onTap: () {
-                    answerChecker(opt2, answer, borderColor1);
+                    answerChecker(opt2, answer, borderColor1, borderColor0);
+                    print(borderColor0);
                   },
                 )
               ],

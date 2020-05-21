@@ -17,11 +17,12 @@ class FlatNumButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height ?? 100,
-      width: width ?? 100,
+    return Container(
+    height: 100,
+    width: 100,
+      padding: EdgeInsets.all(2),
       child: OutlineButton(
-        borderSide: BorderSide(width: 3, color: borderColor ?? Colors.transparent),
+        borderSide: BorderSide(width: 3, color: borderColor),
         child: Text(
           text ?? '?',
           style: TextStyle(fontSize: 30),
