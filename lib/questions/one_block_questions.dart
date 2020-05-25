@@ -65,9 +65,10 @@ class OneBlockQuestions {
     else
       return val;
   }
+
 //
 //
-String operandOptionGenerator(String restrict, int range) {
+  String operandOptionGenerator(String restrict, int range) {
     int val = random.nextInt(range);
     if (operations[val] == restrict)
       return operandOptionGenerator(restrict, range);
@@ -80,22 +81,21 @@ String operandOptionGenerator(String restrict, int range) {
     if (buttonSelected == 0) {
       return answer;
     } else {
-      if (choice == 1 && buttonSelected!=0)
+      if (choice == 1 && buttonSelected != 0)
         return operandOptionGenerator(answer, 2);
       else
         return random.nextInt(9);
     }
   }
 
-dynamic opt2Generator(choice, answer, buttonSelected, opt1) {
+  dynamic opt2Generator(choice, answer, buttonSelected, opt1) {
     if (buttonSelected == 1) {
       return answer;
     } else {
-      if (choice == 1){
+      if (choice == 1 && buttonSelected != 0) {
         return operandOptionGenerator(opt1, 2);
-        }
-      else
+      } else
         return intOptionGenerator(opt1, 9);
     }
-  } 
+  }
 }

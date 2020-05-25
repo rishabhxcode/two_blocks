@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:two_blocks/constants.dart';
 
 class NeuContainer extends StatelessWidget {
   final Color fillColor;
@@ -40,9 +41,7 @@ class NeuContainer extends StatelessWidget {
                     offset: Offset(2, 2),
                     spreadRadius: 2,
                     blurRadius: 4,
-                    color: Color(0xffc9c9c9)
-                    // color: Colors.grey[300]
-                    ),
+                    color: Constants.DarkShadow),
                 BoxShadow(
                     offset: Offset(-2, -2),
                     spreadRadius: 2,

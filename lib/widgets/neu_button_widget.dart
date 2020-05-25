@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:two_blocks/constants.dart';
 
 class NeuButtonWidget extends StatelessWidget {
   final Color fillColor;
@@ -48,13 +49,12 @@ class NeuButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-        curve: curve,
+    return Container(
         height: height,
         width: width,
+        margin: margin,
         padding: EdgeInsets.all(0),
         alignment: Alignment.center,
-        duration: duration ?? Duration(milliseconds: 50),
         decoration: BoxDecoration(
           shape: shape,
           color: Colors.transparent,
@@ -68,7 +68,7 @@ class NeuButtonWidget extends StatelessWidget {
                     offset: Offset(2, 2),
                     spreadRadius: 2,
                     blurRadius: 4,
-                    color: Colors.grey[400]),
+                    color: Constants.DarkShadow),
                 BoxShadow(
                     offset: Offset(-2, -2),
                     spreadRadius: 2,
@@ -88,9 +88,7 @@ class NeuButtonWidget extends StatelessWidget {
               onTap: onTap ?? () {},
               onTapCancel: onTapCancel,
               onTapDown: onTapDown,
-              child: SizedBox(
-                height: height,
-                width: width,
+              child: Center(
                 child: child,
               )
 

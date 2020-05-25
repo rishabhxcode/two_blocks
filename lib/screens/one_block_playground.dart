@@ -3,6 +3,7 @@ import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/questions/one_block_questions.dart';
 import 'package:two_blocks/widgets/choice_container.dart';
 import 'package:two_blocks/widgets/flat_num_button.dart';
+import 'package:two_blocks/widgets/neu_button_widget.dart';
 import 'package:two_blocks/widgets/neu_container.dart';
 
 class OneBlockPlayGround extends StatefulWidget {
@@ -22,38 +23,56 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
   int buttonSelected;
   dynamic opt1;
   dynamic opt2;
+  String choiceAnswer;
+
 //
-  BorderColor borderColor0 = BorderColor();
-  BorderColor borderColor1 = BorderColor();
+  Shadows shadows1 = Shadows();
+  Shadows shadows2 = Shadows();
+//
   generate() {
     setState(() {
       operation = oneBlock.operationGenerator();
       var1 = oneBlock.var1Generator();
       var2 = oneBlock.var2Generator();
       result = oneBlock.resultGenerator(var1, var2, operation);
-      choice = oneBlock.choiceGenerator();
+      // choice = oneBlock.choiceGenerator();
+      choice = 1;
       buttonSelected = oneBlock.ansButtonSelector();
       answer = oneBlock.answerGenerator(choice, var1, operation, var2, result);
       opt1 = oneBlock.opt1Generator(choice, answer, buttonSelected);
       opt2 = oneBlock.opt2Generator(choice, answer, buttonSelected, opt1);
-      //
-      borderColor0.set(Colors.transparent);
-      borderColor1.set(Colors.transparent);
+      shadows1.set(null);
+      shadows2.set(null);
+      choiceAnswer = '';
+      print(choice);
+      print(answer);
+      
     });
   }
 
-  answerChecker(opt, answer, BorderColor color) async {
+  setAnswer() {
+    setState(() {
+      choiceAnswer = '$answer';
+      print(choiceAnswer);
+    });
+  }
+
+  answerChecker(opt, answer, Shadows shadow1, Shadows shadow2) {
     if (opt == answer) {
       setState(() {
-        color.set(Colors.green);
-        print('GREEN');
+        shadow1.set(Constants.greenShadow);
       });
-      await Future.delayed(Duration(milliseconds: 200), generate);
-    } else
+      Future.delayed(Duration(milliseconds: 400), generate);
+    } else {
       setState(() {
-        color.set(Colors.red);
-        print('RED');
+        shadow1.set(Constants.redShadow);
       });
+      Future.delayed(Duration(milliseconds: 100), () {
+        setState(() {
+          shadow2.set(Constants.greenShadow);
+        });
+      });
+    }
   }
 
   @override
@@ -135,49 +154,75 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 choice == 0
-                    ? ChoiceContainer()
+                    ? ChoiceContainer(
+                        choiceAnswer: choiceAnswer,
+                      )
                     : Text(
                         '$var1',
                         style: Constants.textStyle2,
                       ),
                 choice == 1
-                    ? ChoiceContainer()
+                    ? ChoiceContainer(
+                        choiceAnswer: choiceAnswer,
+                      )
                     : Text(operation, style: Constants.textStyle2),
                 choice == 2
-                    ? ChoiceContainer()
+                    ? ChoiceContainer(
+                        choiceAnswer: choiceAnswer,
+                      )
                     : Text('$var2', style: Constants.textStyle2),
                 Text('=', style: Constants.textStyle2),
                 choice == 3
-                    ? ChoiceContainer()
+                    ? ChoiceContainer(
+                        choiceAnswer: choiceAnswer,
+                      )
                     : Text('$result', style: Constants.textStyle2)
               ],
             ),
           ),
 
           NeuContainer(
-            width: 200,
             height: 100,
+            width: 200.5,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 FlatNumButton(
                     text: '$opt1',
-                    borderColor: borderColor0.get(),
+                    boxShadows: shadows1.get(),
                     onTap: () {
-                      answerChecker(opt1, answer, borderColor0);
+                      setAnswer();
+                      answerChecker(opt1, answer, shadows1, shadows2);
                     }),
+                Container(
+                  height: 80,
+                  child: VerticalDivider(
+                    color: Colors.grey,
+                    thickness: 0.3,
+                    width: 0.5,
+                  ),
+                ),
                 FlatNumButton(
                   text: '$opt2',
-                  borderColor: borderColor1.get(),
+                  boxShadows: shadows2.get(),
                   onTap: () {
-                    answerChecker(opt2, answer, borderColor1);
-                    print(borderColor0);
+                    setAnswer();
+                    answerChecker(opt2, answer, shadows2, shadows1);
                   },
                 )
               ],
             ),
           ),
-          SizedBox(
-            height: 40,
+          Container(
+            height: 100,
+            alignment: Alignment.centerRight,
+            child: NeuButtonWidget(
+              child: Text('Next'),
+              fillColor: Constants.BGColor,
+              shadows: Constants.nextButtonShadow,
+              margin: EdgeInsets.only(right: 20),
+              onTap: () {},
+            ),
           )
         ],
       ),
@@ -185,8 +230,8 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
   }
 }
 
-class BorderColor {
-  Color _border;
-  void set(Color color) => _border = color;
-  Color get() => _border;
+class Shadows {
+  List<BoxShadow> _shadow;
+  void set(List<BoxShadow> shadow) => _shadow = shadow;
+  List<BoxShadow> get() => _shadow;
 }

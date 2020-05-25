@@ -35,18 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
               'LOGO',
               style: TextStyle(fontSize: 30),
             ),
-            // boxShadow: [
-            //   BoxShadow(
-            //       blurRadius: 4,
-            //       spreadRadius: 2,
-            //       color: Colors.grey[300],
-            //       offset: Offset(3, 3)),
-            //   BoxShadow(
-            //       blurRadius: 4,
-            //       spreadRadius: 2,
-            //       color: Colors.white,
-            //       offset: Offset(-3, -3))
-            // ],
           ),
           Wrap(
             alignment: WrapAlignment.center,
