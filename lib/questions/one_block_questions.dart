@@ -92,7 +92,7 @@ class OneBlockQuestions {
     if (buttonSelected == 1) {
       return answer;
     } else {
-      if (choice == 1 && buttonSelected != 0) {
+      if (choice == 1 && buttonSelected != 1) {
         return operandOptionGenerator(opt1, 2);
       } else
         return intOptionGenerator(opt1, 9);

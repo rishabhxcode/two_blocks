@@ -46,7 +46,6 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
       choiceAnswer = '';
       print(choice);
       print(answer);
-      
     });
   }
 
