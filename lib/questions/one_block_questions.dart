@@ -83,8 +83,7 @@ class OneBlockQuestions {
     } else {
       if (choice == 1 && buttonSelected != 0)
         return operandOptionGenerator(answer, 2);
-      else
-        return random.nextInt(9);
+      else if (buttonSelected != 0) return random.nextInt(10);
     }
   }
 
@@ -94,8 +93,7 @@ class OneBlockQuestions {
     } else {
       if (choice == 1 && buttonSelected != 1) {
         return operandOptionGenerator(opt1, 2);
-      } else
-        return intOptionGenerator(opt1, 9);
+      } else if (buttonSelected != 1) return intOptionGenerator(opt1, 10);
     }
   }
 }

@@ -24,10 +24,13 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
   dynamic opt1;
   dynamic opt2;
   String choiceAnswer;
+  bool _isInCorrect = false;
 
 //
   Shadows shadows1 = Shadows();
   Shadows shadows2 = Shadows();
+//
+  int _score = 0;
 //
   generate() {
     setState(() {
@@ -35,8 +38,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
       var1 = oneBlock.var1Generator();
       var2 = oneBlock.var2Generator();
       result = oneBlock.resultGenerator(var1, var2, operation);
-      // choice = oneBlock.choiceGenerator();
-      choice = 1;
+      choice = oneBlock.choiceGenerator();
       buttonSelected = oneBlock.ansButtonSelector();
       answer = oneBlock.answerGenerator(choice, var1, operation, var2, result);
       opt1 = oneBlock.opt1Generator(choice, answer, buttonSelected);
@@ -44,6 +46,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
       shadows1.set(null);
       shadows2.set(null);
       choiceAnswer = '';
+      _isInCorrect = false;
       print(choice);
       print(answer);
     });
@@ -60,11 +63,14 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
     if (opt == answer) {
       setState(() {
         shadow1.set(Constants.greenShadow);
+        _isInCorrect = false;
+        _score++;
       });
       Future.delayed(Duration(milliseconds: 400), generate);
     } else {
       setState(() {
         shadow1.set(Constants.redShadow);
+        _isInCorrect = true;
       });
       Future.delayed(Duration(milliseconds: 100), () {
         setState(() {
@@ -110,6 +116,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
         children: <Widget>[
           ///// HEADER ////////////////
           Container(
+            // color: Colors.yellow,
             height: 50,
             child: Row(
               children: <Widget>[
@@ -122,7 +129,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                         '  High score:',
                         style: TextStyle(fontSize: 12),
                       ),
-                      Text('  Score:')
+                      Text('  Score: $_score')
                     ],
                   ),
                 ),
@@ -148,80 +155,112 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
             ),
           ),
           /////////////////////////////////
-          FittedBox(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                choice == 0
-                    ? ChoiceContainer(
-                        choiceAnswer: choiceAnswer,
-                      )
-                    : Text(
-                        '$var1',
-                        style: Constants.textStyle2,
-                      ),
-                choice == 1
-                    ? ChoiceContainer(
-                        choiceAnswer: choiceAnswer,
-                      )
-                    : Text(operation, style: Constants.textStyle2),
-                choice == 2
-                    ? ChoiceContainer(
-                        choiceAnswer: choiceAnswer,
-                      )
-                    : Text('$var2', style: Constants.textStyle2),
-                Text('=', style: Constants.textStyle2),
-                choice == 3
-                    ? ChoiceContainer(
-                        choiceAnswer: choiceAnswer,
-                      )
-                    : Text('$result', style: Constants.textStyle2)
-              ],
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  choice == 0
+                      ? ChoiceContainer(
+                          choiceAnswer: choiceAnswer,
+                        )
+                      : Text(
+                          '$var1',
+                          style: Constants.textStyle2,
+                        ),
+                  choice == 1
+                      ? ChoiceContainer(
+                          choiceAnswer: choiceAnswer,
+                        )
+                      : Text(operation, style: Constants.textStyle2),
+                  choice == 2
+                      ? ChoiceContainer(
+                          choiceAnswer: choiceAnswer,
+                        )
+                      : Text('$var2', style: Constants.textStyle2),
+                  Text('=', style: Constants.textStyle2),
+                  choice == 3
+                      ? ChoiceContainer(
+                          choiceAnswer: choiceAnswer,
+                        )
+                      : Text('$result', style: Constants.textStyle2)
+                ],
+              ),
             ),
           ),
 
-          NeuContainer(
-            height: 100,
-            width: 200.5,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FlatNumButton(
-                    text: '$opt1',
-                    boxShadows: shadows1.get(),
-                    onTap: () {
-                      setAnswer();
-                      answerChecker(opt1, answer, shadows1, shadows2);
-                    }),
-                Container(
-                  height: 80,
-                  child: VerticalDivider(
-                    color: Colors.grey,
-                    thickness: 0.3,
-                    width: 0.5,
-                  ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              // color: Colors.cyan,
+              child: NeuContainer(
+                height: 100,
+                width: 200.5,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FlatNumButton(
+                        text: '$opt1',
+                        boxShadows: shadows1.get(),
+                        onTap: () {
+                          setAnswer();
+                          answerChecker(opt1, answer, shadows1, shadows2);
+                        }),
+                    Container(
+                      height: 80,
+                      child: VerticalDivider(
+                        color: Colors.grey,
+                        thickness: 0.3,
+                        width: 0.5,
+                      ),
+                    ),
+                    FlatNumButton(
+                      text: '$opt2',
+                      boxShadows: shadows2.get(),
+                      onTap: () {
+                        setAnswer();
+                        answerChecker(opt2, answer, shadows2, shadows1);
+                      },
+                    )
+                  ],
                 ),
-                FlatNumButton(
-                  text: '$opt2',
-                  boxShadows: shadows2.get(),
-                  onTap: () {
-                    setAnswer();
-                    answerChecker(opt2, answer, shadows2, shadows1);
-                  },
-                )
-              ],
+              ),
             ),
           ),
           Container(
             height: 100,
             alignment: Alignment.centerRight,
-            child: NeuButtonWidget(
-              child: Text('Next'),
-              fillColor: Constants.BGColor,
-              shadows: Constants.nextButtonShadow,
-              margin: EdgeInsets.only(right: 20),
-              onTap: () {},
-            ),
+            child: _isInCorrect
+                ? NeuButtonWidget(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          ' Next',
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.deepPurple,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        Icon(
+                          Icons.navigate_next,
+                          size: 30,
+                          color: Colors.deepPurple,
+                        ),
+                      ],
+                    ),
+                    fillColor: Constants.BGColor,
+                    shadows: Constants.nextButtonShadow,
+                    margin: EdgeInsets.only(right: 20),
+                    onTap: () {
+                      setState(() {
+                        generate();
+                        _isInCorrect = false;
+                      });
+                    },
+                  )
+                : Container(),
           )
         ],
       ),
