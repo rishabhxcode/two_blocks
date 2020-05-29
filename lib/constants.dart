@@ -37,7 +37,7 @@ class Constants {
     BoxShadow(
       color: BGColor,
       spreadRadius: -3.0,
-      blurRadius: 3.0,
+      blurRadius: 1.0,
     ),
   ];
 
