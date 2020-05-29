@@ -54,14 +54,14 @@ class OneBlockQuestions {
   }
 
   String operationGenerator() {
-    return operations[2 + random.nextInt(2)];
+    return operations[random.nextInt(2)];
   }
 
-  int var1Generator() {
+  int var1Generator(operation) {
     return random.nextInt(10);
   }
 
-  int var2Generator() {
+  int var2Generator(operation) {
     return random.nextInt(10);
   }
 
@@ -159,5 +159,18 @@ class OneBlockQuestions {
         return option4Generator(answer, opt1, opt2, opt3, 10);
       }
     }
+  }
+
+  checker(opt, var1, var2, result) {
+    if (opt == Constants.add && var1 + var2 == result)
+      return true;
+    else if (opt == Constants.minus && var1 - var2 == result)
+      return true;
+    else if (opt == Constants.multiply && var1 * var2 == result)
+      return true;
+    else if (opt == Constants.divide && var1 ~/ var2 == result)
+      return true;
+    else
+      return false;
   }
 }

@@ -45,24 +45,21 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
 //
   generate() {
     operation = ob.operationGenerator();
-    // var1 = ob.var1Generator();
-    var1 = 0;
-    // var2 = ob.var2Generator();
-    var2 = 1;
+    var1 = ob.var1Generator(operation);
+    var2 = ob.var2Generator(operation);
     result = ob.resultGenerator(operation, var1, var2);
     buttonSelected = ob.buttonSelected();
-    // choiceSelected = ob.choiceSelected();
-    choiceSelected = 0;
+    choiceSelected = ob.choiceSelected();
     answer = ob.answerGenerator(choiceSelected, var1, operation, var2, result);
     opt1 = ob.opt1Generator(buttonSelected, choiceSelected, answer);
     opt2 = ob.opt2Generator(buttonSelected, choiceSelected, answer, opt1);
     opt3 = ob.opt3Generator(buttonSelected, choiceSelected, answer, opt1, opt2);
     opt4 = ob.opt4Generator(
         buttonSelected, choiceSelected, answer, opt1, opt2, opt3);
-    _opt1Checker = checker(opt1, var1, var2, result);
-    _opt2Checker = checker(opt2, var1, var2, result);
-    _opt3Checker = checker(opt3, var1, var2, result);
-    _opt4Checker = checker(opt4, var1, var2, result);
+    _opt1Checker = ob.checker(opt1, var1, var2, result);
+    _opt2Checker = ob.checker(opt2, var1, var2, result);
+    _opt3Checker = ob.checker(opt3, var1, var2, result);
+    _opt4Checker = ob.checker(opt4, var1, var2, result);
     /** **/
     shadows1.set(null);
     shadows2.set(null);
@@ -83,7 +80,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
   answerChecker(dynamic opt, dynamic answer, Shadows shadow) {
     _absorbOptButtons = true;
     if (choiceSelected == 1) {
-      bool optCheck = checker(opt, var1, var2, result);
+      bool optCheck = ob.checker(opt, var1, var2, result);
       if (optCheck == true) {
         choiceAnswer = '$opt';
         shadow.set(Constants.greenShadow);
@@ -122,19 +119,6 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
 
   rightAnsChecker(bool isOpt, Shadows shadow) {
     if (isOpt == true) shadow.set(Constants.greenShadow);
-  }
-
-  checker(opt, var1, var2, result) {
-    if (opt == Constants.add && var1 + var2 == result)
-      return true;
-    else if (opt == Constants.minus && var1 - var2 == result)
-      return true;
-    else if (opt == Constants.multiply && var1 * var2 == result)
-      return true;
-    else if (opt == Constants.divide && var1 ~/ var2 == result)
-      return true;
-    else
-      return false;
   }
 
   @override
@@ -267,7 +251,6 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                               onTap: () {
                                 setAnswer();
                                 answerChecker(opt1, answer, shadows1);
-                                print(checker(opt1, var1, var2, result));
                               }),
                           Container(
                             height: 80,
@@ -283,7 +266,6 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                             onTap: () {
                               setAnswer();
                               answerChecker(opt2, answer, shadows2);
-                              print(checker(opt2, var1, var2, result));
                             },
                           )
                         ],
@@ -316,7 +298,6 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                               onTap: () {
                                 setAnswer();
                                 answerChecker(opt3, answer, shadows3);
-                                print(checker(opt3, var1, var2, result));
                               }),
                           Container(
                             height: 80,
@@ -332,7 +313,6 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                             onTap: () {
                               setAnswer();
                               answerChecker(opt4, answer, shadows4);
-                              print(checker(opt4, var1, var2, result));
                             },
                           )
                         ],
