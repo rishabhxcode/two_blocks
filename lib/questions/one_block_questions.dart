@@ -58,11 +58,25 @@ class OneBlockQuestions {
   }
 
   int var1Generator(operation) {
-    return random.nextInt(10);
+    if (operation == Constants.divide)
+      return 1 + random.nextInt(9);
+    else
+      return random.nextInt(10);
   }
 
-  int var2Generator(operation) {
-    return random.nextInt(10);
+  int var2Generator(operation, var1) {
+    if (operation == Constants.divide)
+      return random.nextInt(10) * var1;
+    else
+      return random.nextInt(10);
+  }
+
+  swap(var1, var2) {
+    var1 = var1 + var2;
+    var2 = var1 - var2;
+    var1 = var1 - var2;
+    print('var1: $var1');
+    print('var2: $var2');
   }
 
   int resultGenerator(String operand, int var1, int var2) {
@@ -174,3 +188,5 @@ class OneBlockQuestions {
       return false;
   }
 }
+
+

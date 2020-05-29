@@ -43,10 +43,21 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
   int _score = 0;
   bool _absorbOptButtons = false;
 //
+
   generate() {
-    operation = ob.operationGenerator();
+    operation = Constants.divide;
+    // operation = ob.operationGenerator();
     var1 = ob.var1Generator(operation);
-    var2 = ob.var2Generator(operation);
+    var2 = ob.var2Generator(operation, var1);
+    print('var1 : $var1');
+    print('var2 : $var2');
+    if (operation == Constants.divide) {
+      int temp = var1;
+      var1 = var2;
+      var2 = temp;
+    }
+    print('var1 : $var1');
+    print('var2 : $var2');
     result = ob.resultGenerator(operation, var1, var2);
     buttonSelected = ob.buttonSelected();
     choiceSelected = ob.choiceSelected();
