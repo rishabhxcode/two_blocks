@@ -62,7 +62,9 @@ class OneBlockQuestions {
     _operation = Constants.divide;
     // operation =  operationGenerator();
     _variable1 = var1Generator(_operation);
-    _variable2 = var2Generator(_operation, _variable1);
+    // _variable1 = 1;
+    // _variable2 = var2Generator(_operation, _variable1);
+    _variable2 = 0;
     print('var1 : $_variable1');
     print('var2 : $_variable2');
     if (_operation == Constants.divide) {
@@ -73,11 +75,14 @@ class OneBlockQuestions {
     print('var1 : $_variable1');
     print('var2 : $_variable2');
     _result = resultGenerator(_operation, _variable1, _variable2);
-    _buttonSelected = getButtonSelected();
-    _choiceSelected = getChoiceSelected();
+    // _buttonSelected = getButtonSelected();
+    _buttonSelected = 1;
+    // _choiceSelected = getChoiceSelected();
+    _choiceSelected = 2;
     _answer = answerGenerator(
         _choiceSelected, _variable1, _operation, _variable2, _result);
-    _opt1 = opt1Generator(_buttonSelected, _choiceSelected, _answer);
+    // _opt1 = opt1Generator(_buttonSelected, _choiceSelected, _answer);
+    _opt1 = 0;
     _opt2 = opt2Generator(_buttonSelected, _choiceSelected, _answer, _opt1);
     _opt3 =
         opt3Generator(_buttonSelected, _choiceSelected, _answer, _opt1, _opt2);
@@ -97,7 +102,8 @@ class OneBlockQuestions {
     _absorbOptButtons = false;
   }
 
-  answerChecker(dynamic opt, dynamic answer, Shadows shadow,Function action) async {
+  answerChecker(
+      dynamic opt, dynamic answer, Shadows shadow, Function action) async {
     _absorbOptButtons = true;
     if (_choiceSelected == 1) {
       bool optCheck = checker(opt, _variable1, _variable2, _result);
@@ -139,7 +145,10 @@ class OneBlockQuestions {
   }
 
   rightAnsChecker(bool isOpt, Shadows shadow) {
-    if (isOpt == true) shadow.set(Constants.greenShadow);
+    if (isOpt == true) {
+      print(isOpt);
+      shadow.set(Constants.greenShadow);
+    }
   }
 
   int option1Generator(restrict, range) {
