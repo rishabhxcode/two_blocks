@@ -14,127 +14,9 @@ class OneBlockPlayGround extends StatefulWidget {
 
 class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
   OneBlockQuestions ob = OneBlockQuestions();
-
-  String operation;
-  int var1;
-  int var2;
-  int result;
-  dynamic answer;
-  int buttonSelected;
-  int choiceSelected;
-  dynamic opt1;
-  dynamic opt2;
-  dynamic opt3;
-  dynamic opt4;
-  bool _isInCorrect = false;
-  bool _opt1Checker;
-  bool _opt2Checker;
-  bool _opt3Checker;
-  bool _opt4Checker;
-
-  dynamic choiceAnswer = '';
-
-//
-  Shadows shadows1 = Shadows();
-  Shadows shadows2 = Shadows();
-  Shadows shadows3 = Shadows();
-  Shadows shadows4 = Shadows();
-//
-  int _score = 0;
-  bool _absorbOptButtons = false;
-//
-
-  generate() {
-    operation = Constants.divide;
-    // operation = ob.operationGenerator();
-    var1 = ob.var1Generator(operation);
-    var2 = ob.var2Generator(operation, var1);
-    print('var1 : $var1');
-    print('var2 : $var2');
-    if (operation == Constants.divide) {
-      int temp = var1;
-      var1 = var2;
-      var2 = temp;
-    }
-    print('var1 : $var1');
-    print('var2 : $var2');
-    result = ob.resultGenerator(operation, var1, var2);
-    buttonSelected = ob.buttonSelected();
-    choiceSelected = ob.choiceSelected();
-    answer = ob.answerGenerator(choiceSelected, var1, operation, var2, result);
-    opt1 = ob.opt1Generator(buttonSelected, choiceSelected, answer);
-    opt2 = ob.opt2Generator(buttonSelected, choiceSelected, answer, opt1);
-    opt3 = ob.opt3Generator(buttonSelected, choiceSelected, answer, opt1, opt2);
-    opt4 = ob.opt4Generator(
-        buttonSelected, choiceSelected, answer, opt1, opt2, opt3);
-    _opt1Checker = ob.checker(opt1, var1, var2, result);
-    _opt2Checker = ob.checker(opt2, var1, var2, result);
-    _opt3Checker = ob.checker(opt3, var1, var2, result);
-    _opt4Checker = ob.checker(opt4, var1, var2, result);
-    /** **/
-    shadows1.set(null);
-    shadows2.set(null);
-    shadows3.set(null);
-    shadows4.set(null);
-    _isInCorrect = false;
-    choiceAnswer = '';
-    _absorbOptButtons = false;
-    setState(() {});
-  }
-
-  setAnswer() {
-    setState(() {
-      choiceAnswer = '$answer';
-    });
-  }
-
-  answerChecker(dynamic opt, dynamic answer, Shadows shadow) {
-    _absorbOptButtons = true;
-    if (choiceSelected == 1) {
-      bool optCheck = ob.checker(opt, var1, var2, result);
-      if (optCheck == true) {
-        choiceAnswer = '$opt';
-        shadow.set(Constants.greenShadow);
-        Future.delayed(const Duration(milliseconds: 500), () {
-          generate();
-        });
-      } else {
-        shadow.set(Constants.redShadow);
-        rightAnsChecker(_opt1Checker, shadows1);
-        rightAnsChecker(_opt2Checker, shadows2);
-        rightAnsChecker(_opt3Checker, shadows3);
-        rightAnsChecker(_opt4Checker, shadows4);
-        _isInCorrect = true;
-        print('opt1: $_opt1Checker');
-        print('opt2: $_opt2Checker');
-        print('opt3: $_opt3Checker');
-        print('opt4: $_opt4Checker');
-      }
-    } else {
-      if (opt == answer) {
-        shadow.set(Constants.greenShadow);
-        Future.delayed(const Duration(milliseconds: 500), () {
-          generate();
-        });
-      } else {
-        shadow.set(Constants.redShadow);
-        _isInCorrect = true;
-        if (opt1 == answer) shadows1.set(Constants.greenShadow);
-        if (opt2 == answer) shadows2.set(Constants.greenShadow);
-        if (opt3 == answer) shadows3.set(Constants.greenShadow);
-        if (opt4 == answer) shadows4.set(Constants.greenShadow);
-      }
-    }
-    setState(() {});
-  }
-
-  rightAnsChecker(bool isOpt, Shadows shadow) {
-    if (isOpt == true) shadow.set(Constants.greenShadow);
-  }
-
   @override
   void initState() {
-    generate();
+    ob.generate();
     super.initState();
   }
 
@@ -181,7 +63,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                         '  High score:',
                         style: TextStyle(fontSize: 12),
                       ),
-                      Text('  Score: $_score')
+                      Text('  Score: ${ob.score}')
                     ],
                   ),
                 ),
@@ -213,30 +95,30 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  choiceSelected == 0
+                  ob.choiceSelected == 0
                       ? ChoiceContainer(
-                          choiceAnswer: choiceAnswer,
+                          choiceAnswer: ob.choiceAnswer,
                         )
                       : Text(
-                          '$var1',
+                          '${ob.var1}',
                           style: Constants.textStyle2,
                         ),
-                  choiceSelected == 1
+                  ob.choiceSelected == 1
                       ? ChoiceContainer(
-                          choiceAnswer: choiceAnswer,
+                          choiceAnswer: ob.choiceAnswer,
                         )
-                      : Text(operation, style: Constants.textStyle2),
-                  choiceSelected == 2
+                      : Text(ob.operation, style: Constants.textStyle2),
+                  ob.choiceSelected == 2
                       ? ChoiceContainer(
-                          choiceAnswer: choiceAnswer,
+                          choiceAnswer: ob.choiceAnswer,
                         )
-                      : Text('$var2', style: Constants.textStyle2),
+                      : Text('${ob.var2}', style: Constants.textStyle2),
                   Text('=', style: Constants.textStyle2),
-                  choiceSelected == 3
+                  ob.choiceSelected == 3
                       ? ChoiceContainer(
-                          choiceAnswer: choiceAnswer,
+                          choiceAnswer: ob.choiceAnswer,
                         )
-                      : Text('$result', style: Constants.textStyle2)
+                      : Text('${ob.result}', style: Constants.textStyle2)
                 ],
               ),
             ),
@@ -247,7 +129,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
               alignment: Alignment.center,
               // color: Colors.cyan,
               child: AbsorbPointer(
-                absorbing: _absorbOptButtons,
+                absorbing: ob?.absorbOptButtons ?? false,
                 child: NeuContainer(
                   height: 200.5,
                   width: 200.5,
@@ -257,11 +139,19 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FlatNumButton(
-                              text: '$opt1',
-                              boxShadows: shadows1.get(),
+                              text: '${ob.opt1}',
+                              boxShadows: ob.shadows1.get(),
                               onTap: () {
-                                setAnswer();
-                                answerChecker(opt1, answer, shadows1);
+                                ob.setAnswer();
+                                ob.answerChecker(
+                                    ob.opt1, ob.answer, ob.shadows1, () async {
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 500), () {
+                                    ob.generate();
+                                    setState(() {});
+                                  });
+                                });
+                                setState(() {});
                               }),
                           Container(
                             height: 80,
@@ -272,11 +162,20 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                             ),
                           ),
                           FlatNumButton(
-                            text: '$opt2',
-                            boxShadows: shadows2.get(),
+                            text: '${ob.opt2}',
+                            boxShadows: ob.shadows2.get(),
                             onTap: () {
-                              setAnswer();
-                              answerChecker(opt2, answer, shadows2);
+                              ob.setAnswer();
+
+                              ob.answerChecker(ob.opt2, ob.answer, ob.shadows2,
+                                  () async {
+                                await Future.delayed(
+                                    const Duration(milliseconds: 500), () {
+                                  ob.generate();
+                                  setState(() {});
+                                });
+                              });
+                              setState(() {});
                             },
                           )
                         ],
@@ -304,11 +203,20 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FlatNumButton(
-                              text: '$opt3',
-                              boxShadows: shadows3.get(),
+                              text: '${ob.opt3}',
+                              boxShadows: ob.shadows3.get(),
                               onTap: () {
-                                setAnswer();
-                                answerChecker(opt3, answer, shadows3);
+                                ob.setAnswer();
+
+                                ob.answerChecker(
+                                    ob.opt3, ob.answer, ob.shadows3, () async {
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 500), () {
+                                    ob.generate();
+                                    setState(() {});
+                                  });
+                                });
+                                setState(() {});
                               }),
                           Container(
                             height: 80,
@@ -319,11 +227,20 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                             ),
                           ),
                           FlatNumButton(
-                            text: '$opt4',
-                            boxShadows: shadows4.get(),
+                            text: '${ob.opt4}',
+                            boxShadows: ob.shadows4.get(),
                             onTap: () {
-                              setAnswer();
-                              answerChecker(opt4, answer, shadows4);
+                              ob.setAnswer();
+
+                              ob.answerChecker(ob.opt4, ob.answer, ob.shadows4,
+                                  () async {
+                                await Future.delayed(
+                                    const Duration(milliseconds: 500), () {
+                                  ob.generate();
+                                  setState(() {});
+                                });
+                              });
+                              setState(() {});
                             },
                           )
                         ],
@@ -337,7 +254,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
           Container(
             height: 100,
             alignment: Alignment.centerRight,
-            child: _isInCorrect
+            child: ob.isInCorrect
                 ? NeuButtonWidget(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -360,10 +277,9 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                     shadows: Constants.nextButtonShadow,
                     margin: EdgeInsets.only(right: 20),
                     onTap: () {
-                      setState(() {
-                        generate();
-                        _isInCorrect = false;
-                      });
+                      ob.generate();
+                      ob.setIsInCorrect(false);
+                      setState(() {});
                     },
                   )
                 : Container(),
@@ -374,8 +290,8 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
   }
 }
 
-class Shadows {
-  List<BoxShadow> _shadow;
-  void set(List<BoxShadow> shadow) => _shadow = shadow;
-  List<BoxShadow> get() => _shadow;
-}
+// class Shadows {
+//   List<BoxShadow> _shadow;
+//   void set(List<BoxShadow> shadow) => _shadow = shadow;
+//   List<BoxShadow> get() => _shadow;
+// }
