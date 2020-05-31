@@ -59,12 +59,11 @@ class OneBlockQuestions {
   Shadows get shadows4 => _shadows4;
 
   generate() {
+    // _operation = operationGenerator();
     _operation = Constants.divide;
-    // operation =  operationGenerator();
     _variable1 = var1Generator(_operation);
-    // _variable1 = 1;
-    // _variable2 = var2Generator(_operation, _variable1);
-    _variable2 = 0;
+    _variable2 = var2Generator(_operation, _variable1);
+    print(_operation);
     print('var1 : $_variable1');
     print('var2 : $_variable2');
     if (_operation == Constants.divide) {
@@ -75,14 +74,11 @@ class OneBlockQuestions {
     print('var1 : $_variable1');
     print('var2 : $_variable2');
     _result = resultGenerator(_operation, _variable1, _variable2);
-    // _buttonSelected = getButtonSelected();
-    _buttonSelected = 1;
-    // _choiceSelected = getChoiceSelected();
-    _choiceSelected = 2;
+    _buttonSelected = getButtonSelected();
+    _choiceSelected = getChoiceSelected();
     _answer = answerGenerator(
         _choiceSelected, _variable1, _operation, _variable2, _result);
-    // _opt1 = opt1Generator(_buttonSelected, _choiceSelected, _answer);
-    _opt1 = 0;
+    _opt1 = opt1Generator(_buttonSelected, _choiceSelected, _answer);
     _opt2 = opt2Generator(_buttonSelected, _choiceSelected, _answer, _opt1);
     _opt3 =
         opt3Generator(_buttonSelected, _choiceSelected, _answer, _opt1, _opt2);
@@ -109,6 +105,7 @@ class OneBlockQuestions {
       bool optCheck = checker(opt, _variable1, _variable2, _result);
       if (optCheck == true) {
         _choiceAnswer = '$opt';
+        _score++;
         shadow.set(Constants.greenShadow);
         action();
         // await Future.delayed(const Duration(milliseconds: 500), () {
@@ -129,6 +126,7 @@ class OneBlockQuestions {
     } else {
       if (opt == answer) {
         shadow.set(Constants.greenShadow);
+        _score++;
         action();
         // await Future.delayed(const Duration(milliseconds: 500), () {
         //   generate();
@@ -207,6 +205,8 @@ class OneBlockQuestions {
     return operations[random.nextInt(2)];
   }
 
+  ///////////////////////////////////////////////////////
+
   int var1Generator(operation) {
     if (operation == Constants.divide)
       return 1 + random.nextInt(9);
@@ -216,10 +216,12 @@ class OneBlockQuestions {
 
   int var2Generator(operation, var1) {
     if (operation == Constants.divide)
-      return random.nextInt(10) * var1;
+      return (1 + random.nextInt(9)) * var1;
     else
       return random.nextInt(10);
   }
+  
+  ////////////////////////////////////////////////////////
 
   swap(var1, var2) {
     var1 = var1 + var2;

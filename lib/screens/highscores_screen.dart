@@ -9,6 +9,7 @@ class HighScoresScreen extends StatelessWidget {
       backgroundColor: Constants.BGColor,
       appBar: AppBar(
         elevation: 0,
+        title: Text('High Scores'),
       ),
       body: Center(
         child: Text('HighScores will Appear here'),

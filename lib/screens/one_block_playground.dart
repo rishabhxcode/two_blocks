@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:two_blocks/constants.dart';
+import 'package:two_blocks/logic/save_and_get.dart';
 import 'package:two_blocks/questions/one_block_questions.dart';
-
 import 'package:two_blocks/widgets/choice_container.dart';
 import 'package:two_blocks/widgets/flat_num_button.dart';
 import 'package:two_blocks/widgets/neu_button_widget.dart';
@@ -14,9 +14,18 @@ class OneBlockPlayGround extends StatefulWidget {
 
 class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
   OneBlockQuestions ob = OneBlockQuestions();
+  SaveAndGet sharedPref = SaveAndGet();
+  int highScore;
+  getStore() async {
+    highScore = await sharedPref.getScore() ?? 0;
+    setState(() {});
+    print(highScore);
+  }
+
   @override
   void initState() {
     ob.generate();
+    getStore();
     super.initState();
   }
 
@@ -60,7 +69,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        '  High score:',
+                        '  High score: $highScore',
                         style: TextStyle(fontSize: 12),
                       ),
                       Text('  Score: ${ob.score}')
@@ -146,7 +155,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                                 ob.answerChecker(
                                     ob.opt1, ob.answer, ob.shadows1, () async {
                                   await Future.delayed(
-                                      const Duration(milliseconds: 500), () {
+                                      const Duration(milliseconds: 300), () {
                                     ob.generate();
                                     setState(() {});
                                   });
@@ -166,7 +175,6 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                             boxShadows: ob.shadows2.get(),
                             onTap: () {
                               ob.setAnswer();
-
                               ob.answerChecker(ob.opt2, ob.answer, ob.shadows2,
                                   () async {
                                 await Future.delayed(
@@ -279,6 +287,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                     onTap: () {
                       ob.generate();
                       ob.setIsInCorrect(false);
+                      SaveAndGet().saveStore(ob.score);
                       setState(() {});
                     },
                   )
@@ -289,9 +298,3 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
     );
   }
 }
-
-// class Shadows {
-//   List<BoxShadow> _shadow;
-//   void set(List<BoxShadow> shadow) => _shadow = shadow;
-//   List<BoxShadow> get() => _shadow;
-// }
