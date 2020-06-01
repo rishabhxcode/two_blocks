@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:two_blocks/constants.dart';
 
 class TwoBlocksPlayGround extends StatefulWidget {
   @override
@@ -8,8 +9,11 @@ class TwoBlocksPlayGround extends StatefulWidget {
 class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    return Scaffold(
+      backgroundColor: Constants.BGColor,
+      appBar: AppBar(
+        elevation: 0.0,
+      ),
     );
   }
 }

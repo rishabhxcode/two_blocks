@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:two_blocks/constants.dart';
 
-class HighScoresScreen extends StatelessWidget {
+class HighScoresScreen extends StatefulWidget {
+  @override
+  _HighScoresScreenState createState() => _HighScoresScreenState();
+}
+
+class _HighScoresScreenState extends State<HighScoresScreen> {
   @override
   Widget build(BuildContext context) {
     print('build::HighScoresScreen()');

@@ -59,8 +59,7 @@ class OneBlockQuestions {
   Shadows get shadows4 => _shadows4;
 
   generate() {
-    // _operation = operationGenerator();
-    _operation = Constants.divide;
+    _operation = operationGenerator();
     _variable1 = var1Generator(_operation);
     _variable2 = var2Generator(_operation, _variable1);
     print(_operation);
@@ -99,7 +98,11 @@ class OneBlockQuestions {
   }
 
   answerChecker(
-      dynamic opt, dynamic answer, Shadows shadow, Function action) async {
+    dynamic opt,
+    dynamic answer,
+    Shadows shadow,
+    Function action,
+  ) async {
     _absorbOptButtons = true;
     if (_choiceSelected == 1) {
       bool optCheck = checker(opt, _variable1, _variable2, _result);
@@ -108,6 +111,7 @@ class OneBlockQuestions {
         _score++;
         shadow.set(Constants.greenShadow);
         action();
+
         // await Future.delayed(const Duration(milliseconds: 500), () {
         //   generate();
         // });
@@ -220,7 +224,7 @@ class OneBlockQuestions {
     else
       return random.nextInt(10);
   }
-  
+
   ////////////////////////////////////////////////////////
 
   swap(var1, var2) {

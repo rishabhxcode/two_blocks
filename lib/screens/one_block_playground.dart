@@ -6,26 +6,45 @@ import 'package:two_blocks/widgets/choice_container.dart';
 import 'package:two_blocks/widgets/flat_num_button.dart';
 import 'package:two_blocks/widgets/neu_button_widget.dart';
 import 'package:two_blocks/widgets/neu_container.dart';
+import 'package:two_blocks/widgets/timer.dart';
 
 class OneBlockPlayGround extends StatefulWidget {
   @override
   _OneBlockPlayGroundState createState() => _OneBlockPlayGroundState();
 }
 
-class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
+class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
+    with TickerProviderStateMixin {
   OneBlockQuestions ob = OneBlockQuestions();
   SaveAndGet sharedPref = SaveAndGet();
+  AnimationController timerController;
+  int time;
   int highScore;
-  getStore() async {
-    highScore = await sharedPref.getScore() ?? 0;
+  getScore() async {
+    highScore = await sharedPref.getOneBlockScore() ?? 0;
     setState(() {});
     print(highScore);
+  }
+
+  saveScore(score) async {
+    if (score > highScore) {
+      sharedPref.saveOneBlockScore(score);
+      highScore++;
+    }
   }
 
   @override
   void initState() {
     ob.generate();
-    getStore();
+    getScore();
+    time = 10;
+    timerController =
+        AnimationController(vsync: this, duration: Duration(seconds: time))
+          ..addListener(() {
+            if (timerController.duration.inSeconds * timerController.value ==
+                time) {}
+          });
+    timerController.forward();
     super.initState();
   }
 
@@ -60,12 +79,14 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
           ///// HEADER ////////////////
           Container(
             // color: Colors.yellow,
-            height: 50,
+            height: 70,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Expanded(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
@@ -78,7 +99,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                 ),
                 Expanded(
                     child: Container(
-                  alignment: Alignment.center,
+                  alignment: Alignment.topCenter,
                   child: Wrap(
                     children: <Widget>[
                       Icon(Icons.favorite),
@@ -88,12 +109,10 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                   ),
                 )),
                 Expanded(
-                  child: Container(
-                    width: 100,
-                    alignment: Alignment.center,
-                    child: Text('Timer'),
-                  ),
-                ),
+                    child: TimerWidget(
+                  controller: timerController,
+                  time: time,
+                )),
               ],
             ),
           ),
@@ -153,13 +172,20 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                               onTap: () {
                                 ob.setAnswer();
                                 ob.answerChecker(
-                                    ob.opt1, ob.answer, ob.shadows1, () async {
-                                  await Future.delayed(
-                                      const Duration(milliseconds: 300), () {
-                                    ob.generate();
-                                    setState(() {});
-                                  });
-                                });
+                                  ob.opt1,
+                                  ob.answer,
+                                  ob.shadows1,
+                                  () async {
+                                    await Future.delayed(
+                                        const Duration(milliseconds: 300), () {
+                                      ob.generate();
+                                      timerController.reset();
+                                      timerController.forward();
+                                      saveScore(ob.score);
+                                      setState(() {});
+                                    });
+                                  },
+                                );
                                 setState(() {});
                               }),
                           Container(
@@ -180,6 +206,9 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                                 await Future.delayed(
                                     const Duration(milliseconds: 500), () {
                                   ob.generate();
+                                  timerController.reset();
+                                  timerController.forward();
+                                  saveScore(ob.score);
                                   setState(() {});
                                 });
                               });
@@ -221,6 +250,9 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                                   await Future.delayed(
                                       const Duration(milliseconds: 500), () {
                                     ob.generate();
+                                    timerController.reset();
+                                    timerController.forward();
+                                    saveScore(ob.score);
                                     setState(() {});
                                   });
                                 });
@@ -239,12 +271,14 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                             boxShadows: ob.shadows4.get(),
                             onTap: () {
                               ob.setAnswer();
-
                               ob.answerChecker(ob.opt4, ob.answer, ob.shadows4,
                                   () async {
                                 await Future.delayed(
                                     const Duration(milliseconds: 500), () {
                                   ob.generate();
+                                  timerController.reset();
+                                  timerController.forward();
+                                  saveScore(ob.score);
                                   setState(() {});
                                 });
                               });
@@ -287,7 +321,9 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround> {
                     onTap: () {
                       ob.generate();
                       ob.setIsInCorrect(false);
-                      SaveAndGet().saveStore(ob.score);
+                      saveScore(ob.score);
+                      timerController.reset();
+                      timerController.forward();
                       setState(() {});
                     },
                   )

@@ -1,14 +1,25 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SaveAndGet {
-  saveStore(int score) async {
+  saveOneBlockScore(int score) async {
     SharedPreferences scorePref = await SharedPreferences.getInstance();
-    scorePref.setInt('SCORE', score);
+    scorePref.setInt('ONE_BLOCK_SCORE', score);
   }
 
-  getScore() async {
+  getOneBlockScore() async {
     SharedPreferences scorePref = await SharedPreferences.getInstance();
-    int score = scorePref.getInt('SCORE');
+    int score = scorePref.getInt('ONE_BLOCK_SCORE');
+    return score;
+  }
+
+  saveTwoBlockScore(int score) async {
+    SharedPreferences scorePref = await SharedPreferences.getInstance();
+    scorePref.setInt('TWO_BLOCK_SCORE', score);
+  }
+  
+  getTwoBlockScore() async {
+    SharedPreferences scorePref = await SharedPreferences.getInstance();
+    int score = scorePref.getInt('TWO_BLOCK_SCORE');
     return score;
   }
 }
