@@ -54,8 +54,8 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
               if (ob.answer == ob.opt4) ob.shadows4.set(Constants.greenShadow);
               setState(() {});
               if (ob.lives <= 0) {
-                // Navigator.of(context).pop();
-                Future.delayed(Duration(seconds: 2), () {
+                Future.delayed(Duration(milliseconds: 1500), () {
+                  Navigator.of(context).pop();
                   Navigator.push(
                       context,
                       RtoLSlideRoute(
