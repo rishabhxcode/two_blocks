@@ -220,7 +220,7 @@ class OneBlockQuestions {
   }
 
   String operationGenerator() {
-    return operations[random.nextInt(2)];
+    return operations[random.nextInt(4)];
   }
 
   ///////////////////////////////////////////////////////

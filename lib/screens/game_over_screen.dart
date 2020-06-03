@@ -63,7 +63,9 @@ class _GameOverScreenState extends State<GameOverScreen> {
                   )
                 ],
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, RtoLSlideRoute(to: MyApp()));
+              },
             ),
             SizedBox(),
             SizedBox(),
