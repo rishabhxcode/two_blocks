@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:two_blocks/animations/routing_animation_widget.dart';
 import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/logic/save_and_get.dart';
 import 'package:two_blocks/questions/one_block_questions.dart';
+import 'package:two_blocks/screens/game_over_screen.dart';
 import 'package:two_blocks/widgets/choice_container.dart';
 import 'package:two_blocks/widgets/flat_num_button.dart';
 import 'package:two_blocks/widgets/neu_button_widget.dart';
@@ -42,7 +44,27 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
         AnimationController(vsync: this, duration: Duration(seconds: time))
           ..addListener(() {
             if (timerController.duration.inSeconds * timerController.value ==
-                time) {}
+                time) {
+              if (ob.lives > 0) ob.checkLivesOnTimeOver();
+              ob.setAbsorbToTrue();
+              ob.setIsIncorrentToTrue();
+              if (ob.answer == ob.opt1) ob.shadows1.set(Constants.greenShadow);
+              if (ob.answer == ob.opt2) ob.shadows2.set(Constants.greenShadow);
+              if (ob.answer == ob.opt3) ob.shadows3.set(Constants.greenShadow);
+              if (ob.answer == ob.opt4) ob.shadows4.set(Constants.greenShadow);
+              setState(() {});
+              if (ob.lives <= 0) {
+                // Navigator.of(context).pop();
+                Future.delayed(Duration(seconds: 2), () {
+                  Navigator.push(
+                      context,
+                      RtoLSlideRoute(
+                          to: GameOverScreen(
+                        score: ob.score,
+                      )));
+                });
+              }
+            }
           });
     timerController.forward();
     super.initState();
@@ -102,9 +124,18 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                   alignment: Alignment.topCenter,
                   child: Wrap(
                     children: <Widget>[
-                      Icon(Icons.favorite),
-                      Icon(Icons.favorite),
-                      Icon(Icons.favorite)
+                      Icon(
+                        ob.lives > 0 ? Icons.favorite : Icons.favorite_border,
+                        color: Colors.red[400],
+                      ),
+                      Icon(
+                        ob.lives > 1 ? Icons.favorite : Icons.favorite_border,
+                        color: Colors.red[400],
+                      ),
+                      Icon(
+                        ob.lives == 3 ? Icons.favorite : Icons.favorite_border,
+                        color: Colors.red[400],
+                      )
                     ],
                   ),
                 )),
@@ -172,20 +203,22 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                               onTap: () {
                                 ob.setAnswer();
                                 ob.answerChecker(
-                                  ob.opt1,
-                                  ob.answer,
-                                  ob.shadows1,
-                                  () async {
-                                    await Future.delayed(
-                                        const Duration(milliseconds: 300), () {
-                                      ob.generate();
-                                      timerController.reset();
-                                      timerController.forward();
-                                      saveScore(ob.score);
-                                      setState(() {});
-                                    });
-                                  },
-                                );
+                                    ob.opt1, ob.answer, ob.shadows1, () async {
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 300), () {
+                                    ob.generate();
+                                    saveScore(ob.score);
+                                    setState(() {});
+                                  });
+                                }, routeToGameOverScreen: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.push(
+                                      context,
+                                      RtoLSlideRoute(
+                                          to: GameOverScreen(
+                                        score: ob.score,
+                                      )));
+                                }, controller: timerController);
                                 setState(() {});
                               }),
                           Container(
@@ -206,12 +239,18 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                 await Future.delayed(
                                     const Duration(milliseconds: 500), () {
                                   ob.generate();
-                                  timerController.reset();
-                                  timerController.forward();
                                   saveScore(ob.score);
                                   setState(() {});
                                 });
-                              });
+                              }, routeToGameOverScreen: () {
+                                Navigator.of(context).pop();
+                                Navigator.push(
+                                    context,
+                                    RtoLSlideRoute(
+                                        to: GameOverScreen(
+                                      score: ob.score,
+                                    )));
+                              }, controller: timerController);
                               setState(() {});
                             },
                           )
@@ -244,18 +283,23 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                               boxShadows: ob.shadows3.get(),
                               onTap: () {
                                 ob.setAnswer();
-
                                 ob.answerChecker(
                                     ob.opt3, ob.answer, ob.shadows3, () async {
                                   await Future.delayed(
                                       const Duration(milliseconds: 500), () {
                                     ob.generate();
-                                    timerController.reset();
-                                    timerController.forward();
                                     saveScore(ob.score);
                                     setState(() {});
                                   });
-                                });
+                                }, routeToGameOverScreen: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.push(
+                                      context,
+                                      RtoLSlideRoute(
+                                          to: GameOverScreen(
+                                        score: ob.score,
+                                      )));
+                                }, controller: timerController);
                                 setState(() {});
                               }),
                           Container(
@@ -276,12 +320,17 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                 await Future.delayed(
                                     const Duration(milliseconds: 500), () {
                                   ob.generate();
-                                  timerController.reset();
-                                  timerController.forward();
+
                                   saveScore(ob.score);
                                   setState(() {});
                                 });
-                              });
+                              }, routeToGameOverScreen: () {
+                                Navigator.of(context).pop();
+                                Navigator.push(
+                                    context,
+                                    RtoLSlideRoute(
+                                        to: GameOverScreen(score: ob.score)));
+                              }, controller: timerController);
                               setState(() {});
                             },
                           )

@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:two_blocks/animations/routing_animation_widget.dart';
 import 'package:two_blocks/constants.dart';
+import 'package:two_blocks/main.dart';
+import 'package:two_blocks/screens/home_screen.dart';
 import 'package:two_blocks/widgets/neu_button_widget.dart';
 
 class GameOverScreen extends StatefulWidget {
+  final int score;
+
+  const GameOverScreen({Key key, this.score}) : super(key: key);
   @override
   _GameOverScreenState createState() => _GameOverScreenState();
 }
@@ -14,6 +20,12 @@ class _GameOverScreenState extends State<GameOverScreen> {
       backgroundColor: Constants.BGColor,
       appBar: AppBar(
         elevation: 0,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.push(context, LtoRSlideRoute(to: MyApp()));
+            }),
       ),
       body: Center(
         child: Column(
@@ -22,7 +34,7 @@ class _GameOverScreenState extends State<GameOverScreen> {
           children: [
             Text('Your Score', style: TextStyle(fontSize: 30)),
             Text(
-              '10',
+              '${widget.score ?? 0}',
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
             ),
             SizedBox(),

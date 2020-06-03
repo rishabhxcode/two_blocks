@@ -33,9 +33,11 @@ class OneBlockQuestions {
 //
   int _score = 0;
   bool _absorbOptButtons = false;
+  int _lives = 3;
 
   /////
   int get score => _score;
+  int get lives => _lives;
   int get choiceSelected => _choiceSelected;
   int get var1 => _variable1;
   int get var2 => _variable2;
@@ -97,12 +99,8 @@ class OneBlockQuestions {
     _absorbOptButtons = false;
   }
 
-  answerChecker(
-    dynamic opt,
-    dynamic answer,
-    Shadows shadow,
-    Function action,
-  ) async {
+  answerChecker(dynamic opt, dynamic answer, Shadows shadow, Function action,
+      {Function routeToGameOverScreen, AnimationController controller}) async {
     _absorbOptButtons = true;
     if (_choiceSelected == 1) {
       bool optCheck = checker(opt, _variable1, _variable2, _result);
@@ -111,7 +109,8 @@ class OneBlockQuestions {
         _score++;
         shadow.set(Constants.greenShadow);
         action();
-
+        controller.reset();
+        controller.forward();
         // await Future.delayed(const Duration(milliseconds: 500), () {
         //   generate();
         // });
@@ -122,6 +121,14 @@ class OneBlockQuestions {
         rightAnsChecker(_opt3Checker, _shadows3);
         rightAnsChecker(_opt4Checker, _shadows4);
         _isInCorrect = true;
+        _lives--;
+        controller.stop();
+        if (_lives == 0) {
+          _isInCorrect = false;
+          Future.delayed(Duration(milliseconds: 1500), () {
+            routeToGameOverScreen();
+          });
+        }
         print('opt1: $_opt1Checker');
         print('opt2: $_opt2Checker');
         print('opt3: $_opt3Checker');
@@ -132,16 +139,23 @@ class OneBlockQuestions {
         shadow.set(Constants.greenShadow);
         _score++;
         action();
-        // await Future.delayed(const Duration(milliseconds: 500), () {
-        //   generate();
-        // });
+        controller.reset();
+        controller.forward();
       } else {
         shadow.set(Constants.redShadow);
         _isInCorrect = true;
+        _lives--;
+        controller.stop();
         if (_opt1 == answer) _shadows1.set(Constants.greenShadow);
         if (_opt2 == answer) _shadows2.set(Constants.greenShadow);
         if (_opt3 == answer) _shadows3.set(Constants.greenShadow);
         if (_opt4 == answer) _shadows4.set(Constants.greenShadow);
+        if (_lives == 0) {
+          _isInCorrect = false;
+          Future.delayed(Duration(milliseconds: 1500), () {
+            routeToGameOverScreen();
+          });
+        }
       }
     }
   }
@@ -342,6 +356,18 @@ class OneBlockQuestions {
       return true;
     else
       return false;
+  }
+
+  checkLivesOnTimeOver() {
+    _lives--;
+  }
+
+  setAbsorbToTrue() {
+    _absorbOptButtons = true;
+  }
+
+  setIsIncorrentToTrue() {
+    _isInCorrect = true;
   }
 }
 

@@ -33,9 +33,9 @@ class ScaleRoute extends PageRouteBuilder {
             transitionDuration: Duration(milliseconds: 500));
 }
 
-class SlideRoute extends PageRouteBuilder {
+class RtoLSlideRoute extends PageRouteBuilder {
   final Widget to;
-  SlideRoute({this.to})
+  RtoLSlideRoute({this.to})
       : super(
           pageBuilder: (
             BuildContext context,
@@ -52,6 +52,32 @@ class SlideRoute extends PageRouteBuilder {
               SlideTransition(
             position: Tween<Offset>(
               begin: const Offset(1, 0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          ),
+        );
+}
+
+class LtoRSlideRoute extends PageRouteBuilder {
+  final Widget to;
+  LtoRSlideRoute({this.to})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              to,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 1),
               end: Offset.zero,
             ).animate(animation),
             child: child,
