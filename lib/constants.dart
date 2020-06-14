@@ -53,4 +53,11 @@ class Constants {
         blurRadius: 3,
         color: Colors.white),
   ];
+  // messages
+  static const String timeUp = 'Oops! Time Up';
+  static const String nice = 'Nice!';
+  static const String wrong = 'Wrong!';
+  static const String correct = 'CORRECT';
+  static const String gameOver = 'GAME OVER!!';
+  //
 }

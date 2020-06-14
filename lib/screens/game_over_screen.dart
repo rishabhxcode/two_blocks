@@ -37,7 +37,7 @@ class _GameOverScreenState extends State<GameOverScreen> {
               '${widget.score ?? 0}',
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
             ),
-            SizedBox(),
+            const SizedBox(),
             NeuButtonWidget(
               width: 200,
               height: 60,
@@ -64,12 +64,12 @@ class _GameOverScreenState extends State<GameOverScreen> {
                 ],
               ),
               onTap: () {
-                Navigator.push(context, RtoLSlideRoute(to: MyApp()));
+                Navigator.push(context, LtoRSlideRoute(to: MyApp()));
               },
             ),
-            SizedBox(),
-            SizedBox(),
-            SizedBox()
+            const SizedBox(),
+            const SizedBox(),
+            const SizedBox()
           ],
         ),
       ),

@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 onTap: () {
                   Navigator.push(
-                      context, ScaleRoute(to: GameOverScreen()));
+                      context, ScaleRoute(to: TwoBlocksPlayGround()));
                 },
               ),
               SizedBox(

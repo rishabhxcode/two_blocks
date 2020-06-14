@@ -35,22 +35,23 @@ class NeuContainer extends StatelessWidget {
       margin: margin,
       alignment: alignment,
       decoration: BoxDecoration(
-          boxShadow: boxShadow ??
-              [
-                BoxShadow(
-                    offset: Offset(2, 2),
-                    spreadRadius: 2,
-                    blurRadius: 4,
-                    color: Constants.DarkShadow),
-                BoxShadow(
-                    offset: Offset(-2, -2),
-                    spreadRadius: 2,
-                    blurRadius: 4,
-                    color: Colors.white),
-              ],
-          color: fillColor ?? Theme.of(context).accentColor,
-          borderRadius: borderRadius ?? BorderRadius.circular(4),
-          gradient: gradient),
+        boxShadow: boxShadow ??
+            [
+              BoxShadow(
+                  offset: Offset(2, 2),
+                  spreadRadius: 2,
+                  blurRadius: 4,
+                  color: Constants.DarkShadow),
+              BoxShadow(
+                  offset: Offset(-2, -2),
+                  spreadRadius: 2,
+                  blurRadius: 4,
+                  color: Colors.white),
+            ],
+        color: fillColor ?? Theme.of(context).accentColor,
+        borderRadius: borderRadius ?? BorderRadius.circular(4),
+        gradient: gradient,
+      ),
     );
   }
 }

@@ -24,6 +24,10 @@ class OneBlockQuestions {
   bool _opt4Checker;
 
   dynamic _choiceAnswer = '';
+//message
+  String _message = '';
+  double _messageSize = 0;
+  Colour _messageColor = Colour();
 
 //
   Shadows _shadows1 = Shadows();
@@ -60,6 +64,10 @@ class OneBlockQuestions {
   Shadows get shadows3 => _shadows3;
   Shadows get shadows4 => _shadows4;
 
+  String get message => _message;
+  double get messageSize => _messageSize;
+  Colour get messageColor => _messageColor;
+
   generate() {
     _operation = operationGenerator();
     _variable1 = var1Generator(_operation);
@@ -75,7 +83,7 @@ class OneBlockQuestions {
     print('var1 : $_variable1');
     print('var2 : $_variable2');
     _result = resultGenerator(_operation, _variable1, _variable2);
-    _buttonSelected = getButtonSelected();
+    _buttonSelected = buttonSelected();
     _choiceSelected = getChoiceSelected();
     _answer = answerGenerator(
         _choiceSelected, _variable1, _operation, _variable2, _result);
@@ -90,6 +98,9 @@ class OneBlockQuestions {
     _opt3Checker = checker(_opt3, _variable1, _variable2, _result);
     _opt4Checker = checker(_opt4, _variable1, _variable2, _result);
     /** **/
+    _message = '';
+    _messageColor.set(Colors.transparent);
+    _messageSize = 0;
     _shadows1.set(null);
     _shadows2.set(null);
     _shadows3.set(null);
@@ -105,6 +116,9 @@ class OneBlockQuestions {
     if (_choiceSelected == 1) {
       bool optCheck = checker(opt, _variable1, _variable2, _result);
       if (optCheck == true) {
+        _message = Constants.nice;
+        _messageSize = 24;
+        _messageColor.set(Colors.green);
         _choiceAnswer = '$opt';
         _score++;
         shadow.set(Constants.greenShadow);
@@ -115,6 +129,9 @@ class OneBlockQuestions {
         //   generate();
         // });
       } else {
+        _message = Constants.wrong;
+        _messageSize = 24;
+        _messageColor.set(Colors.red);
         shadow.set(Constants.redShadow);
         rightAnsChecker(_opt1Checker, _shadows1);
         rightAnsChecker(_opt2Checker, _shadows2);
@@ -136,12 +153,18 @@ class OneBlockQuestions {
       }
     } else {
       if (opt == answer) {
+        _message = Constants.correct;
+        _messageSize = 24;
+        _messageColor.set(Colors.green);
         shadow.set(Constants.greenShadow);
         _score++;
         action();
         controller.reset();
         controller.forward();
       } else {
+        _message = Constants.wrong;
+        _messageSize = 24;
+        _messageColor.set(Colors.red);
         shadow.set(Constants.redShadow);
         _isInCorrect = true;
         _lives--;
@@ -185,10 +208,6 @@ class OneBlockQuestions {
       return val;
   }
 
-  setAnswer() {
-    _choiceAnswer = '$_answer';
-  }
-
   int option3Generator(restrict1, restrict2, restrict3, range) {
     int val = random.nextInt(range);
     if (val == restrict1)
@@ -219,6 +238,10 @@ class OneBlockQuestions {
       return val;
   }
 
+  setAnswer() {
+    _choiceAnswer = '$_answer';
+  }
+
   String operationGenerator() {
     return operations[random.nextInt(4)];
   }
@@ -241,14 +264,6 @@ class OneBlockQuestions {
 
   ////////////////////////////////////////////////////////
 
-  swap(var1, var2) {
-    var1 = var1 + var2;
-    var2 = var1 - var2;
-    var1 = var1 - var2;
-    print('var1: $var1');
-    print('var2: $var2');
-  }
-
   int resultGenerator(String operand, int var1, int var2) {
     if (operand == Constants.add)
       return var1 + var2;
@@ -260,7 +275,7 @@ class OneBlockQuestions {
       return var1 ~/ var2;
   }
 
-  int getButtonSelected() {
+  int buttonSelected() {
     return random.nextInt(4);
   }
 
@@ -369,10 +384,28 @@ class OneBlockQuestions {
   setIsIncorrentToTrue() {
     _isInCorrect = true;
   }
+
+  setTimeUpMessage() {
+    _message = Constants.timeUp;
+    _messageSize = 24;
+    _messageColor.set(Colors.red);
+  }
+
+  setGameOverMessage() {
+    _message = Constants.gameOver;
+    _messageSize = 24;
+    _messageColor.set(Colors.red);
+  }
 }
 
 class Shadows {
   List<BoxShadow> _shadow;
   void set(List<BoxShadow> shadow) => _shadow = shadow;
   List<BoxShadow> get() => _shadow;
+}
+
+class Colour {
+  Color _color;
+  void set(Color color) => _color = color;
+  Color get() => _color;
 }

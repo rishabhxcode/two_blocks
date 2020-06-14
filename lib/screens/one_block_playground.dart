@@ -4,11 +4,13 @@ import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/logic/save_and_get.dart';
 import 'package:two_blocks/questions/one_block_questions.dart';
 import 'package:two_blocks/screens/game_over_screen.dart';
-import 'package:two_blocks/widgets/choice_container.dart';
+import 'package:two_blocks/widgets/animated_message.dart';
+import 'package:two_blocks/widgets/equation_widget.dart';
 import 'package:two_blocks/widgets/flat_num_button.dart';
 import 'package:two_blocks/widgets/neu_button_widget.dart';
 import 'package:two_blocks/widgets/neu_container.dart';
-import 'package:two_blocks/widgets/timer.dart';
+import 'package:two_blocks/widgets/next_button.dart';
+import 'package:two_blocks/widgets/playground_indigator.dart';
 
 class OneBlockPlayGround extends StatefulWidget {
   @override
@@ -48,12 +50,14 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
               if (ob.lives > 0) ob.checkLivesOnTimeOver();
               ob.setAbsorbToTrue();
               ob.setIsIncorrentToTrue();
+              ob.setTimeUpMessage();
               if (ob.answer == ob.opt1) ob.shadows1.set(Constants.greenShadow);
               if (ob.answer == ob.opt2) ob.shadows2.set(Constants.greenShadow);
               if (ob.answer == ob.opt3) ob.shadows3.set(Constants.greenShadow);
               if (ob.answer == ob.opt4) ob.shadows4.set(Constants.greenShadow);
               setState(() {});
               if (ob.lives <= 0) {
+                ob.setGameOverMessage();
                 Future.delayed(Duration(milliseconds: 1500), () {
                   Navigator.of(context).pop();
                   Navigator.push(
@@ -99,192 +103,90 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           ///// HEADER ////////////////
-          Container(
-            // color: Colors.yellow,
-            height: 70,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        '  High score: $highScore',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                      Text('  Score: ${ob.score}')
-                    ],
-                  ),
-                ),
-                Expanded(
-                    child: Container(
-                  alignment: Alignment.topCenter,
-                  child: Wrap(
-                    children: <Widget>[
-                      Icon(
-                        ob.lives > 0 ? Icons.favorite : Icons.favorite_border,
-                        color: Colors.red[400],
-                      ),
-                      Icon(
-                        ob.lives > 1 ? Icons.favorite : Icons.favorite_border,
-                        color: Colors.red[400],
-                      ),
-                      Icon(
-                        ob.lives == 3 ? Icons.favorite : Icons.favorite_border,
-                        color: Colors.red[400],
-                      )
-                    ],
-                  ),
-                )),
-                Expanded(
-                    child: TimerWidget(
-                  controller: timerController,
-                  time: time,
-                )),
-              ],
-            ),
+          PlayGroundIndigator(
+            highScore: highScore,
+            lives: ob.lives,
+            score: ob.score,
+            time: time,
+            timerController: timerController,
           ),
           /////////////////////////////////
           Expanded(
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  ob.choiceSelected == 0
-                      ? ChoiceContainer(
-                          choiceAnswer: ob.choiceAnswer,
-                        )
-                      : Text(
-                          '${ob.var1}',
-                          style: Constants.textStyle2,
-                        ),
-                  ob.choiceSelected == 1
-                      ? ChoiceContainer(
-                          choiceAnswer: ob.choiceAnswer,
-                        )
-                      : Text(ob.operation, style: Constants.textStyle2),
-                  ob.choiceSelected == 2
-                      ? ChoiceContainer(
-                          choiceAnswer: ob.choiceAnswer,
-                        )
-                      : Text('${ob.var2}', style: Constants.textStyle2),
-                  Text('=', style: Constants.textStyle2),
-                  ob.choiceSelected == 3
-                      ? ChoiceContainer(
-                          choiceAnswer: ob.choiceAnswer,
-                        )
-                      : Text('${ob.result}', style: Constants.textStyle2)
-                ],
-              ),
+            flex: 2,
+            child: AnimatedMessage(
+              message: ob.message,
+              messageColor: ob.messageColor.get(),
+              messageSize: ob.messageSize,
             ),
+          ),
+          Expanded(
+            flex: 3,
+            child: EquationWidget(
+                opt1: ob.var1,
+                opt2: ob.var2,
+                choiceAnswer: ob.choiceAnswer,
+                result: ob.result,
+                choiceSelected: ob.choiceSelected,
+                operation: ob.operation),
           ),
 
           Expanded(
+            flex: 6,
             child: Container(
               alignment: Alignment.center,
               // color: Colors.cyan,
-              child: AbsorbPointer(
-                absorbing: ob?.absorbOptButtons ?? false,
-                child: NeuContainer(
-                  height: 200.5,
-                  width: 200.5,
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          FlatNumButton(
-                              text: '${ob.opt1}',
-                              boxShadows: ob.shadows1.get(),
-                              onTap: () {
-                                ob.setAnswer();
-                                ob.answerChecker(
-                                    ob.opt1, ob.answer, ob.shadows1, () async {
-                                  await Future.delayed(
-                                      const Duration(milliseconds: 300), () {
-                                    ob.generate();
-                                    saveScore(ob.score);
-                                    setState(() {});
-                                  });
-                                }, routeToGameOverScreen: () {
-                                  Navigator.of(context).pop();
-                                  Navigator.push(
-                                      context,
-                                      RtoLSlideRoute(
-                                          to: GameOverScreen(
-                                        score: ob.score,
-                                      )));
-                                }, controller: timerController);
-                                setState(() {});
-                              }),
-                          Container(
-                            height: 80,
-                            child: VerticalDivider(
-                              color: Colors.grey,
-                              thickness: 0.3,
-                              width: 0.5,
-                            ),
-                          ),
-                          FlatNumButton(
-                            text: '${ob.opt2}',
-                            boxShadows: ob.shadows2.get(),
-                            onTap: () {
-                              ob.setAnswer();
-                              ob.answerChecker(ob.opt2, ob.answer, ob.shadows2,
-                                  () async {
-                                await Future.delayed(
-                                    const Duration(milliseconds: 500), () {
-                                  ob.generate();
-                                  saveScore(ob.score);
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: AbsorbPointer(
+                  absorbing: ob?.absorbOptButtons ?? false,
+                  child: NeuContainer(
+                    height: 200.5,
+                    width: 200.5,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FlatNumButton(
+                                text: '${ob.opt1}',
+                                boxShadows: ob.shadows1.get(),
+                                onTap: () {
+                                  ob.setAnswer();
+                                  ob.answerChecker(
+                                      ob.opt1, ob.answer, ob.shadows1,
+                                      () async {
+                                    await Future.delayed(
+                                        const Duration(milliseconds: 300), () {
+                                      ob.generate();
+                                      saveScore(ob.score);
+                                      setState(() {});
+                                    });
+                                  }, routeToGameOverScreen: () {
+                                    Navigator.of(context).pop();
+                                    Navigator.push(
+                                        context,
+                                        RtoLSlideRoute(
+                                            to: GameOverScreen(
+                                          score: ob.score,
+                                        )));
+                                  }, controller: timerController);
                                   setState(() {});
-                                });
-                              }, routeToGameOverScreen: () {
-                                Navigator.of(context).pop();
-                                Navigator.push(
-                                    context,
-                                    RtoLSlideRoute(
-                                        to: GameOverScreen(
-                                      score: ob.score,
-                                    )));
-                              }, controller: timerController);
-                              setState(() {});
-                            },
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            width: 80,
-                            child: Divider(
-                              thickness: 0.5,
-                              height: 0.5,
+                                }),
+                            Container(
+                              height: 80,
+                              child: VerticalDivider(
+                                color: Colors.grey,
+                                thickness: 0.3,
+                                width: 0.5,
+                              ),
                             ),
-                          ),
-                          Container(
-                            width: 80,
-                            child: Divider(
-                              thickness: 0.5,
-                              height: 0.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          FlatNumButton(
-                              text: '${ob.opt3}',
-                              boxShadows: ob.shadows3.get(),
+                            FlatNumButton(
+                              text: '${ob.opt2}',
+                              boxShadows: ob.shadows2.get(),
                               onTap: () {
                                 ob.setAnswer();
                                 ob.answerChecker(
-                                    ob.opt3, ob.answer, ob.shadows3, () async {
+                                    ob.opt2, ob.answer, ob.shadows2, () async {
                                   await Future.delayed(
                                       const Duration(milliseconds: 500), () {
                                     ob.generate();
@@ -301,42 +203,93 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                       )));
                                 }, controller: timerController);
                                 setState(() {});
-                              }),
-                          Container(
-                            height: 80,
-                            child: VerticalDivider(
-                              color: Colors.grey,
-                              thickness: 0.3,
-                              width: 0.5,
+                              },
+                            )
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              width: 80,
+                              child: Divider(
+                                thickness: 0.5,
+                                height: 0.5,
+                              ),
                             ),
-                          ),
-                          FlatNumButton(
-                            text: '${ob.opt4}',
-                            boxShadows: ob.shadows4.get(),
-                            onTap: () {
-                              ob.setAnswer();
-                              ob.answerChecker(ob.opt4, ob.answer, ob.shadows4,
-                                  () async {
-                                await Future.delayed(
-                                    const Duration(milliseconds: 500), () {
-                                  ob.generate();
-
-                                  saveScore(ob.score);
+                            Container(
+                              width: 80,
+                              child: Divider(
+                                thickness: 0.5,
+                                height: 0.5,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FlatNumButton(
+                                text: '${ob.opt3}',
+                                boxShadows: ob.shadows3.get(),
+                                onTap: () {
+                                  ob.setAnswer();
+                                  ob.answerChecker(
+                                      ob.opt3, ob.answer, ob.shadows3,
+                                      () async {
+                                    await Future.delayed(
+                                        const Duration(milliseconds: 500), () {
+                                      ob.generate();
+                                      saveScore(ob.score);
+                                      setState(() {});
+                                    });
+                                  }, routeToGameOverScreen: () {
+                                    Navigator.of(context).pop();
+                                    Navigator.push(
+                                        context,
+                                        RtoLSlideRoute(
+                                            to: GameOverScreen(
+                                          score: ob.score,
+                                        )));
+                                  }, controller: timerController);
                                   setState(() {});
-                                });
-                              }, routeToGameOverScreen: () {
-                                Navigator.of(context).pop();
-                                Navigator.push(
-                                    context,
-                                    RtoLSlideRoute(
-                                        to: GameOverScreen(score: ob.score)));
-                              }, controller: timerController);
-                              setState(() {});
-                            },
-                          )
-                        ],
-                      ),
-                    ],
+                                }),
+                            Container(
+                              height: 80,
+                              child: VerticalDivider(
+                                color: Colors.grey,
+                                thickness: 0.3,
+                                width: 0.5,
+                              ),
+                            ),
+                            FlatNumButton(
+                              text: '${ob.opt4}',
+                              boxShadows: ob.shadows4.get(),
+                              onTap: () {
+                                ob.setAnswer();
+                                ob.answerChecker(
+                                    ob.opt4, ob.answer, ob.shadows4, () async {
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 500), () {
+                                    ob.generate();
+
+                                    saveScore(ob.score);
+                                    setState(() {});
+                                  });
+                                }, routeToGameOverScreen: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.push(
+                                      context,
+                                      RtoLSlideRoute(
+                                          to: GameOverScreen(score: ob.score)));
+                                }, controller: timerController);
+                                setState(() {});
+                              },
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -346,27 +299,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
             height: 100,
             alignment: Alignment.centerRight,
             child: ob.isInCorrect
-                ? NeuButtonWidget(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          ' Next',
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.deepPurple,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Icon(
-                          Icons.navigate_next,
-                          size: 30,
-                          color: Colors.deepPurple,
-                        ),
-                      ],
-                    ),
-                    fillColor: Constants.BGColor,
-                    shadows: Constants.nextButtonShadow,
-                    margin: EdgeInsets.only(right: 20),
+                ? NextButton(
                     onTap: () {
                       ob.generate();
                       ob.setIsInCorrect(false);
