@@ -115,7 +115,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround> {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: AbsorbPointer(
-                        absorbing: ob?.absorbOptButtons ?? false,
+                        absorbing: tb.isAabsorbed,
                         child: NeuContainer(
                           height: 200.5,
                           width: 200.5,
@@ -127,8 +127,11 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround> {
                                 children: [
                                   FlatNumButton(
                                     text: '${tb.optA1}',
-                                    boxShadows: ob.shadows1.get(),
-                                    onTap: () {},
+                                    color: tb.colorA1.get(),
+                                    onTap: () {
+                                      tb.onPressedA1();
+                                      setState(() {});
+                                    },
                                   ),
                                   Container(
                                     height: 80,
@@ -140,8 +143,11 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround> {
                                   ),
                                   FlatNumButton(
                                     text: '${tb.optA2}',
-                                    boxShadows: ob.shadows2.get(),
-                                    onTap: () {},
+                                    color: tb.colorA2.get(),
+                                    onTap: () {
+                                      tb.onPressedA2();
+                                      setState(() {});
+                                    },
                                   )
                                 ],
                               ),
@@ -172,8 +178,11 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround> {
                                 children: [
                                   FlatNumButton(
                                     text: '${tb.optA3}',
-                                    boxShadows: ob.shadows3.get(),
-                                    onTap: () {},
+                                    color: tb.colorA3.get(),
+                                    onTap: () {
+                                      tb.onPressedA3();
+                                      setState(() {});
+                                    },
                                   ),
                                   Container(
                                     height: 80,
@@ -185,8 +194,11 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround> {
                                   ),
                                   FlatNumButton(
                                     text: '${tb.optA4}',
-                                    boxShadows: ob.shadows4.get(),
-                                    onTap: () {},
+                                    color: tb.colorA4.get(),
+                                    onTap: () {
+                                      tb.onPressedA4();
+                                      setState(() {});
+                                    },
                                   )
                                 ],
                               ),
@@ -205,7 +217,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround> {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: AbsorbPointer(
-                      absorbing: ob?.absorbOptButtons ?? false,
+                      absorbing: tb.isBabsorbed,
                       child: NeuContainer(
                         height: 200.5,
                         width: 200.5,
@@ -217,8 +229,11 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround> {
                               children: [
                                 FlatNumButton(
                                   text: '${tb.optB1}',
-                                  boxShadows: ob.shadows1.get(),
-                                  onTap: () {},
+                                  color: tb.colorB1.get(),
+                                  onTap: () {
+                                    tb.onPressedB1();
+                                    setState(() {});
+                                  },
                                 ),
                                 Container(
                                   height: 80,
@@ -230,8 +245,11 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround> {
                                 ),
                                 FlatNumButton(
                                   text: '${tb.optB2}',
-                                  boxShadows: ob.shadows2.get(),
-                                  onTap: () {},
+                                  color: tb.colorB2.get(),
+                                  onTap: () {
+                                    tb.onPressedB2();
+                                    setState(() {});
+                                  },
                                 )
                               ],
                             ),
@@ -261,8 +279,11 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround> {
                               children: [
                                 FlatNumButton(
                                   text: '${tb.optB3}',
-                                  boxShadows: ob.shadows3.get(),
-                                  onTap: () {},
+                                  color: tb.colorB3.get(),
+                                  onTap: () {
+                                    tb.onPressedB3();
+                                    setState(() {});
+                                  },
                                 ),
                                 Container(
                                   height: 80,
@@ -274,8 +295,11 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround> {
                                 ),
                                 FlatNumButton(
                                   text: '${tb.optB4}',
-                                  boxShadows: ob.shadows4.get(),
-                                  onTap: () {},
+                                  color: tb.colorB4.get(),
+                                  onTap: () {
+                                    tb.onPressedB4();
+                                    setState(() {});
+                                  },
                                 )
                               ],
                             ),
@@ -293,9 +317,13 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround> {
           ),
           Container(
             height: 100,
-            // color: Colors.pink[200],
             alignment: Alignment.centerRight,
-            child: NextButton(),
+            child: NextButton(
+              onTap: () {
+                tb.generate();
+                setState(() {});
+              },
+            ),
           )
         ],
       ),

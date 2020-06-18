@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/questions/one_block_questions.dart';
 import 'dart:math';
 
 class TwoBlockQuestions {
   OneBlockQuestions ob = OneBlockQuestions();
+
   Random random = Random();
 
   String _operation;
@@ -25,6 +27,24 @@ class TwoBlockQuestions {
   dynamic _optB2;
   dynamic _optB3;
   dynamic _optB4;
+  int _timesPressed;
+  bool _isAabsorbed;
+  bool _isBabsorbed;
+  dynamic _a;
+  dynamic _b;
+  //message
+  String _message;
+  double _messageSize;
+  Color _messageColor;
+  //colors
+  Colour _colorA1 = Colour();
+  Colour _colorA2 = Colour();
+  Colour _colorA3 = Colour();
+  Colour _colorA4 = Colour();
+  Colour _colorB1 = Colour();
+  Colour _colorB2 = Colour();
+  Colour _colorB3 = Colour();
+  Colour _colorB4 = Colour();
 
   String get operation => _operation;
   int get var1 => _var1;
@@ -44,6 +64,26 @@ class TwoBlockQuestions {
   dynamic get optB2 => _optB2;
   dynamic get optB3 => _optB3;
   dynamic get optB4 => _optB4;
+  int get timesPressed => _timesPressed;
+  bool get isAabsorbed => _isAabsorbed;
+  bool get isBabsorbed => _isBabsorbed;
+
+  //message
+  String get messagee => _message;
+  double get messageSize => _messageSize;
+  Color get messageColor => _messageColor;
+  //color
+  Colour get colorA1 => _colorA1;
+  Colour get colorA2 => _colorA2;
+  Colour get colorA3 => _colorA3;
+  Colour get colorA4 => _colorA4;
+  Colour get colorB1 => _colorB1;
+  Colour get colorB2 => _colorB2;
+  Colour get colorB3 => _colorB3;
+  Colour get colorB4 => _colorB4;
+
+  dynamic get a => _a;
+  dynamic get b => _b;
 
   String operationGenerator() {
     return ob.operationGenerator();
@@ -133,7 +173,7 @@ class TwoBlockQuestions {
       _var1 = _var2;
       _var2 = temp;
     }
-    
+
     _result = resultGenerator(_operation, _var1, _var2);
     _choice1 = choice1Selection();
     _choice2 = choice2Selection(_choice1);
@@ -154,11 +194,228 @@ class TwoBlockQuestions {
         optB3Generator(_buttonBSelected, _choice2, _answerB, _optB1, _optB2);
     _optB4 = optB4Generator(
         _buttonBSelected, _choice2, _answerB, _optB1, _optB2, _optB3);
+    _timesPressed = 0;
+    _isAabsorbed = false;
+    _isBabsorbed = false;
+
+    _colorA1.set(Colors.transparent);
+    _colorA2.set(Colors.transparent);
+    _colorA3.set(Colors.transparent);
+    _colorA4.set(Colors.transparent);
+    _colorB1.set(Colors.transparent);
+    _colorB2.set(Colors.transparent);
+    _colorB3.set(Colors.transparent);
+    _colorB4.set(Colors.transparent);
 
     print('CHOICE 1: $_choice1');
     print('CHOICE 2: $_choice2');
     print('Answer A: $_answerA');
     print('Answer B: $_answerB');
   }
-  
+
+  bool answerChecker2(
+      dynamic a, dynamic b, choice1, choice2, var1, var2, operation, result) {
+    if (choice1 == 0) {
+      if (choice2 == 1) {
+        if (b == Constants.add && a + var2 == result)
+          return true;
+        else if (b == Constants.minus && a - var2 == result)
+          return true;
+        else if (b == Constants.multiply && a * var2 == result)
+          return true;
+        else if (b == Constants.divide && a ~/ var2 == result)
+          return true;
+        else
+          return false;
+      } else if (choice2 == 2) {}
+    }
+  }
+
+  bool answerChecker(
+      dynamic a, dynamic b, choice1, choice2, var1, var2, operation, result) {
+    if (choice1 != 1 && choice2 != 1) {
+      if (choice1 == 0) {
+        if (choice2 == 2) {
+          if (operation == Constants.divide && a ~/ b == result)
+            return true;
+          else if (operation == Constants.multiply && a * b == result)
+            return true;
+          else if (operation == Constants.add && a + b == result)
+            return true;
+          else if (operation == Constants.minus && a - b == result)
+            return true;
+          else
+            return false;
+        } else if (choice2 == 3) {
+          if (operation == Constants.divide && a ~/ var2 == b)
+            return true;
+          else if (operation == Constants.multiply && a * var2 == b)
+            return true;
+          else if (operation == Constants.add && a + var2 == b)
+            return true;
+          else if (operation == Constants.minus && a - var2 == b)
+            return true;
+          else
+            return false;
+        }
+      } else if (choice1 == 2) {
+        if (choice2 == 3) {
+          if (operation == Constants.divide && var1 ~/ a == b)
+            return true;
+          else if (operation == Constants.multiply && var1 * a == b)
+            return true;
+          else if (operation == Constants.add && var1 + a == b)
+            return true;
+          else if (operation == Constants.minus && var1 - a == b)
+            return true;
+          else
+            return false;
+        }
+      } else
+        return false;
+    } else {
+      if (choice1 == 1) {
+        if (choice2 == 2) {
+          if (a == Constants.add && var1 + b == result)
+            return true;
+          else if (a == Constants.minus && var1 - b == result)
+            return true;
+          else if (a == Constants.multiply && var1 * b == result)
+            return true;
+          else if (a == Constants.divide && var1 ~/ b == result)
+            return true;
+          else
+            return false;
+        } else if (choice2 == 3) {
+          if (a == Constants.add && var1 + var2 == b)
+            return true;
+          else if (a == Constants.minus && var1 - var2 == b)
+            return true;
+          else if (a == Constants.multiply && var1 * var2 == b)
+            return true;
+          else if (a == Constants.divide && var1 ~/ var2 == b)
+            return true;
+          else
+            return false;
+        } else
+          return false;
+      } else if (choice2 == 1) {
+        if (b == Constants.add && a + var2 == result)
+          return true;
+        else if (b == Constants.minus && a - var2 == result)
+          return true;
+        else if (b == Constants.multiply && a * var2 == result)
+          return true;
+        else if (b == Constants.divide && a ~/ var2 == result)
+          return true;
+        else
+          return false;
+      } else
+        return false;
+    }
+  }
+
+  onPressedA1() {
+    _a = _optA1;
+    _isAabsorbed = true;
+    _colorA1.set(Colors.purple[100]);
+    _timesPressed++;
+    if (_timesPressed == 2) {
+      bool check = answerChecker(
+          _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
+      print('CHECK : $check');
+      if (check == true) generate();
+    }
+  }
+
+  onPressedA2() {
+    _a = _optA2;
+    _isAabsorbed = true;
+    _colorA2.set(Colors.purple[100]);
+    _timesPressed++;
+    if (_timesPressed == 2) {
+      bool check = answerChecker(
+          _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
+      print('CHECK : $check');
+      if (check == true) generate();
+    }
+  }
+
+  onPressedA3() {
+    _a = _optA3;
+    _isAabsorbed = true;
+    _timesPressed++;
+    _colorA3.set(Colors.purple[100]);
+    if (_timesPressed == 2) {
+      bool check = answerChecker(
+          _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
+      print('CHECK : $check');
+      if (check == true) generate();
+    }
+  }
+
+  onPressedA4() {
+    _a = _optA4;
+    _isAabsorbed = true;
+    _timesPressed++;
+    _colorA4.set(Colors.purple[100]);
+    if (_timesPressed == 2) {
+      bool check = answerChecker(
+          _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
+      print('CHECK : $check');
+      if (check == true) generate();
+    }
+  }
+
+  onPressedB1() {
+    _b = _optB1;
+    _isBabsorbed = true;
+    _timesPressed++;
+    _colorB1.set(Colors.blue[100]);
+    if (_timesPressed == 2) {
+      bool check = answerChecker(
+          _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
+      print('CHECK : $check');
+      if (check == true) generate();
+    }
+  }
+
+  onPressedB2() {
+    _b = _optB2;
+    _isBabsorbed = true;
+    _timesPressed++;
+    _colorB2.set(Colors.blue[100]);
+    if (_timesPressed == 2) {
+      bool check = answerChecker(
+          _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
+      print('CHECK : $check');
+      if (check == true) generate();
+    }
+  }
+
+  onPressedB3() {
+    _b = _optB3;
+    _isBabsorbed = true;
+    _timesPressed++;
+    _colorB3.set(Colors.blue[100]);
+    if (_timesPressed == 2) {
+      bool check = answerChecker(
+          _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
+      print('CHECK : $check');
+      if (check == true) generate();
+    }
+  }
+
+  onPressedB4() {
+    _b = _optB4;
+    _isBabsorbed = true;
+    _timesPressed++;
+    _colorB4.set(Colors.blue[100]);
+    if (_timesPressed == 2) {
+      bool check = answerChecker(
+          _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
+      print('CHECK : $check');
+      if (check == true) generate();
+    }
+  }
 }

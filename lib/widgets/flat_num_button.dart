@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:two_blocks/constants.dart';
-import 'package:two_blocks/widgets/concave_decoration.dart';
 
 class FlatNumButton extends StatelessWidget {
   final double height;
@@ -10,6 +8,7 @@ class FlatNumButton extends StatelessWidget {
   final Color borderColor;
   final BorderRadius borderRadius;
   final List<BoxShadow> boxShadows;
+  final Color color;
   const FlatNumButton(
       {Key key,
       this.height,
@@ -18,7 +17,8 @@ class FlatNumButton extends StatelessWidget {
       this.onTap,
       this.borderColor,
       this.borderRadius,
-      this.boxShadows})
+      this.boxShadows,
+      this.color})
       : super(key: key);
 
   @override
@@ -30,7 +30,8 @@ class FlatNumButton extends StatelessWidget {
           borderRadius: borderRadius ?? BorderRadius.circular(4),
           boxShadow: boxShadows),
       child: Material(
-        color: Colors.transparent,
+        color: color ?? Colors.transparent,
+        borderRadius: borderRadius ?? BorderRadius.circular(4),
         child: InkWell(
           borderRadius: borderRadius ?? BorderRadius.circular(4),
           onTap: onTap,
