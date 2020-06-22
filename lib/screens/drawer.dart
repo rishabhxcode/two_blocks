@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:two_blocks/constants.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -13,23 +14,33 @@ class _AppDrawerState extends State<AppDrawer> {
         children: <Widget>[
           Container(
             height: 100,
-            color: Colors.purple,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              '         logo',
+              style: TextStyle(fontSize: 18),
+            ),
+            decoration: BoxDecoration(color: Constants.BGColor, boxShadow: [
+              BoxShadow(
+                  color: Constants.DarkShadow,
+                  offset: Offset(0, 1),
+                  blurRadius: 1,
+                  spreadRadius: 0)
+            ]),
           ),
           ListTile(
-            title: Text('Dark mode'),
+            title: Text('About'),
             leading: Icon(
-              Icons.brightness_2,
+              Icons.info_outline,
               color: Colors.deepPurple.shade900,
             ),
-            trailing: Switch(
-              value: true,
-              onChanged: (bool) {},
-            ),
           ),
           ListTile(
-            title: Text('Language'),
-            leading: Icon(Icons.language),
-            onTap: (){},
+            title: Text('Help'),
+            leading: Icon(
+              Icons.help_outline,
+              color: Colors.deepPurple.shade900,
+            ),
+            onTap: () {},
           )
         ],
       ),

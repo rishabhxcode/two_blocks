@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:two_blocks/constants.dart';
+import 'package:two_blocks/logic/save_and_get.dart';
 import 'package:two_blocks/questions/one_block_questions.dart';
 import 'dart:math';
 
 class TwoBlockQuestions {
   OneBlockQuestions ob = OneBlockQuestions();
-
   Random random = Random();
+
+  int _lives = 3;
 
   String _operation;
   int _var1;
@@ -27,7 +29,7 @@ class TwoBlockQuestions {
   dynamic _optB2;
   dynamic _optB3;
   dynamic _optB4;
-  int _timesPressed;
+
   bool _isAabsorbed;
   bool _isBabsorbed;
   dynamic _a;
@@ -35,7 +37,11 @@ class TwoBlockQuestions {
   //message
   String _message;
   double _messageSize;
-  Color _messageColor;
+  Colour _messageColor = Colour();
+  //
+  String _choice1Ans;
+  String _choice2Ans;
+
   //colors
   Colour _colorA1 = Colour();
   Colour _colorA2 = Colour();
@@ -46,6 +52,26 @@ class TwoBlockQuestions {
   Colour _colorB3 = Colour();
   Colour _colorB4 = Colour();
 
+  bool _isInCorrect;
+
+  Shadows _shadowA1 = Shadows();
+  Shadows _shadowA2 = Shadows();
+  Shadows _shadowA3 = Shadows();
+  Shadows _shadowA4 = Shadows();
+  Shadows _shadowB1 = Shadows();
+  Shadows _shadowB2 = Shadows();
+  Shadows _shadowB3 = Shadows();
+  Shadows _shadowB4 = Shadows();
+
+  int _score = 0;
+  int _highScore = 0;
+
+  bool _isAPressed;
+  bool _isBPressed;
+
+  bool _isInit = false;
+
+  int get lives => _lives;
   String get operation => _operation;
   int get var1 => _var1;
   int get var2 => _var2;
@@ -64,14 +90,17 @@ class TwoBlockQuestions {
   dynamic get optB2 => _optB2;
   dynamic get optB3 => _optB3;
   dynamic get optB4 => _optB4;
-  int get timesPressed => _timesPressed;
+
   bool get isAabsorbed => _isAabsorbed;
   bool get isBabsorbed => _isBabsorbed;
 
   //message
-  String get messagee => _message;
+  String get message => _message;
   double get messageSize => _messageSize;
-  Color get messageColor => _messageColor;
+  Colour get messageColor => _messageColor;
+  //
+  String get choice1Ans => _choice1Ans;
+  String get choice2Ans => _choice2Ans;
   //color
   Colour get colorA1 => _colorA1;
   Colour get colorA2 => _colorA2;
@@ -82,8 +111,40 @@ class TwoBlockQuestions {
   Colour get colorB3 => _colorB3;
   Colour get colorB4 => _colorB4;
 
+  bool get isInCorrect => _isInCorrect;
+
+  Shadows get shadowA1 => _shadowA1;
+  Shadows get shadowA2 => _shadowA2;
+  Shadows get shadowA3 => _shadowA3;
+  Shadows get shadowA4 => _shadowA4;
+  Shadows get shadowB1 => _shadowB1;
+  Shadows get shadowB2 => _shadowB2;
+  Shadows get shadowB3 => _shadowB3;
+  Shadows get shadowB4 => _shadowB4;
+
+  bool get isAPressed => _isAPressed;
+  bool get isBPressed => _isBPressed;
+
+  int get score => _score;
+  int get highScore => _highScore;
+
   dynamic get a => _a;
   dynamic get b => _b;
+
+  SaveAndGet sharedPref = SaveAndGet();
+
+  getHighScore() async {
+    _highScore = await sharedPref.getTwoBlockScore() ?? 0;
+    print('HIGH SCORE : $_highScore');
+  }
+
+  saveHighScore() async {
+    if (_score > _highScore) {
+      sharedPref.saveTwoBlockScore(score);
+      _highScore++;
+      print('SCORE : $_score');
+    }
+  }
 
   String operationGenerator() {
     return ob.operationGenerator();
@@ -164,7 +225,14 @@ class TwoBlockQuestions {
   }
 
 //
+
   generate() {
+    if (_isInit == false) {
+      getHighScore();
+    }
+    print(_isInit);
+    _isInit = true;
+    _isInCorrect = false;
     _operation = operationGenerator();
     _var1 = var1Generator(_operation);
     _var2 = var2Generator(_operation, _var1);
@@ -173,7 +241,6 @@ class TwoBlockQuestions {
       _var1 = _var2;
       _var2 = temp;
     }
-
     _result = resultGenerator(_operation, _var1, _var2);
     _choice1 = choice1Selection();
     _choice2 = choice2Selection(_choice1);
@@ -194,9 +261,16 @@ class TwoBlockQuestions {
         optB3Generator(_buttonBSelected, _choice2, _answerB, _optB1, _optB2);
     _optB4 = optB4Generator(
         _buttonBSelected, _choice2, _answerB, _optB1, _optB2, _optB3);
-    _timesPressed = 0;
+    _isAPressed = false;
+    _isBPressed = false;
     _isAabsorbed = false;
     _isBabsorbed = false;
+
+    _message = '';
+    _messageSize = 0;
+    _choice1Ans = '';
+    _choice2Ans = '';
+    // _messageColor.set(Colors.transparent);
 
     _colorA1.set(Colors.transparent);
     _colorA2.set(Colors.transparent);
@@ -207,30 +281,22 @@ class TwoBlockQuestions {
     _colorB3.set(Colors.transparent);
     _colorB4.set(Colors.transparent);
 
+    _shadowA1.set(null);
+    _shadowA2.set(null);
+    _shadowA3.set(null);
+    _shadowA4.set(null);
+    _shadowB1.set(null);
+    _shadowB2.set(null);
+    _shadowB3.set(null);
+    _shadowB4.set(null);
+
     print('CHOICE 1: $_choice1');
     print('CHOICE 2: $_choice2');
     print('Answer A: $_answerA');
     print('Answer B: $_answerB');
   }
 
-  bool answerChecker2(
-      dynamic a, dynamic b, choice1, choice2, var1, var2, operation, result) {
-    if (choice1 == 0) {
-      if (choice2 == 1) {
-        if (b == Constants.add && a + var2 == result)
-          return true;
-        else if (b == Constants.minus && a - var2 == result)
-          return true;
-        else if (b == Constants.multiply && a * var2 == result)
-          return true;
-        else if (b == Constants.divide && a ~/ var2 == result)
-          return true;
-        else
-          return false;
-      } else if (choice2 == 2) {}
-    }
-  }
-
+//
   bool answerChecker(
       dynamic a, dynamic b, choice1, choice2, var1, var2, operation, result) {
     if (choice1 != 1 && choice2 != 1) {
@@ -315,107 +381,402 @@ class TwoBlockQuestions {
     }
   }
 
-  onPressedA1() {
-    _a = _optA1;
-    _isAabsorbed = true;
+  setATransparent() {
+    _colorA1.set(Colors.transparent);
+    _colorA2.set(Colors.transparent);
+    _colorA3.set(Colors.transparent);
+    _colorA4.set(Colors.transparent);
+  }
+
+  setBTransparent() {
+    _colorB1.set(Colors.transparent);
+    _colorB2.set(Colors.transparent);
+    _colorB3.set(Colors.transparent);
+    _colorB4.set(Colors.transparent);
+  }
+
+  setAShadow(buttonASelected) {
+    if (buttonASelected == 0) {
+      _shadowA1.set(Constants.greenShadow);
+    } else if (buttonASelected == 1) {
+      _shadowA2.set(Constants.greenShadow);
+    } else if (buttonASelected == 2) {
+      _shadowA3.set(Constants.greenShadow);
+    } else
+      _shadowA4.set(Constants.greenShadow);
+  }
+
+  setBShadow(buttonBSelected) {
+    if (buttonBSelected == 0) {
+      _shadowB1.set(Constants.greenShadow);
+    } else if (buttonBSelected == 1) {
+      _shadowB2.set(Constants.greenShadow);
+    } else if (buttonBSelected == 2) {
+      _shadowB3.set(Constants.greenShadow);
+    } else
+      _shadowB4.set(Constants.greenShadow);
+  }
+
+  onPressedA1({Function gen, AnimationController controller, Function route}) {
+    setATransparent();
     _colorA1.set(Colors.purple[100]);
-    _timesPressed++;
-    if (_timesPressed == 2) {
+    _a = _optA1;
+    _isAPressed = true;
+    _choice1Ans = '$_optA1';
+    if (_isAPressed && _isBPressed) {
+      _isAabsorbed = true;
+      _isBabsorbed = true;
+      _messageSize = 30;
       bool check = answerChecker(
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
-      if (check == true) generate();
+      if (check == true) {
+        _score++;
+        _message = Constants.pass[random.nextInt(3)];
+        _messageColor.set(Colors.green);
+        saveHighScore();
+        gen();
+      } else {
+        _lives--;
+        controller.stop();
+        _choice2Ans = '$_answerB';
+        _choice1Ans = '$_answerA';
+        _message = Constants.fail[random.nextInt(3)];
+        _messageColor.set(Colors.red);
+        _colorA1.set(Colors.transparent);
+        if (_lives == 0) {
+          _message = Constants.gameOver;
+          _isInCorrect = false;
+
+          Future.delayed(Duration(milliseconds: 1500), () {
+            route();
+          });
+        } else {
+          _isInCorrect = true;
+        }
+        setAShadow(_buttonASelected);
+        setBShadow(_buttonBSelected);
+        _message = Constants.wrong;
+      }
     }
   }
 
-  onPressedA2() {
-    _a = _optA2;
-    _isAabsorbed = true;
+  onPressedA2({Function gen, AnimationController controller, Function route}) {
+    setATransparent();
     _colorA2.set(Colors.purple[100]);
-    _timesPressed++;
-    if (_timesPressed == 2) {
+    _a = _optA2;
+    _isAPressed = true;
+    _choice1Ans = '$_optA2';
+    if (_isAPressed && _isBPressed) {
+      _isAabsorbed = true;
+      _isBabsorbed = true;
+      _messageSize = 30;
       bool check = answerChecker(
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
-      if (check == true) generate();
+      if (check == true) {
+        _score++;
+        _message = Constants.pass[random.nextInt(3)];
+        _messageColor.set(Colors.green);
+        saveHighScore();
+        gen();
+      } else {
+        controller.stop();
+        _lives--;
+        _choice2Ans = '$_answerB';
+        _choice1Ans = '$_answerA';
+        _message = Constants.fail[random.nextInt(3)];
+        _messageColor.set(Colors.red);
+        setAShadow(_buttonASelected);
+        setBShadow(_buttonBSelected);
+        if (_lives == 0) {
+          _message = Constants.gameOver;
+          _isInCorrect = false;
+
+          Future.delayed(Duration(milliseconds: 1500), () {
+            route();
+          });
+        } else {
+          _isInCorrect = true;
+        }
+      }
     }
   }
 
-  onPressedA3() {
-    _a = _optA3;
-    _isAabsorbed = true;
-    _timesPressed++;
+  onPressedA3({Function gen, AnimationController controller, Function route}) {
+    setATransparent();
     _colorA3.set(Colors.purple[100]);
-    if (_timesPressed == 2) {
+    _a = _optA3;
+    _isAPressed = true;
+    _choice1Ans = '$_optA3';
+    if (_isAPressed && _isBPressed) {
+      _isAabsorbed = true;
+      _isBabsorbed = true;
+      _messageSize = 30;
       bool check = answerChecker(
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
-      if (check == true) generate();
+      if (check == true) {
+        _score++;
+        _message = Constants.pass[random.nextInt(3)];
+        _messageColor.set(Colors.green);
+        saveHighScore();
+        gen();
+      } else {
+        controller.stop();
+        _lives--;
+        _choice2Ans = '$_answerB';
+        _choice1Ans = '$_answerA';
+        setAShadow(_buttonASelected);
+        setBShadow(_buttonBSelected);
+        _message = Constants.fail[random.nextInt(3)];
+        _messageColor.set(Colors.red);
+        if (_lives == 0) {
+          _message = Constants.gameOver;
+          _isInCorrect = false;
+
+          Future.delayed(Duration(milliseconds: 1500), () {
+            route();
+          });
+        } else {
+          _isInCorrect = true;
+        }
+      }
     }
   }
 
-  onPressedA4() {
-    _a = _optA4;
-    _isAabsorbed = true;
-    _timesPressed++;
+  onPressedA4({Function gen, AnimationController controller, Function route}) {
+    setATransparent();
     _colorA4.set(Colors.purple[100]);
-    if (_timesPressed == 2) {
+    _a = _optA4;
+    _isAPressed = true;
+    _choice1Ans = '$_optA4';
+    if (_isAPressed && _isBPressed) {
+      _isAabsorbed = true;
+      _isBabsorbed = true;
+      _messageSize = 30;
       bool check = answerChecker(
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
-      if (check == true) generate();
+      if (check == true) {
+        _score++;
+        _message = Constants.pass[random.nextInt(3)];
+        _messageColor.set(Colors.green);
+        saveHighScore();
+        gen();
+      } else {
+        controller.stop();
+        _lives--;
+        _choice2Ans = '$_answerB';
+        _choice1Ans = '$_answerA';
+        setAShadow(_buttonASelected);
+        setBShadow(_buttonBSelected);
+        _message = Constants.fail[random.nextInt(3)];
+        _messageColor.set(Colors.red);
+        if (_lives == 0) {
+          _message = Constants.gameOver;
+          _isInCorrect = false;
+
+          Future.delayed(Duration(milliseconds: 1500), () {
+            route();
+          });
+        } else {
+          _isInCorrect = true;
+        }
+      }
     }
   }
 
-  onPressedB1() {
-    _b = _optB1;
-    _isBabsorbed = true;
-    _timesPressed++;
+  onPressedB1({Function gen, AnimationController controller, Function route}) {
+    setBTransparent();
     _colorB1.set(Colors.blue[100]);
-    if (_timesPressed == 2) {
+    _b = _optB1;
+    _isBPressed = true;
+    _choice2Ans = '$_optB1';
+    if (_isAPressed && _isBPressed) {
+      _isAabsorbed = true;
+      _isBabsorbed = true;
+      _messageSize = 30;
       bool check = answerChecker(
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
-      if (check == true) generate();
+      if (check == true) {
+        _score++;
+        _message = Constants.pass[random.nextInt(3)];
+        _messageColor.set(Colors.green);
+        saveHighScore();
+        gen();
+      } else {
+        controller.stop();
+        _lives--;
+        _choice2Ans = '$_answerB';
+        _choice1Ans = '$_answerA';
+        setBShadow(_buttonBSelected);
+        setAShadow(_buttonASelected);
+        _message = Constants.fail[random.nextInt(3)];
+        _messageColor.set(Colors.red);
+        if (_lives == 0) {
+          _message = Constants.gameOver;
+          _isInCorrect = false;
+
+          Future.delayed(Duration(milliseconds: 1500), () {
+            route();
+          });
+        } else {
+          _isInCorrect = true;
+        }
+      }
     }
   }
 
-  onPressedB2() {
-    _b = _optB2;
-    _isBabsorbed = true;
-    _timesPressed++;
+  onPressedB2({Function gen, AnimationController controller, Function route}) {
+    setBTransparent();
     _colorB2.set(Colors.blue[100]);
-    if (_timesPressed == 2) {
+    _b = _optB2;
+    _isBPressed = true;
+    _choice2Ans = '$_optB2';
+    if (_isAPressed && _isBPressed) {
+      _isAabsorbed = true;
+      _isBabsorbed = true;
+      _messageSize = 30;
       bool check = answerChecker(
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
-      if (check == true) generate();
+      if (check == true) {
+        _score++;
+        _message = Constants.pass[random.nextInt(3)];
+        _messageColor.set(Colors.green);
+        saveHighScore();
+        gen();
+      } else {
+        controller.stop();
+        _lives--;
+        _choice2Ans = '$_answerB';
+        _choice1Ans = '$_answerA';
+        setBShadow(_buttonBSelected);
+        setAShadow(_buttonASelected);
+        _message = Constants.fail[random.nextInt(3)];
+        _messageColor.set(Colors.red);
+        if (_lives == 0) {
+          _message = Constants.gameOver;
+          _isInCorrect = false;
+
+          Future.delayed(Duration(milliseconds: 1500), () {
+            route();
+          });
+        } else {
+          _isInCorrect = true;
+        }
+      }
     }
   }
 
-  onPressedB3() {
-    _b = _optB3;
-    _isBabsorbed = true;
-    _timesPressed++;
+  onPressedB3({Function gen, AnimationController controller, Function route}) {
+    setBTransparent();
     _colorB3.set(Colors.blue[100]);
-    if (_timesPressed == 2) {
+    _b = _optB3;
+    _isBPressed = true;
+
+    _choice2Ans = '$_optB3';
+
+    if (_isAPressed && _isBPressed) {
+      _isAabsorbed = true;
+      _isBabsorbed = true;
+      _messageSize = 30;
       bool check = answerChecker(
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
-      if (check == true) generate();
+      if (check == true) {
+        _score++;
+        _message = Constants.pass[random.nextInt(3)];
+        _messageColor.set(Colors.green);
+        saveHighScore();
+        gen();
+      } else {
+        controller.stop();
+        _lives--;
+        _choice2Ans = '$_answerB';
+        _choice1Ans = '$_answerA';
+        setBShadow(_buttonBSelected);
+        setAShadow(_buttonASelected);
+        _message = Constants.fail[random.nextInt(3)];
+        _messageColor.set(Colors.red);
+        if (_lives == 0) {
+          _message = Constants.gameOver;
+          _isInCorrect = false;
+
+          Future.delayed(Duration(milliseconds: 1500), () {
+            route();
+          });
+        } else {
+          _isInCorrect = true;
+        }
+      }
     }
   }
 
-  onPressedB4() {
-    _b = _optB4;
-    _isBabsorbed = true;
-    _timesPressed++;
+  onPressedB4({Function gen, AnimationController controller, Function route}) {
+    setBTransparent();
     _colorB4.set(Colors.blue[100]);
-    if (_timesPressed == 2) {
+    _b = _optB4;
+    _isBPressed = true;
+    _choice2Ans = '$_optB4';
+    if (_isAPressed && _isBPressed) {
+      _isAabsorbed = true;
+      _isBabsorbed = true;
+      _messageSize = 30;
       bool check = answerChecker(
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
-      if (check == true) generate();
+      if (check == true) {
+        _score++;
+        _message = Constants.pass[random.nextInt(3)];
+        _messageColor.set(Colors.green);
+        saveHighScore();
+        gen();
+      } else {
+        controller.stop();
+        _lives--;
+        _choice2Ans = '$_answerB';
+        _choice1Ans = '$_answerA';
+        setBShadow(_buttonBSelected);
+        setAShadow(_buttonASelected);
+        _message = Constants.fail[random.nextInt(3)];
+        _messageColor.set(Colors.red);
+        if (_lives == 0) {
+          _isInCorrect = false;
+          _message = Constants.gameOver;
+
+          Future.delayed(Duration(milliseconds: 1500), () {
+            route();
+          });
+        } else {
+          _isInCorrect = true;
+        }
+      }
+    }
+  }
+
+  onTimeFinished(double seconds, int time, {Function route}) {
+    if (seconds == time) {
+      _lives--;
+      print('LIVES: $_lives');
+      if (_lives == 0) {
+        print('GAME OVER: TIME UP');
+        _message = Constants.gameOver;
+        _messageColor.set(Colors.red);
+        _messageSize = 30;
+        _isAabsorbed = true;
+        _isBabsorbed = true;
+        route();
+      } else {
+        _message = Constants.timeUp;
+        _messageColor.set(Colors.red);
+        _messageSize = 30;
+        _isInCorrect = true;
+        _isAabsorbed = true;
+        _isBabsorbed = true;
+      }
     }
   }
 }

@@ -57,9 +57,8 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
               setState(() {});
               if (ob.lives <= 0) {
                 ob.setGameOverMessage();
-                Future.delayed(Duration(milliseconds: 1500), () {
-                  Navigator.of(context).pop();
-                  Navigator.push(
+                Future.delayed(Duration(milliseconds: 800), () {
+                  Navigator.pushReplacement(
                       context,
                       RtoLSlideRoute(
                           to: GameOverScreen(
@@ -161,8 +160,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                       setState(() {});
                                     });
                                   }, routeToGameOverScreen: () {
-                                    Navigator.of(context).pop();
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                         context,
                                         RtoLSlideRoute(
                                             to: GameOverScreen(
@@ -193,8 +191,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                     setState(() {});
                                   });
                                 }, routeToGameOverScreen: () {
-                                  Navigator.of(context).pop();
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                       context,
                                       RtoLSlideRoute(
                                           to: GameOverScreen(
@@ -243,8 +240,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                       setState(() {});
                                     });
                                   }, routeToGameOverScreen: () {
-                                    Navigator.of(context).pop();
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                         context,
                                         RtoLSlideRoute(
                                             to: GameOverScreen(
@@ -276,8 +272,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                     setState(() {});
                                   });
                                 }, routeToGameOverScreen: () {
-                                  Navigator.of(context).pop();
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                       context,
                                       RtoLSlideRoute(
                                           to: GameOverScreen(score: ob.score)));

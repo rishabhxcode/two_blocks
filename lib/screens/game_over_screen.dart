@@ -24,7 +24,6 @@ class _GameOverScreenState extends State<GameOverScreen> {
             icon: Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.of(context).pop();
-              Navigator.push(context, LtoRSlideRoute(to: MyApp()));
             }),
       ),
       body: Center(
@@ -37,42 +36,52 @@ class _GameOverScreenState extends State<GameOverScreen> {
               '${widget.score ?? 0}',
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
             ),
+            PlayAgainButton(),
             const SizedBox(),
-            NeuButtonWidget(
-              width: 200,
-              height: 60,
-              borderRadius: BorderRadius.all(Radius.circular(100)),
-              boundaryRadius: BorderRadius.all(Radius.circular(100)),
-              fillColor: Constants.BGColor,
-              highLightColor: Colors.grey[100],
-              splashColor: Colors.grey[200],
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.play_arrow,
-                    size: 40,
-                    color: Colors.purple,
-                  ),
-                  Text(
-                    'Play Again',
-                    style: TextStyle(
-                        fontSize: 21,
-                        color: Colors.deepOrange[700],
-                        fontWeight: FontWeight.w600),
-                  )
-                ],
-              ),
-              onTap: () {
-                Navigator.push(context, LtoRSlideRoute(to: MyApp()));
-              },
-            ),
             const SizedBox(),
             const SizedBox(),
             const SizedBox()
           ],
         ),
       ),
+    );
+  }
+}
+
+class PlayAgainButton extends StatelessWidget {
+  final String text;
+
+  const PlayAgainButton({Key key, this.text = 'Play Again'}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return NeuButtonWidget(
+      width: 200,
+      height: 60,
+      borderRadius: BorderRadius.all(Radius.circular(100)),
+      boundaryRadius: BorderRadius.all(Radius.circular(100)),
+      fillColor: Constants.BGColor,
+      highLightColor: Colors.grey[100],
+      splashColor: Colors.grey[200],
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.play_arrow,
+            size: 40,
+            color: Colors.purple,
+          ),
+          Text(
+            text,
+            style: TextStyle(
+                fontSize: 21,
+                color: Colors.deepOrange[700],
+                fontWeight: FontWeight.w600),
+          )
+        ],
+      ),
+      onTap: () {
+        Navigator.of(context).pop();
+      },
     );
   }
 }

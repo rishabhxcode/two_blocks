@@ -11,6 +11,7 @@ class Choice1Container extends StatelessWidget {
       height: 60,
       width: 60,
       margin: EdgeInsets.symmetric(horizontal: 2),
+      alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(6)),
           boxShadow: [
@@ -23,13 +24,13 @@ class Choice1Container extends StatelessWidget {
               blurRadius: 3.0,
             ),
           ]),
+      child: Text(text, style: Constants.textStyle3),
     );
   }
 }
 
 class Choice2Container extends StatelessWidget {
   final String text;
-
   const Choice2Container({Key key, this.text}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class Choice2Container extends StatelessWidget {
       height: 60,
       width: 60,
       margin: EdgeInsets.symmetric(horizontal: 2),
+      alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(6)),
           boxShadow: [
@@ -49,7 +51,7 @@ class Choice2Container extends StatelessWidget {
               blurRadius: 3.0,
             ),
           ]),
-          
+      child: Text(text, style: Constants.textStyle3),
     );
   }
 }

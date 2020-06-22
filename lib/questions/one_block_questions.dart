@@ -23,6 +23,8 @@ class OneBlockQuestions {
   bool _opt3Checker;
   bool _opt4Checker;
 
+  int _level;
+
   dynamic _choiceAnswer = '';
 //message
   String _message = '';
@@ -143,6 +145,7 @@ class OneBlockQuestions {
         if (_lives == 0) {
           _isInCorrect = false;
           Future.delayed(Duration(milliseconds: 1500), () {
+            
             routeToGameOverScreen();
           });
         }

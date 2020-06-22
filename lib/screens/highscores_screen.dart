@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:two_blocks/constants.dart';
+import 'package:two_blocks/logic/save_and_get.dart';
+import 'package:two_blocks/screens/game_over_screen.dart';
 
 class HighScoresScreen extends StatefulWidget {
   @override
@@ -7,6 +9,28 @@ class HighScoresScreen extends StatefulWidget {
 }
 
 class _HighScoresScreenState extends State<HighScoresScreen> {
+  SaveAndGet sharedPref = SaveAndGet();
+
+  int oneBlockHighScore = 0;
+  int twoBlockHighScore = 0;
+
+  get1BHighScore() async {
+    oneBlockHighScore = await sharedPref.getOneBlockScore() ?? 0;
+    setState(() {});
+  }
+
+  get2BHighScore() async {
+    twoBlockHighScore = await sharedPref.getTwoBlockScore() ?? 0;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    get1BHighScore();
+    get2BHighScore();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     print('build::HighScoresScreen()');
@@ -17,8 +41,40 @@ class _HighScoresScreenState extends State<HighScoresScreen> {
         title: Text('High Scores'),
       ),
       body: Center(
-        child: Text('HighScores will Appear here'),
-      ),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            '1 Block',
+            style: TextStyle(fontSize: 32),
+          ),
+          Text(
+            '$oneBlockHighScore',
+            style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.green[700]),
+          ),
+          SizedBox(
+            height: 60,
+          ),
+          Text(
+            '2 Block',
+            style: TextStyle(fontSize: 32),
+          ),
+          Text('$twoBlockHighScore',
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green[700])),
+          SizedBox(
+            height: 80,
+          ),
+          PlayAgainButton(
+            text: 'PLAY',
+          )
+        ],
+      )),
     );
   }
 }
