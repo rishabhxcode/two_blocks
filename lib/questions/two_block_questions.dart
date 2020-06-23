@@ -233,7 +233,8 @@ class TwoBlockQuestions {
     print(_isInit);
     _isInit = true;
     _isInCorrect = false;
-    _operation = operationGenerator();
+    // _operation = operationGenerator();
+    _operation = Constants.divide;
     _var1 = var1Generator(_operation);
     _var2 = var2Generator(_operation, _var1);
     if (_operation == Constants.divide) {
@@ -242,7 +243,8 @@ class TwoBlockQuestions {
       _var2 = temp;
     }
     _result = resultGenerator(_operation, _var1, _var2);
-    _choice1 = choice1Selection();
+    // _choice1 = choice1Selection();
+    _choice1 = 2;
     _choice2 = choice2Selection(_choice1);
     _answerA = ansAGenerator(_choice1, _var1, _operation, _var2, _result);
     _answerB = ansAGenerator(_choice2, _var1, _operation, _var2, _result);
@@ -296,13 +298,25 @@ class TwoBlockQuestions {
     print('Answer B: $_answerB');
   }
 
+  bool checkDivide(a, b, result) {
+    try {
+      int res = a ~/ b;
+      if (res == result) {
+        return true;
+      }
+    } catch (DivideByZeroException) {
+      return false;
+    }
+    return false;
+  }
+
 //
   bool answerChecker(
       dynamic a, dynamic b, choice1, choice2, var1, var2, operation, result) {
     if (choice1 != 1 && choice2 != 1) {
       if (choice1 == 0) {
         if (choice2 == 2) {
-          if (operation == Constants.divide && a ~/ b == result)
+          if (operation == Constants.divide && checkDivide(a, b, result))
             return true;
           else if (operation == Constants.multiply && a * b == result)
             return true;
@@ -313,7 +327,7 @@ class TwoBlockQuestions {
           else
             return false;
         } else if (choice2 == 3) {
-          if (operation == Constants.divide && a ~/ var2 == b)
+          if (operation == Constants.divide && checkDivide(a, var2, b))
             return true;
           else if (operation == Constants.multiply && a * var2 == b)
             return true;
@@ -326,7 +340,7 @@ class TwoBlockQuestions {
         }
       } else if (choice1 == 2) {
         if (choice2 == 3) {
-          if (operation == Constants.divide && var1 ~/ a == b)
+          if (operation == Constants.divide && checkDivide(var1, a, b))
             return true;
           else if (operation == Constants.multiply && var1 * a == b)
             return true;
@@ -348,7 +362,7 @@ class TwoBlockQuestions {
             return true;
           else if (a == Constants.multiply && var1 * b == result)
             return true;
-          else if (a == Constants.divide && var1 ~/ b == result)
+          else if (a == Constants.divide && checkDivide(var1, b, result))
             return true;
           else
             return false;
@@ -359,7 +373,7 @@ class TwoBlockQuestions {
             return true;
           else if (a == Constants.multiply && var1 * var2 == b)
             return true;
-          else if (a == Constants.divide && var1 ~/ var2 == b)
+          else if (a == Constants.divide && checkDivide(var1, var2, b))
             return true;
           else
             return false;
@@ -372,7 +386,7 @@ class TwoBlockQuestions {
           return true;
         else if (b == Constants.multiply && a * var2 == result)
           return true;
-        else if (b == Constants.divide && a ~/ var2 == result)
+        else if (b == Constants.divide && checkDivide(a, var2, result))
           return true;
         else
           return false;
