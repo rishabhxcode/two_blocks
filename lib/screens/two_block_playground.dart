@@ -59,18 +59,6 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                     )));
               });
             });
-            // if (timerController.duration.inSeconds * timerController.value ==
-            //     time) {
-            //   if (tb.lives == 0) {
-            //     RtoLSlideRoute(
-            //         to: GameOverScreen(
-            //       score: tb.score,
-            //     ));
-            //   } else {
-            //     tb.generate();
-            //   }
-            // }
-
             setState(() {});
           });
 

@@ -759,6 +759,16 @@ class TwoBlockQuestions {
 
   onTimeFinished(double seconds, int time, {Function route}) {
     if (seconds == time) {
+      if (_answerA == _optA1) shadowA1.set(Constants.greenShadow);
+      if (_answerA == _optA2) shadowA2.set(Constants.greenShadow);
+      if (_answerA == _optA3) shadowA3.set(Constants.greenShadow);
+      if (_answerA == _optA4) shadowA4.set(Constants.greenShadow);
+      if (_answerB == _optB1) shadowB1.set(Constants.greenShadow);
+      if (_answerB == _optB2) shadowB2.set(Constants.greenShadow);
+      if (_answerB == _optB3) shadowB3.set(Constants.greenShadow);
+      if (_answerB == _optB4) shadowB4.set(Constants.greenShadow);
+      _choice1Ans = '$_answerA';
+      _choice2Ans = '$_answerB';
       _lives--;
       print('LIVES: $_lives');
       if (_lives == 0) {

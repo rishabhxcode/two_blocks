@@ -23,7 +23,8 @@ class OneBlockQuestions {
   bool _opt3Checker;
   bool _opt4Checker;
 
-  int _level;
+  int _level = 0;
+  int _count = 0;
 
   dynamic _choiceAnswer = '';
 //message
@@ -75,15 +76,11 @@ class OneBlockQuestions {
     _variable1 = var1Generator(_operation);
     _variable2 = var2Generator(_operation, _variable1);
     print(_operation);
-    print('var1 : $_variable1');
-    print('var2 : $_variable2');
     if (_operation == Constants.divide) {
       int temp = _variable1;
       _variable1 = _variable2;
       _variable2 = temp;
     }
-    print('var1 : $_variable1');
-    print('var2 : $_variable2');
     _result = resultGenerator(_operation, _variable1, _variable2);
     _buttonSelected = buttonSelected();
     _choiceSelected = getChoiceSelected();
@@ -145,7 +142,6 @@ class OneBlockQuestions {
         if (_lives == 0) {
           _isInCorrect = false;
           Future.delayed(Duration(milliseconds: 1500), () {
-            
             routeToGameOverScreen();
           });
         }
