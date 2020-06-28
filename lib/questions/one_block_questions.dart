@@ -6,25 +6,29 @@ class OneBlockQuestions {
   Random random = Random();
   List<String> operations = Constants.symbols;
   /////
+  int _time = 10;
   String _operation;
-  int _variable1;
-  int _variable2;
+  int _var1;
+  int _var2;
   int _result;
   dynamic _answer;
   int _buttonSelected;
-  int _choiceSelected;
+  int _choice;
   dynamic _opt1;
   dynamic _opt2;
   dynamic _opt3;
   dynamic _opt4;
   bool _isInCorrect = false;
-  bool _opt1Checker;
-  bool _opt2Checker;
-  bool _opt3Checker;
-  bool _opt4Checker;
+  dynamic _opt;
 
   int _level = 0;
   int _count = 0;
+
+  int _min = 0;
+  int _max = 5;
+
+  int _optMin = 0;
+  int _optMax = 10;
 
   dynamic _choiceAnswer = '';
 //message
@@ -33,212 +37,397 @@ class OneBlockQuestions {
   Colour _messageColor = Colour();
 
 //
-  Shadows _shadows1 = Shadows();
-  Shadows _shadows2 = Shadows();
-  Shadows _shadows3 = Shadows();
-  Shadows _shadows4 = Shadows();
+  Shadows _shadow1 = Shadows();
+  Shadows _shadow2 = Shadows();
+  Shadows _shadow3 = Shadows();
+  Shadows _shadow4 = Shadows();
 //
   int _score = 0;
   bool _absorbOptButtons = false;
   int _lives = 3;
 
   /////
+  int get time => _time;
+  int get level => _level;
   int get score => _score;
   int get lives => _lives;
-  int get choiceSelected => _choiceSelected;
-  int get var1 => _variable1;
-  int get var2 => _variable2;
+  int get choiceSelected => _choice;
+  int get var1 => _var1;
+  int get var2 => _var2;
   int get result => _result;
   String get operation => _operation;
   String get choiceAnswer => _choiceAnswer;
-
   bool get absorbOptButtons => _absorbOptButtons;
   bool get isInCorrect => _isInCorrect;
-
   setIsInCorrect(bool value) => _isInCorrect = value;
-
   dynamic get opt1 => _opt1;
   dynamic get opt2 => _opt2;
   dynamic get opt3 => _opt3;
   dynamic get opt4 => _opt4;
   dynamic get answer => _answer;
-  Shadows get shadows1 => _shadows1;
-  Shadows get shadows2 => _shadows2;
-  Shadows get shadows3 => _shadows3;
-  Shadows get shadows4 => _shadows4;
+  Shadows get shadows1 => _shadow1;
+  Shadows get shadows2 => _shadow2;
+  Shadows get shadows3 => _shadow3;
+  Shadows get shadows4 => _shadow4;
 
   String get message => _message;
   double get messageSize => _messageSize;
   Colour get messageColor => _messageColor;
+  dynamic get opt => _opt;
 
   generate() {
+    _count++;
     _operation = operationGenerator();
-    _variable1 = var1Generator(_operation);
-    _variable2 = var2Generator(_operation, _variable1);
-    print(_operation);
+    _var1 = var1Generator(_operation, min: _min, max: _max);
+    _var2 = var2Generator(_operation, _var1, min: _min, max: _max);
     if (_operation == Constants.divide) {
-      int temp = _variable1;
-      _variable1 = _variable2;
-      _variable2 = temp;
+      int temp = _var1;
+      _var1 = _var2;
+      _var2 = temp;
     }
-    _result = resultGenerator(_operation, _variable1, _variable2);
+    _result = resultGenerator(_operation, _var1, _var2);
     _buttonSelected = buttonSelected();
-    _choiceSelected = getChoiceSelected();
-    _answer = answerGenerator(
-        _choiceSelected, _variable1, _operation, _variable2, _result);
-    _opt1 = opt1Generator(_buttonSelected, _choiceSelected, _answer);
-    _opt2 = opt2Generator(_buttonSelected, _choiceSelected, _answer, _opt1);
-    _opt3 =
-        opt3Generator(_buttonSelected, _choiceSelected, _answer, _opt1, _opt2);
-    _opt4 = opt4Generator(
-        _buttonSelected, _choiceSelected, _answer, _opt1, _opt2, _opt3);
-    _opt1Checker = checker(_opt1, _variable1, _variable2, _result);
-    _opt2Checker = checker(_opt2, _variable1, _variable2, _result);
-    _opt3Checker = checker(_opt3, _variable1, _variable2, _result);
-    _opt4Checker = checker(_opt4, _variable1, _variable2, _result);
+    _choice = getChoiceSelected();
+    _answer = answerGenerator(_choice, _var1, _operation, _var2, _result);
+    _opt1 = opt1Generator(_buttonSelected, _choice, _answer);
+    _opt2 = opt2Generator(_buttonSelected, _choice, _answer, _opt1);
+    _opt3 = opt3Generator(_buttonSelected, _choice, _answer, _opt1, _opt2);
+    _opt4 =
+        opt4Generator(_buttonSelected, _choice, _answer, _opt1, _opt2, _opt3);
     /** **/
     _message = '';
     _messageColor.set(Colors.transparent);
     _messageSize = 0;
-    _shadows1.set(null);
-    _shadows2.set(null);
-    _shadows3.set(null);
-    _shadows4.set(null);
+    _shadow1.set(null);
+    _shadow2.set(null);
+    _shadow3.set(null);
+    _shadow4.set(null);
     _isInCorrect = false;
     _choiceAnswer = '';
     _absorbOptButtons = false;
+    setMinMax(_level);
+    if (_count == 2) {
+      _level = 1;
+    } else if (_count == 20) {
+      _level = 2;
+    } else if (_count == 30) {
+      _level = 3;
+    }
+    print('ANSWER : $_answer');
   }
 
-  answerChecker(dynamic opt, dynamic answer, Shadows shadow, Function action,
-      {Function routeToGameOverScreen, AnimationController controller}) async {
-    _absorbOptButtons = true;
-    if (_choiceSelected == 1) {
-      bool optCheck = checker(opt, _variable1, _variable2, _result);
-      if (optCheck == true) {
-        _message = Constants.nice;
-        _messageSize = 24;
-        _messageColor.set(Colors.green);
-        _choiceAnswer = '$opt';
-        _score++;
-        shadow.set(Constants.greenShadow);
-        action();
-        controller.reset();
-        controller.forward();
-        // await Future.delayed(const Duration(milliseconds: 500), () {
-        //   generate();
-        // });
+  setMinMax(level) {
+    if (level == 1) {
+      _min = -5;
+      _max = 10;
+      if (_operation == Constants.divide) {
+        _optMin = -25;
+        _optMax = 50;
+      } else if (_operation == Constants.multiply) {
+        _optMin = -25;
+        _optMax = 50;
       } else {
-        _message = Constants.wrong;
-        _messageSize = 24;
-        _messageColor.set(Colors.red);
-        shadow.set(Constants.redShadow);
-        rightAnsChecker(_opt1Checker, _shadows1);
-        rightAnsChecker(_opt2Checker, _shadows2);
-        rightAnsChecker(_opt3Checker, _shadows3);
-        rightAnsChecker(_opt4Checker, _shadows4);
-        _isInCorrect = true;
-        _lives--;
-        controller.stop();
-        if (_lives == 0) {
-          _isInCorrect = false;
-          Future.delayed(Duration(milliseconds: 1500), () {
-            routeToGameOverScreen();
-          });
-        }
-        print('opt1: $_opt1Checker');
-        print('opt2: $_opt2Checker');
-        print('opt3: $_opt3Checker');
-        print('opt4: $_opt4Checker');
+        _optMin = -10;
+        _optMax = 20;
+      }
+    } else if (level == 2) {
+      _min = 5;
+      _max = 10;
+      if (_operation == Constants.divide) {
+        _optMin = 25;
+        _optMax = 200;
+      } else if (_operation == Constants.multiply) {
+        _optMin = 25;
+        _optMax = 200;
+      } else {
+        _optMin = 10;
+        _optMax = 20;
+      }
+    }
+  }
+
+  bool checkDivide(a, b, result) {
+    try {
+      int res = a ~/ b;
+      if (res == result) {
+        return true;
+      }
+    } catch (DivideByZeroException) {
+      return false;
+    }
+    return false;
+  }
+
+  bool answerChecker(dynamic ans, choice, var1, var2, result, operation) {
+    if (choice != 1) {
+      if (choice == 0) {
+        if (operation == Constants.add && ans + var2 == result)
+          return true;
+        else if (operation == Constants.minus && ans - var2 == result)
+          return true;
+        else if (operation == Constants.divide &&
+            checkDivide(ans, var2, result))
+          return true;
+        else if (operation == Constants.multiply && ans * var2 == result)
+          return true;
+        else
+          return false;
+      } else if (choice == 2) {
+        if (operation == Constants.add && var1 + ans == result)
+          return true;
+        else if (operation == Constants.minus && var1 - ans == result)
+          return true;
+        else if (operation == Constants.divide &&
+            checkDivide(var1, ans, result))
+          return true;
+        else if (operation == Constants.multiply && var1 * ans == result)
+          return true;
+        else
+          return false;
+      } else {
+        if (operation == Constants.add && var1 + var2 == ans)
+          return true;
+        else if (operation == Constants.minus && var1 - var2 == ans)
+          return true;
+        else if (operation == Constants.divide &&
+            checkDivide(var1, var2, result))
+          return true;
+        else if (operation == Constants.multiply && var1 * var2 == ans)
+          return true;
+        else
+          return false;
       }
     } else {
-      if (opt == answer) {
-        _message = Constants.correct;
-        _messageSize = 24;
-        _messageColor.set(Colors.green);
-        shadow.set(Constants.greenShadow);
-        _score++;
-        action();
-        controller.reset();
-        controller.forward();
+      if (ans == Constants.multiply && var1 * var2 == result)
+        return true;
+      else if (ans == Constants.minus && var1 - var2 == result)
+        return true;
+      else if (ans == Constants.add && var1 + var2 == result)
+        return true;
+      else if (ans == Constants.divide && checkDivide(var1, var2, result))
+        return true;
+      else
+        return false;
+    }
+  }
+
+  setGreenShadow(selected) {
+    if (selected == 0) {
+      _shadow1.set(Constants.greenShadow);
+    } else if (selected == 1) {
+      _shadow2.set(Constants.greenShadow);
+    } else if (selected == 2) {
+      _shadow3.set(Constants.greenShadow);
+    } else
+      _shadow4.set(Constants.greenShadow);
+  }
+
+  onPressed1(
+      {AnimationController controller,
+      Function route,
+      int time,
+      Function generate}) {
+    controller.stop();
+    _absorbOptButtons = true;
+    bool check =
+        answerChecker(_opt1, _choice, _var1, _var2, _result, _operation);
+    if (check == true) {
+      _message = Constants.pass[random.nextInt(4)];
+      _messageSize = 24;
+      _messageColor.set(Colors.green);
+      _choiceAnswer = '$_opt1';
+      _score +=
+          time - (controller.duration.inSeconds * controller.value).toInt();
+      print('SCORE : $_score');
+      _shadow1.set(Constants.greenShadow);
+      generate();
+    } else {
+      setGreenShadow(_buttonSelected);
+      _lives--;
+      _choiceAnswer = '$_answer';
+      _message = Constants.fail[random.nextInt(3)];
+      _messageSize = 24;
+      _messageColor.set(Colors.red);
+      _shadow1.set(Constants.redShadow);
+      if (_lives == 0) {
+        _message = Constants.gameOver;
+        _isInCorrect = false;
+        Future.delayed(Duration(milliseconds: 1500), () {
+          route();
+        });
       } else {
-        _message = Constants.wrong;
-        _messageSize = 24;
-        _messageColor.set(Colors.red);
-        shadow.set(Constants.redShadow);
         _isInCorrect = true;
-        _lives--;
-        controller.stop();
-        if (_opt1 == answer) _shadows1.set(Constants.greenShadow);
-        if (_opt2 == answer) _shadows2.set(Constants.greenShadow);
-        if (_opt3 == answer) _shadows3.set(Constants.greenShadow);
-        if (_opt4 == answer) _shadows4.set(Constants.greenShadow);
-        if (_lives == 0) {
-          _isInCorrect = false;
-          Future.delayed(Duration(milliseconds: 1500), () {
-            routeToGameOverScreen();
-          });
-        }
       }
     }
   }
 
-  rightAnsChecker(bool isOpt, Shadows shadow) {
-    if (isOpt == true) {
-      print(isOpt);
-      shadow.set(Constants.greenShadow);
+  onPressed2(
+      {AnimationController controller,
+      Function route,
+      int time,
+      Function generate}) {
+    controller.stop();
+    _absorbOptButtons = true;
+    bool check =
+        answerChecker(_opt2, _choice, _var1, _var2, _result, _operation);
+    if (check == true) {
+      _message = Constants.pass[random.nextInt(4)];
+      _messageSize = 24;
+      _messageColor.set(Colors.green);
+      _choiceAnswer = '$_opt2';
+      _score +=
+          time - (controller.duration.inSeconds * controller.value).toInt();
+      print('SCORE : $_score');
+      _shadow2.set(Constants.greenShadow);
+      generate();
+    } else {
+      setGreenShadow(_buttonSelected);
+      _lives--;
+      _choiceAnswer = '$_answer';
+      _message = Constants.fail[random.nextInt(3)];
+      _messageSize = 24;
+      _messageColor.set(Colors.red);
+      _shadow2.set(Constants.redShadow);
+      if (_lives == 0) {
+        _message = Constants.gameOver;
+        _isInCorrect = false;
+        Future.delayed(Duration(milliseconds: 1500), () {
+          route();
+        });
+      } else {
+        _isInCorrect = true;
+      }
     }
   }
 
-  int option1Generator(restrict, range) {
-    int val = random.nextInt(range);
+  onPressed3(
+      {AnimationController controller,
+      Function route,
+      int time,
+      Function generate}) {
+    controller.stop();
+    _absorbOptButtons = true;
+    bool check =
+        answerChecker(_opt3, _choice, _var1, _var2, _result, _operation);
+    if (check == true) {
+      _message = Constants.pass[random.nextInt(4)];
+      _messageSize = 24;
+      _messageColor.set(Colors.green);
+      _choiceAnswer = '$_opt3';
+      _score +=
+          time - (controller.duration.inSeconds * controller.value).toInt();
+      print('SCORE : $_score');
+      _shadow3.set(Constants.greenShadow);
+      generate();
+    } else {
+      setGreenShadow(_buttonSelected);
+      _lives--;
+      _choiceAnswer = '$_answer';
+
+      _message = Constants.fail[random.nextInt(3)];
+      _messageSize = 24;
+      _messageColor.set(Colors.red);
+      _shadow3.set(Constants.redShadow);
+      if (_lives == 0) {
+        _message = Constants.gameOver;
+        _isInCorrect = false;
+        Future.delayed(Duration(milliseconds: 1500), () {
+          route();
+        });
+      } else {
+        _isInCorrect = true;
+      }
+    }
+  }
+
+  onPressed4(
+      {AnimationController controller,
+      Function route,
+      int time,
+      Function generate}) {
+    controller.stop();
+    _absorbOptButtons = true;
+    bool check =
+        answerChecker(_opt4, _choice, _var1, _var2, _result, _operation);
+    if (check == true) {
+      _message = Constants.pass[random.nextInt(4)];
+      _messageSize = 24;
+      _messageColor.set(Colors.green);
+      _choiceAnswer = '$_opt4';
+      _score +=
+          time - (controller.duration.inSeconds * controller.value).toInt();
+      _shadow4.set(Constants.greenShadow);
+      generate();
+    } else {
+      setGreenShadow(_buttonSelected);
+      _choiceAnswer = '$_answer';
+      _lives--;
+      _message = Constants.fail[random.nextInt(3)];
+      _messageSize = 24;
+      _messageColor.set(Colors.red);
+      _shadow4.set(Constants.redShadow);
+      if (_lives == 0) {
+        _message = Constants.gameOver;
+        _isInCorrect = false;
+        Future.delayed(Duration(milliseconds: 1500), () {
+          route();
+        });
+      } else {
+        _isInCorrect = true;
+      }
+    }
+  }
+
+  int option1Generator(restrict, {int min, int max}) {
+    int val = min + random.nextInt(max);
     if (val == restrict)
-      return option1Generator(restrict, range);
+      return option1Generator(restrict, max: max, min: min);
     else
       return val;
   }
 
-  int option2Generator(restrict1, restrict2, range) {
-    int val = random.nextInt(range);
+  int option2Generator(restrict1, restrict2, {int min, int max}) {
+    int val = min + random.nextInt(max + 1);
     if (val == restrict1)
-      return option2Generator(restrict1, restrict2, range);
+      return option2Generator(restrict1, restrict2, max: max, min: min);
     else if (val == restrict2)
-      return option2Generator(restrict1, restrict2, range);
+      return option2Generator(restrict1, restrict2, min: min, max: max);
     else
       return val;
   }
 
-  int option3Generator(restrict1, restrict2, restrict3, range) {
-    int val = random.nextInt(range);
+  int option3Generator(restrict1, restrict2, restrict3, {int min, int max}) {
+    int val = min + random.nextInt(max + 1);
     if (val == restrict1)
-      return option3Generator(restrict1, restrict2, restrict3, range);
+      return option3Generator(restrict1, restrict2, restrict3,
+          max: max, min: min);
     else if (val == restrict2)
-      return option3Generator(restrict1, restrict2, restrict3, range);
+      return option3Generator(restrict1, restrict2, restrict3,
+          max: max, min: min);
     else if (val == restrict3)
-      return option3Generator(restrict1, restrict2, restrict3, range);
+      return option3Generator(restrict1, restrict2, restrict3,
+          max: max, min: min);
     else
       return val;
   }
 
-  int option4Generator(restrict1, restrict2, restrict3, restrict4, range) {
-    int val = random.nextInt(range);
+  int option4Generator(restrict1, restrict2, restrict3, restrict4,
+      {int min, int max}) {
+    int val = min + random.nextInt(max + 1);
     if (val == restrict1)
-      return option4Generator(
-          restrict1, restrict2, restrict3, restrict4, range);
+      return option4Generator(restrict1, restrict2, restrict3, restrict4,
+          max: max, min: min);
     else if (val == restrict2)
-      return option4Generator(
-          restrict1, restrict2, restrict3, restrict4, range);
+      return option4Generator(restrict1, restrict2, restrict3, restrict4,
+          max: max, min: min);
     else if (val == restrict3)
-      return option4Generator(
-          restrict1, restrict2, restrict3, restrict4, range);
+      return option4Generator(restrict1, restrict2, restrict3, restrict4,
+          max: max, min: min);
     else if (val == restrict4)
-      return option4Generator(
-          restrict1, restrict2, restrict3, restrict4, range);
+      return option4Generator(restrict1, restrict2, restrict3, restrict4,
+          max: max, min: min);
     else
       return val;
-  }
-
-  setAnswer() {
-    _choiceAnswer = '$_answer';
   }
 
   String operationGenerator() {
@@ -246,23 +435,29 @@ class OneBlockQuestions {
   }
 
   ///////////////////////////////////////////////////////
-
-  int var1Generator(operation) {
-    if (operation == Constants.divide)
-      return 1 + random.nextInt(9);
+  int divideVarGen({int min, int max}) {
+    int val = min + random.nextInt(max);
+    if (val == 0)
+      return divideVarGen(min: min, max: max);
     else
-      return random.nextInt(10);
+      return val;
   }
 
-  int var2Generator(operation, var1) {
+  int var1Generator(operation, {int min, int max}) {
     if (operation == Constants.divide)
-      return (1 + random.nextInt(9)) * var1;
+      return divideVarGen(min: min, max: max);
     else
-      return random.nextInt(10);
+      return min + random.nextInt(max + 1);
+  }
+
+  int var2Generator(operation, var1, {int min, int max}) {
+    if (operation == Constants.divide)
+      return (1 + min + random.nextInt(max)) * var1;
+    else
+      return min + random.nextInt(max + 1);
   }
 
   ////////////////////////////////////////////////////////
-
   int resultGenerator(String operand, int var1, int var2) {
     if (operand == Constants.add)
       return var1 + var2;
@@ -304,7 +499,7 @@ class OneBlockQuestions {
         temp.remove(answer);
         return temp[random.nextInt(temp.length)];
       } else
-        return option1Generator(answer, 10);
+        return option1Generator(answer, min: _optMin, max: _optMax);
     }
   }
 
@@ -319,7 +514,7 @@ class OneBlockQuestions {
         temp.remove(opt1);
         return temp[random.nextInt(temp.length)];
       } else {
-        return option2Generator(answer, opt1, 10);
+        return option2Generator(answer, opt1, min: _optMin, max: _optMax);
       }
     }
   }
@@ -336,7 +531,7 @@ class OneBlockQuestions {
         temp.remove(opt2);
         return temp[random.nextInt(temp.length)];
       } else {
-        return option3Generator(answer, opt1, opt2, 10);
+        return option3Generator(answer, opt1, opt2, min: _optMin, max: _optMax);
       }
     }
   }
@@ -354,46 +549,34 @@ class OneBlockQuestions {
         temp.remove(opt3);
         return temp[random.nextInt(temp.length)];
       } else {
-        return option4Generator(answer, opt1, opt2, opt3, 10);
+        return option4Generator(answer, opt1, opt2, opt3,
+            min: _optMin, max: _optMax);
       }
     }
   }
 
-  checker(opt, var1, var2, result) {
-    if (opt == Constants.add && var1 + var2 == result)
-      return true;
-    else if (opt == Constants.minus && var1 - var2 == result)
-      return true;
-    else if (opt == Constants.multiply && var1 * var2 == result)
-      return true;
-    else if (opt == Constants.divide && var1 ~/ var2 == result)
-      return true;
-    else
-      return false;
-  }
-
-  checkLivesOnTimeOver() {
-    _lives--;
-  }
-
-  setAbsorbToTrue() {
-    _absorbOptButtons = true;
-  }
-
-  setIsIncorrentToTrue() {
-    _isInCorrect = true;
-  }
-
-  setTimeUpMessage() {
-    _message = Constants.timeUp;
-    _messageSize = 24;
-    _messageColor.set(Colors.red);
-  }
-
-  setGameOverMessage() {
-    _message = Constants.gameOver;
-    _messageSize = 24;
-    _messageColor.set(Colors.red);
+  onTimeFinished(double seconds, int time, {Function route}) {
+    if (seconds == time) {
+      if (_answer == _opt1) _shadow1.set(Constants.greenShadow);
+      if (_answer == _opt2) _shadow2.set(Constants.greenShadow);
+      if (_answer == _opt3) _shadow3.set(Constants.greenShadow);
+      if (_answer == _opt4) _shadow4.set(Constants.greenShadow);
+      _choiceAnswer = '$_answer';
+      _lives--;
+      if (_lives == 0) {
+        _message = Constants.gameOver;
+        _messageColor.set(Colors.red);
+        _messageSize = 30;
+        _absorbOptButtons = true;
+        route();
+      } else {
+        _message = Constants.timeUp;
+        _messageColor.set(Colors.red);
+        _messageSize = 30;
+        _isInCorrect = true;
+        _absorbOptButtons = true;
+      }
+    }
   }
 }
 

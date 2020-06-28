@@ -8,7 +8,7 @@ class ChoiceContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 60,
-      width: 64,
+      width: choiceAnswer.length < 3 ? 64 : 70 ?? 64,
       alignment: Alignment.center,
       decoration: BoxDecoration(
           border: Border.all(
@@ -16,10 +16,12 @@ class ChoiceContainer extends StatelessWidget {
             width: 2,
           ),
           borderRadius: BorderRadius.all(Radius.circular(6))),
-      child: Text(
-        choiceAnswer ?? '',
-        style: TextStyle(fontSize: 44, color: Colors.green[600]),
-      ),
+      child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            choiceAnswer ?? '',
+            style: TextStyle(fontSize: 44, color: Colors.green[600]),
+          )),
     );
   }
 }

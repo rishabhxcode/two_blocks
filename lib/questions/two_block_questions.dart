@@ -233,8 +233,8 @@ class TwoBlockQuestions {
     print(_isInit);
     _isInit = true;
     _isInCorrect = false;
-    // _operation = operationGenerator();
-    _operation = Constants.divide;
+    _operation = operationGenerator();
+    // _operation = Constants.divide;
     _var1 = var1Generator(_operation);
     _var2 = var2Generator(_operation, _var1);
     if (_operation == Constants.divide) {
@@ -461,7 +461,6 @@ class TwoBlockQuestions {
         if (_lives == 0) {
           _message = Constants.gameOver;
           _isInCorrect = false;
-
           Future.delayed(Duration(milliseconds: 1500), () {
             route();
           });
@@ -506,7 +505,6 @@ class TwoBlockQuestions {
         if (_lives == 0) {
           _message = Constants.gameOver;
           _isInCorrect = false;
-
           Future.delayed(Duration(milliseconds: 1500), () {
             route();
           });
@@ -548,7 +546,6 @@ class TwoBlockQuestions {
         if (_lives == 0) {
           _message = Constants.gameOver;
           _isInCorrect = false;
-
           Future.delayed(Duration(milliseconds: 1500), () {
             route();
           });

@@ -3,8 +3,8 @@ import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/widgets/choice_container.dart';
 
 class EquationWidget extends StatelessWidget {
-  final int opt1;
-  final int opt2;
+  final int var1;
+  final int var2;
   final int result;
   final String operation;
   final int choiceSelected;
@@ -12,8 +12,8 @@ class EquationWidget extends StatelessWidget {
 
   const EquationWidget(
       {Key key,
-      this.opt1,
-      this.opt2,
+      this.var1,
+      this.var2,
       this.choiceSelected,
       this.operation,
       this.choiceAnswer,
@@ -22,7 +22,7 @@ class EquationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // color: Colors.yellow,
+      margin: EdgeInsets.symmetric(horizontal: 8),
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Row(
@@ -33,7 +33,7 @@ class EquationWidget extends StatelessWidget {
                     choiceAnswer: choiceAnswer,
                   )
                 : Text(
-                    '$opt1',
+                    '$var1',
                     style: Constants.textStyle2,
                   ),
             choiceSelected == 1
@@ -45,7 +45,8 @@ class EquationWidget extends StatelessWidget {
                 ? ChoiceContainer(
                     choiceAnswer: choiceAnswer,
                   )
-                : Text('$opt2', style: Constants.textStyle2),
+                : Text(var2 >= 0 ? '$var2' : '($var2)',
+                    style: Constants.textStyle2),
             Text('=', style: Constants.textStyle2),
             choiceSelected == 3
                 ? ChoiceContainer(
