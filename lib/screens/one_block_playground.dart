@@ -37,19 +37,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
     }
   }
 
-  // changeLevel() {
-  //   if (ob.level == 1)
-  //     time = 13;
-  //   else if (ob.level == 2)
-  //     time = 16;
-  //   else
-  //     time = 10;
-  // }
-
-  @override
-  void initState() {
-    ob.generate();
-    getScore();
+  setTimer() {
     timerController =
         AnimationController(vsync: this, duration: Duration(seconds: time))
           ..addListener(() {
@@ -67,6 +55,26 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
             });
             setState(() {});
           });
+  }
+
+  changeLevel() {
+    if (ob.level == 1) {
+      time = 13;
+      setTimer();
+    } else if (ob.level == 2) {
+      time = 16;
+      setTimer();
+    } else {
+      time = 10;
+      setTimer();
+    }
+  }
+
+  @override
+  void initState() {
+    ob.generate();
+    getScore();
+    setTimer();
     timerController.forward();
     super.initState();
   }
@@ -92,7 +100,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
               Navigator.pop(context);
             },
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
       ),
       body: Column(
@@ -161,6 +169,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                       generate: () {
                                         Future.delayed(
                                             Duration(milliseconds: 400), () {
+                                          changeLevel();
                                           timerController.reset();
                                           ob.generate();
                                           timerController.forward();
@@ -173,7 +182,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                 }),
                             Container(
                               height: 80,
-                              child: VerticalDivider(
+                              child: const VerticalDivider(
                                 color: Colors.grey,
                                 thickness: 0.3,
                                 width: 0.5,
@@ -196,6 +205,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                     generate: () {
                                       Future.delayed(
                                           Duration(milliseconds: 400), () {
+                                        changeLevel();
                                         timerController.reset();
                                         ob.generate();
                                         timerController.forward();
@@ -214,14 +224,14 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                           children: [
                             Container(
                               width: 80,
-                              child: Divider(
+                              child: const Divider(
                                 thickness: 0.5,
                                 height: 0.5,
                               ),
                             ),
                             Container(
                               width: 80,
-                              child: Divider(
+                              child:const Divider(
                                 thickness: 0.5,
                                 height: 0.5,
                               ),
@@ -248,6 +258,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                       generate: () {
                                         Future.delayed(
                                             Duration(milliseconds: 400), () {
+                                          changeLevel();
                                           timerController.reset();
                                           ob.generate();
                                           timerController.forward();
@@ -259,7 +270,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                 }),
                             Container(
                               height: 80,
-                              child: VerticalDivider(
+                              child: const VerticalDivider(
                                 color: Colors.grey,
                                 thickness: 0.3,
                                 width: 0.5,
@@ -282,6 +293,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                     generate: () {
                                       Future.delayed(
                                           Duration(milliseconds: 400), () {
+                                        changeLevel();
                                         timerController.reset();
                                         ob.generate();
                                         timerController.forward();

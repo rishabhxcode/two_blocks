@@ -106,7 +106,7 @@ class OneBlockQuestions {
     _choiceAnswer = '';
     _absorbOptButtons = false;
     setMinMax(_level);
-    if (_count == 2) {
+    if (_count == 6) {
       _level = 1;
     } else if (_count == 20) {
       _level = 2;
