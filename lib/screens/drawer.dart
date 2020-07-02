@@ -7,6 +7,8 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+  // bool _themeSwitch = false;
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -53,7 +55,21 @@ class _AppDrawerState extends State<AppDrawer> {
                   color: Colors.deepPurple.shade900,
                 ),
                 onTap: () {},
-              )
+              ),
+              // ListTile(
+              //   title: Text('Dark Theme'),
+              //   leading: Icon(
+              //     Icons.brightness_3,
+              //     color: Colors.deepPurple.shade900,
+              //   ),
+              //   trailing: Switch(
+              //     value: _themeSwitch,
+              //     onChanged: (val) {
+              //       _themeSwitch = val;
+              //       setState(() {});
+              //     },
+              //   ),
+              // )
             ],
           ),
           ListTile(

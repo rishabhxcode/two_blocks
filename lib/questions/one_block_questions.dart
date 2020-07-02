@@ -20,16 +20,18 @@ class OneBlockQuestions {
   dynamic _opt4;
   bool _isInCorrect = false;
   dynamic _opt;
-
+//
   int _level = 0;
   int _count = 0;
 
-  int _min = 0;
-  int _max = 5;
+  int _var1min = 0;
+  int _var2min = 0;
+  int _var1max = 10;
+  int _var2max = 10;
 
   int _optMin = 0;
   int _optMax = 10;
-
+//
   dynamic _choiceAnswer = '';
 //message
   String _message = '';
@@ -74,12 +76,13 @@ class OneBlockQuestions {
   double get messageSize => _messageSize;
   Colour get messageColor => _messageColor;
   dynamic get opt => _opt;
+  int get count => _count;
 
   generate() {
     _count++;
     _operation = operationGenerator();
-    _var1 = var1Generator(_operation, min: _min, max: _max);
-    _var2 = var2Generator(_operation, _var1, min: _min, max: _max);
+    _var1 = var1Generator(_operation, min: _var1min, max: _var1max);
+    _var2 = var2Generator(_operation, _var1, min: _var2min, max: _var2max);
     if (_operation == Constants.divide) {
       int temp = _var1;
       _var1 = _var2;
@@ -106,42 +109,188 @@ class OneBlockQuestions {
     _choiceAnswer = '';
     _absorbOptButtons = false;
     setMinMax(_level);
-    if (_count == 6) {
+    if (_count == 3) {
       _level = 1;
-    } else if (_count == 20) {
+    } else if (_count == 6) {
       _level = 2;
-    } else if (_count == 30) {
+    } else if (_count == 10) {
       _level = 3;
+    } else if (_count == 17) {
+      _level = 4;
+    } else if (_count == 23) {
+      _level = 5;
+    } else if (_count == 29) {
+      _level = 6;
+    } else if (_count == 38) {
+      _level = 7;
+    } else if (_count == 46) {
+      _level = 8;
+    } else if (_count == 54) {
+      _level = 9;
+    } else if (_count == 64) {
+      _level = 10;
+    } else if (_count == 80) {
+      _level = 11;
+    } else {
+      _level = 0;
     }
-    print('ANSWER : $_answer');
   }
 
   setMinMax(level) {
-    if (level == 1) {
-      _min = -5;
-      _max = 10;
-      if (_operation == Constants.divide) {
+    if (level == 0) {
+      _var1min = 0;
+      _var1max = 5;
+      _var2min = 0;
+      _var2max = 5;
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = 0;
+        _optMax = 25; //25
+      } else {
+        _optMin = 0;
+        _optMax = 10; //10
+      }
+    } else if (level == 1) {
+      //3
+      _var1min = -5;
+      _var1max = 5; //0
+      _var2min = 0;
+      _var2max = 5; //5
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
         _optMin = -25;
-        _optMax = 50;
-      } else if (_operation == Constants.multiply) {
-        _optMin = -25;
-        _optMax = 50;
+        _optMax = 50; //25
       } else {
         _optMin = -10;
-        _optMax = 20;
+        _optMax = 20; //10
       }
     } else if (level == 2) {
-      _min = 5;
-      _max = 10;
-      if (_operation == Constants.divide) {
-        _optMin = 25;
-        _optMax = 200;
-      } else if (_operation == Constants.multiply) {
-        _optMin = 25;
+      //6
+      _var1min = -5;
+      _var1max = 5; //0
+      _var2min = -5;
+      _var2max = 5; //0
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -25;
+        _optMax = 50; //25
+      } else {
+        _optMin = -10;
+        _optMax = 20; //10
+      }
+    } else if (level == 3) {
+      //10
+      _var1min = -5;
+      _var1max = 10; //5
+      _var2min = -5;
+      _var2max = 10; //5
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -25;
+        _optMax = 50; //25
+      } else {
+        _optMin = -10;
+        _optMax = 20; //10
+      }
+    } else if (level == 4) {
+      //17
+      _var1min = 0;
+      _var1max = 10; //10
+      _var2min = 0;
+      _var2max = 10; //10
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = 0;
+        _optMax = 100; //100
+      } else {
+        _optMin = 0;
+        _optMax = 20; //20
+      }
+    } else if (level == 5) {
+      //23
+      _var1min = -10;
+      _var1max = 10; //0
+      _var2min = 0;
+      _var2max = 10; //10
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -100;
+        _optMax = 200; //100
+      } else {
+        _optMin = -10;
+        _optMax = 20; //10
+      }
+    } else if (level == 6) {
+      //29
+      _var1min = 0;
+      _var1max = 10; //10
+      _var2min = -10;
+      _var2max = 10; //0
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -100;
+        _optMax = 100; //0
+      } else {
+        _optMin = -10;
+        _optMax = 20; //10
+      }
+    } else if (level == 7) {
+      //38
+      _var1min = -10;
+      _var1max = 20; //10
+      _var2min = -10;
+      _var2max = 20; //10
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -100;
+        _optMax = 500; //400
+      } else {
+        _optMin = -20;
+        _optMax = 60; //40
+      }
+    } else if (level == 8) {
+      //46
+      _var1min = 10;
+      _var1max = 10; //20
+      _var2min = 0;
+      _var2max = 10; //10
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = 0;
         _optMax = 200;
       } else {
-        _optMin = 10;
+        _optMin = 0;
         _optMax = 20;
+      }
+    } else if (level == 9) {
+      //54
+      _var1min = 0;
+      _var1max = 10;
+      _var2min = -20;
+      _var2max = 10; //-10
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -200;
+        _optMax = 100; //-100
+      } else {
+        _optMin = -20;
+        _optMax = 30; //10
+      }
+    } else if (level == 10) {
+      //64
+      _var1min = -20;
+      _var1max = 40; //20
+      _var2min = -20;
+      _var2max = 40; //20
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -400;
+        _optMax = 800; //400
+      } else {
+        _optMin = -40;
+        _optMax = 80; //40
+      }
+    } else {
+      // 80
+      _var1min = -50;
+      _var1max = 100; //50
+      _var2min = -50;
+      _var2max = 100; //50
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -2500;
+        _optMax = 5000; //2500
+      } else {
+        _optMin = -100;
+        _optMax = 200; //100
       }
     }
   }
@@ -250,6 +399,7 @@ class OneBlockQuestions {
       _messageColor.set(Colors.red);
       _shadow1.set(Constants.redShadow);
       if (_lives == 0) {
+        _count = 0;
         _message = Constants.gameOver;
         _isInCorrect = false;
         Future.delayed(Duration(milliseconds: 1500), () {
@@ -289,6 +439,7 @@ class OneBlockQuestions {
       _messageColor.set(Colors.red);
       _shadow2.set(Constants.redShadow);
       if (_lives == 0) {
+        _count = 0;
         _message = Constants.gameOver;
         _isInCorrect = false;
         Future.delayed(Duration(milliseconds: 1500), () {
@@ -329,6 +480,7 @@ class OneBlockQuestions {
       _messageColor.set(Colors.red);
       _shadow3.set(Constants.redShadow);
       if (_lives == 0) {
+        _count = 0;
         _message = Constants.gameOver;
         _isInCorrect = false;
         Future.delayed(Duration(milliseconds: 1500), () {
@@ -367,6 +519,7 @@ class OneBlockQuestions {
       _messageColor.set(Colors.red);
       _shadow4.set(Constants.redShadow);
       if (_lives == 0) {
+        _count = 0;
         _message = Constants.gameOver;
         _isInCorrect = false;
         Future.delayed(Duration(milliseconds: 1500), () {

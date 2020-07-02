@@ -21,9 +21,8 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
   OneBlockQuestions ob = OneBlockQuestions();
   SaveAndGet sharedPref = SaveAndGet();
   AnimationController timerController;
-  int time = 10;
+  int time = 7;
   int highScore;
-  int timeLeft;
   getScore() async {
     highScore = await sharedPref.getOneBlockScore() ?? 0;
     setState(() {});
@@ -37,9 +36,9 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
     }
   }
 
-  setTimer() {
+  setTimer(int seconds) {
     timerController =
-        AnimationController(vsync: this, duration: Duration(seconds: time))
+        AnimationController(vsync: this, duration: Duration(seconds: seconds))
           ..addListener(() {
             ob.onTimeFinished(
                 timerController.duration.inSeconds * timerController.value,
@@ -58,23 +57,50 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
   }
 
   changeLevel() {
-    if (ob.level == 1) {
-      time = 13;
-      setTimer();
+    if (ob.level == 0) {
+      time = 7;
+      setTimer(time);
+    } else if (ob.level == 1) {
+      time = 8;
+      setTimer(time);
     } else if (ob.level == 2) {
-      time = 16;
-      setTimer();
-    } else {
+      time = 9;
+      setTimer(time);
+    } else if (ob.level == 3) {
       time = 10;
-      setTimer();
+      setTimer(time);
+    } else if (ob.level == 4) {
+      time = 11;
+      setTimer(time);
+    } else if (ob.level == 5) {
+      time = 12;
+      setTimer(time);
+    } else if (ob.level == 6) {
+      time = 13;
+      setTimer(time);
+    } else if (ob.level == 7) {
+      time = 15;
+      setTimer(time);
+    } else if (ob.level == 8) {
+      time = 16;
+      setTimer(time);
+    } else if (ob.level == 9) {
+      time = 18;
+      setTimer(time);
+    } else if (ob.level == 10) {
+      time = 20;
+      setTimer(time);
+    } else {
+      time = 24;
+      setTimer(time);
     }
   }
 
   @override
   void initState() {
-    ob.generate();
     getScore();
-    setTimer();
+    setTimer(time);
+    ob.generate();
     timerController.forward();
     super.initState();
   }
@@ -82,6 +108,11 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
   @override
   Widget build(BuildContext context) {
     print('build::OneBlockPlayGround()');
+    print('COUNT: ${ob.count}');
+    print('LEVEL: ${ob.level}');
+    print('TIME: ${ob.time}');
+    print('VAR-1: ${ob.var1}');
+    print('VAR-2: ${ob.var2}');
     return Scaffold(
       backgroundColor: Constants.BGColor,
       appBar: AppBar(
@@ -231,7 +262,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                             ),
                             Container(
                               width: 80,
-                              child:const Divider(
+                              child: const Divider(
                                 thickness: 0.5,
                                 height: 0.5,
                               ),
