@@ -20,9 +20,23 @@ class _AppDrawerState extends State<AppDrawer> {
               Container(
                 height: 100,
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  '         logo',
-                  style: TextStyle(fontSize: 18),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      '  2',
+                      style: TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepOrange[700]),
+                    ),
+                    Text(
+                      ' Blocks',
+                      style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.purpleAccent.shade700,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
                 ),
                 decoration: BoxDecoration(color: Constants.BGColor, boxShadow: [
                   BoxShadow(

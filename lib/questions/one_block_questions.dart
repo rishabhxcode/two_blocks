@@ -6,7 +6,6 @@ class OneBlockQuestions {
   Random random = Random();
   List<String> operations = Constants.symbols;
   /////
-  int _time = 10;
   String _operation;
   int _var1;
   int _var2;
@@ -26,8 +25,8 @@ class OneBlockQuestions {
 
   int _var1min = 0;
   int _var2min = 0;
-  int _var1max = 10;
-  int _var2max = 10;
+  int _var1max = 5;
+  int _var2max = 5;
 
   int _optMin = 0;
   int _optMax = 10;
@@ -49,7 +48,6 @@ class OneBlockQuestions {
   int _lives = 3;
 
   /////
-  int get time => _time;
   int get level => _level;
   int get score => _score;
   int get lives => _lives;
@@ -92,11 +90,15 @@ class OneBlockQuestions {
     _buttonSelected = buttonSelected();
     _choice = getChoiceSelected();
     _answer = answerGenerator(_choice, _var1, _operation, _var2, _result);
-    _opt1 = opt1Generator(_buttonSelected, _choice, _answer);
-    _opt2 = opt2Generator(_buttonSelected, _choice, _answer, _opt1);
-    _opt3 = opt3Generator(_buttonSelected, _choice, _answer, _opt1, _opt2);
-    _opt4 =
-        opt4Generator(_buttonSelected, _choice, _answer, _opt1, _opt2, _opt3);
+    _opt1 = opt1Generator(_buttonSelected, _choice, _answer,
+        max: _optMax, min: _optMin);
+    _opt2 = opt2Generator(_buttonSelected, _choice, _answer, _opt1,
+        max: _optMax, min: _optMin);
+    _opt3 = opt3Generator(_buttonSelected, _choice, _answer, _opt1, _opt2,
+        max: _optMax, min: _optMin);
+    _opt4 = opt4Generator(
+        _buttonSelected, _choice, _answer, _opt1, _opt2, _opt3,
+        max: _optMax, min: _optMin);
     /** **/
     _message = '';
     _messageColor.set(Colors.transparent);
@@ -131,8 +133,6 @@ class OneBlockQuestions {
       _level = 10;
     } else if (_count == 80) {
       _level = 11;
-    } else {
-      _level = 0;
     }
   }
 
@@ -642,8 +642,8 @@ class OneBlockQuestions {
       return result;
   }
 
-  dynamic opt1Generator(
-      int buttonSelected, int choiceSelected, dynamic answer) {
+  dynamic opt1Generator(int buttonSelected, int choiceSelected, dynamic answer,
+      {int min, int max}) {
     if (buttonSelected == 0) {
       return answer;
     } else {
@@ -652,12 +652,13 @@ class OneBlockQuestions {
         temp.remove(answer);
         return temp[random.nextInt(temp.length)];
       } else
-        return option1Generator(answer, min: _optMin, max: _optMax);
+        return option1Generator(answer, min: min, max: max);
     }
   }
 
   dynamic opt2Generator(
-      int buttonSelected, int choiceSelected, dynamic answer, opt1) {
+      int buttonSelected, int choiceSelected, dynamic answer, opt1,
+      {int min, int max}) {
     if (buttonSelected == 1) {
       return answer;
     } else {
@@ -667,13 +668,14 @@ class OneBlockQuestions {
         temp.remove(opt1);
         return temp[random.nextInt(temp.length)];
       } else {
-        return option2Generator(answer, opt1, min: _optMin, max: _optMax);
+        return option2Generator(answer, opt1, min: min, max: max);
       }
     }
   }
 
   dynamic opt3Generator(
-      int buttonSelected, int choiceSelected, dynamic answer, opt1, opt2) {
+      int buttonSelected, int choiceSelected, dynamic answer, opt1, opt2,
+      {int min, int max}) {
     if (buttonSelected == 2) {
       return answer;
     } else {
@@ -684,13 +686,14 @@ class OneBlockQuestions {
         temp.remove(opt2);
         return temp[random.nextInt(temp.length)];
       } else {
-        return option3Generator(answer, opt1, opt2, min: _optMin, max: _optMax);
+        return option3Generator(answer, opt1, opt2, min: min, max: max);
       }
     }
   }
 
-  dynamic opt4Generator(int buttonSelected, int choiceSelected, dynamic answer,
-      opt1, opt2, opt3) {
+  dynamic opt4Generator(
+      int buttonSelected, int choiceSelected, dynamic answer, opt1, opt2, opt3,
+      {int min, int max}) {
     if (buttonSelected == 3) {
       return answer;
     } else {
@@ -702,8 +705,7 @@ class OneBlockQuestions {
         temp.remove(opt3);
         return temp[random.nextInt(temp.length)];
       } else {
-        return option4Generator(answer, opt1, opt2, opt3,
-            min: _optMin, max: _optMax);
+        return option4Generator(answer, opt1, opt2, opt3, min: min, max: max);
       }
     }
   }

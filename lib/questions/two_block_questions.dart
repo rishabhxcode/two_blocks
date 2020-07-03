@@ -71,6 +71,16 @@ class TwoBlockQuestions {
 
   bool _isInit = false;
 
+  int _level = 0;
+  int _count = 0;
+  int _var1min = 0;
+  int _var2min = 0;
+  int _var1max = 5;
+  int _var2max = 5;
+
+  int _optMin = 0;
+  int _optMax = 10;
+
   int get lives => _lives;
   String get operation => _operation;
   int get var1 => _var1;
@@ -131,6 +141,9 @@ class TwoBlockQuestions {
   dynamic get a => _a;
   dynamic get b => _b;
 
+  int get level => _level;
+  int get count => _count;
+
   SaveAndGet sharedPref = SaveAndGet();
 
   getHighScore() async {
@@ -151,11 +164,11 @@ class TwoBlockQuestions {
   }
 
   int var1Generator(operation) {
-    return ob.var1Generator(operation);
+    return ob.var1Generator(operation, min: _var1min, max: _var1max);
   }
 
   int var2Generator(operation, var1) {
-    return ob.var2Generator(operation, var1);
+    return ob.var2Generator(operation, var1, min: _var2min, max: _var2max);
   }
 
   resultGenerator(operand, var1, var2) {
@@ -189,20 +202,24 @@ class TwoBlockQuestions {
 //
 
   optA1Generator(buttonAselected, choice1, answerA) {
-    return ob.opt1Generator(buttonAselected, choice1, answerA);
+    return ob.opt1Generator(buttonAselected, choice1, answerA,
+        max: _optMax, min: _optMin);
   }
 
   optA2Generator(buttonAselected, choice1, answerA, optA1) {
-    return ob.opt2Generator(buttonAselected, choice1, answerA, optA1);
+    return ob.opt2Generator(buttonAselected, choice1, answerA, optA1,
+        max: _optMax, min: _optMin);
   }
 
   optA3Generator(buttonAselected, choice1, answerA, optA1, optA2) {
-    return ob.opt3Generator(buttonAselected, choice1, answerA, optA1, optA2);
+    return ob.opt3Generator(buttonAselected, choice1, answerA, optA1, optA2,
+        max: _optMax, min: _optMin);
   }
 
   optA4Generator(buttonAselected, choice1, answerA, optA1, optA2, optA3) {
     return ob.opt4Generator(
-        buttonAselected, choice1, answerA, optA1, optA2, optA3);
+        buttonAselected, choice1, answerA, optA1, optA2, optA3,
+        max: _optMax, min: _optMin);
   }
 
 //
@@ -227,6 +244,7 @@ class TwoBlockQuestions {
 //
 
   generate() {
+    _count++;
     if (_isInit == false) {
       getHighScore();
     }
@@ -282,6 +300,31 @@ class TwoBlockQuestions {
     _colorB2.set(Colors.transparent);
     _colorB3.set(Colors.transparent);
     _colorB4.set(Colors.transparent);
+
+    ob.setMinMax(_level);
+    if (_count == 3) {
+      _level = 1;
+    } else if (_count == 6) {
+      _level = 2;
+    } else if (_count == 10) {
+      _level = 3;
+    } else if (_count == 17) {
+      _level = 4;
+    } else if (_count == 23) {
+      _level = 5;
+    } else if (_count == 29) {
+      _level = 6;
+    } else if (_count == 38) {
+      _level = 7;
+    } else if (_count == 46) {
+      _level = 8;
+    } else if (_count == 54) {
+      _level = 9;
+    } else if (_count == 64) {
+      _level = 10;
+    } else if (_count == 80) {
+      _level = 11;
+    }
 
     _shadowA1.set(null);
     _shadowA2.set(null);

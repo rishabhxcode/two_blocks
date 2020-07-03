@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:two_blocks/animations/routing_animation_widget.dart';
 import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/logic/save_and_get.dart';
-import 'package:two_blocks/questions/one_block_questions.dart';
 import 'package:two_blocks/questions/two_block_questions.dart';
 import 'package:two_blocks/screens/game_over_screen.dart';
 import 'package:two_blocks/widgets/animated_message.dart';
@@ -19,10 +18,9 @@ class TwoBlocksPlayGround extends StatefulWidget {
 
 class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
     with TickerProviderStateMixin {
-  OneBlockQuestions ob = OneBlockQuestions();
   TwoBlockQuestions tb = TwoBlockQuestions();
   AnimationController timerController;
-  int time;
+  int time = 10;
   int highScore = 0;
 
   SaveAndGet sharedPref = SaveAndGet();
@@ -40,12 +38,9 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
     }
   }
 
-  @override
-  void initState() {
-    time = 10;
-    tb.generate();
+  setTimer(int seconds) {
     timerController =
-        AnimationController(vsync: this, duration: Duration(seconds: time))
+        AnimationController(vsync: this, duration: Duration(seconds: seconds))
           ..addListener(() {
             tb.onTimeFinished(
                 timerController.duration.inSeconds * timerController.value,
@@ -61,13 +56,64 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
             });
             setState(() {});
           });
+  }
 
+  changeLevel() {
+    if (tb.level == 0) {
+      time = 12;
+      setTimer(time);
+    } else if (tb.level == 1) {
+      time = 13;
+      setTimer(time);
+    } else if (tb.level == 2) {
+      time = 14;
+      setTimer(time);
+    } else if (tb.level == 3) {
+      time = 15;
+      setTimer(time);
+    } else if (tb.level == 4) {
+      time = 16;
+      setTimer(time);
+    } else if (tb.level == 5) {
+      time = 17;
+      setTimer(time);
+    } else if (tb.level == 6) {
+      time = 19;
+      setTimer(time);
+    } else if (tb.level == 7) {
+      time = 20;
+      setTimer(time);
+    } else if (tb.level == 8) {
+      time = 21;
+      setTimer(time);
+    } else if (tb.level == 9) {
+      time = 23;
+      setTimer(time);
+    } else if (tb.level == 10) {
+      time = 25;
+      setTimer(time);
+    } else {
+      time = 29;
+      setTimer(time);
+    }
+  }
+
+  @override
+  void initState() {
+    tb.generate();
+    setTimer(time);
     timerController.forward();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print('build::OneBlockPlayGround()');
+    print('COUNT: ${tb.count}');
+    print('LEVEL: ${tb.level}');
+    print('TIME: $time');
+    print('VAR-1: ${tb.var1}');
+    print('VAR-2: ${tb.var2}');
     return Scaffold(
       backgroundColor: Constants.BGColor,
       appBar: AppBar(
@@ -194,6 +240,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                                 Duration(milliseconds: 300),
                                                 () {
                                               setState(() {
+                                                changeLevel();
                                                 timerController.reset();
                                                 tb.generate();
                                                 timerController.forward();
@@ -231,6 +278,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                                 Duration(milliseconds: 300),
                                                 () {
                                               setState(() {
+                                                changeLevel();
                                                 timerController.reset();
                                                 tb.generate();
                                                 timerController.forward();
@@ -287,6 +335,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                                 Duration(milliseconds: 300),
                                                 () {
                                               setState(() {
+                                                changeLevel();
                                                 timerController.reset();
                                                 tb.generate();
                                                 timerController.forward();
@@ -324,6 +373,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                                 Duration(milliseconds: 300),
                                                 () {
                                               setState(() {
+                                                changeLevel();
                                                 timerController.reset();
                                                 tb.generate();
                                                 timerController.forward();
@@ -379,6 +429,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                           Future.delayed(
                                               Duration(milliseconds: 300), () {
                                             setState(() {
+                                              changeLevel();
                                               timerController.reset();
                                               tb.generate();
                                               timerController.forward();
@@ -415,6 +466,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                           Future.delayed(
                                               Duration(milliseconds: 300), () {
                                             setState(() {
+                                              changeLevel();
                                               timerController.reset();
                                               tb.generate();
                                               timerController.forward();
@@ -469,6 +521,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                           Future.delayed(
                                               Duration(milliseconds: 300), () {
                                             setState(() {
+                                              changeLevel();
                                               timerController.reset();
                                               tb.generate();
                                               timerController.forward();
@@ -505,6 +558,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                           Future.delayed(
                                               Duration(milliseconds: 300), () {
                                             setState(() {
+                                              changeLevel();
                                               timerController.reset();
                                               tb.generate();
                                               timerController.forward();
@@ -535,6 +589,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
             child: tb.isInCorrect
                 ? NextButton(
                     onTap: () {
+                      changeLevel();
                       timerController.reset();
                       tb.generate();
                       timerController.forward();

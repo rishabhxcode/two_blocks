@@ -110,7 +110,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
     print('build::OneBlockPlayGround()');
     print('COUNT: ${ob.count}');
     print('LEVEL: ${ob.level}');
-    print('TIME: ${ob.time}');
+    print('TIME: $time');
     print('VAR-1: ${ob.var1}');
     print('VAR-2: ${ob.var2}');
     return Scaffold(

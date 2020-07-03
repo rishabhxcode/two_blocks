@@ -32,9 +32,86 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 200,
             fillColor: Constants.BGColor,
             borderRadius: BorderRadius.circular(10),
-            child: Text(
-              'LOGO',
-              style: TextStyle(fontSize: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  '2',
+                  style: TextStyle(
+                      fontSize: 100,
+                      color: Colors.purple[700],
+                      fontWeight: FontWeight.w600),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(1),
+                      child: Text(
+                        'B',
+                        style: TextStyle(
+                            fontSize: 34,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Text(
+                        'L',
+                        style: TextStyle(
+                            fontSize: 34,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Text(
+                        'O',
+                        style: TextStyle(
+                            fontSize: 34,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.pink[400]),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Text(
+                        'C',
+                        style: TextStyle(
+                            fontSize: 34,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Text(
+                        'K',
+                        style: TextStyle(
+                            fontSize: 34,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.teal),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Text(
+                        'S',
+                        style: TextStyle(
+                            fontSize: 34,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.amber[900]),
+                      ),
+                    )
+                  ],
+                )
+                // Text(
+                //   'BLOCKS',
+                //   style: TextStyle(fontSize: 32, letterSpacing: 3),
+                // )
+              ],
             ),
           ),
           Wrap(
