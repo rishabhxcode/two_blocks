@@ -532,7 +532,7 @@ class OneBlockQuestions {
   }
 
   int option1Generator(restrict, {int min, int max}) {
-    int val = min + random.nextInt(max);
+    int val = min + random.nextInt(max + 1);
     if (val == restrict)
       return option1Generator(restrict, max: max, min: min);
     else

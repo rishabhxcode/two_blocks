@@ -225,20 +225,24 @@ class TwoBlockQuestions {
 //
 //
   optB1Generator(buttonBselected, choice2, answerB) {
-    return ob.opt1Generator(buttonBselected, choice2, answerB);
+    return ob.opt1Generator(buttonBselected, choice2, answerB,
+        max: _optMax, min: _optMin);
   }
 
   optB2Generator(buttonBselected, choice2, answerB, optA1) {
-    return ob.opt2Generator(buttonBselected, choice2, answerB, optA1);
+    return ob.opt2Generator(buttonBselected, choice2, answerB, optA1,
+        max: _optMax, min: _optMin);
   }
 
   optB3Generator(buttonBselected, choice2, answerB, optA1, optA2) {
-    return ob.opt3Generator(buttonBselected, choice2, answerB, optA1, optA2);
+    return ob.opt3Generator(buttonBselected, choice2, answerB, optA1, optA2,
+        max: _optMax, min: _optMin);
   }
 
   optB4Generator(buttonBselected, choice2, answerB, optA1, optA2, optA3) {
     return ob.opt4Generator(
-        buttonBselected, choice2, answerB, optA1, optA2, optA3);
+        buttonBselected, choice2, answerB, optA1, optA2, optA3,
+        max: _optMax, min: _optMin);
   }
 
 //
@@ -300,8 +304,7 @@ class TwoBlockQuestions {
     _colorB2.set(Colors.transparent);
     _colorB3.set(Colors.transparent);
     _colorB4.set(Colors.transparent);
-
-    ob.setMinMax(_level);
+    setMinMax(_level);
     if (_count == 3) {
       _level = 1;
     } else if (_count == 6) {
@@ -840,6 +843,165 @@ class TwoBlockQuestions {
         _isInCorrect = true;
         _isAabsorbed = true;
         _isBabsorbed = true;
+      }
+    }
+  }
+
+  setMinMax(level) {
+    if (level == 0) {
+      _var1min = 0;
+      _var1max = 5;
+      _var2min = 0;
+      _var2max = 5;
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = 0;
+        _optMax = 25; //25
+      } else {
+        _optMin = 0;
+        _optMax = 10; //10
+      }
+    } else if (level == 1) {
+      //3
+      _var1min = -5;
+      _var1max = 5; //0
+      _var2min = 0;
+      _var2max = 5; //5
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -25;
+        _optMax = 50; //25
+      } else {
+        _optMin = -10;
+        _optMax = 20; //10
+      }
+    } else if (level == 2) {
+      //6
+      _var1min = -5;
+      _var1max = 5; //0
+      _var2min = -5;
+      _var2max = 5; //0
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -25;
+        _optMax = 50; //25
+      } else {
+        _optMin = -10;
+        _optMax = 20; //10
+      }
+    } else if (level == 3) {
+      //10
+      _var1min = -5;
+      _var1max = 10; //5
+      _var2min = -5;
+      _var2max = 10; //5
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -25;
+        _optMax = 50; //25
+      } else {
+        _optMin = -10;
+        _optMax = 20; //10
+      }
+    } else if (level == 4) {
+      //17
+      _var1min = 0;
+      _var1max = 10; //10
+      _var2min = 0;
+      _var2max = 10; //10
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = 0;
+        _optMax = 100; //100
+      } else {
+        _optMin = 0;
+        _optMax = 20; //20
+      }
+    } else if (level == 5) {
+      //23
+      _var1min = -10;
+      _var1max = 10; //0
+      _var2min = 0;
+      _var2max = 10; //10
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -100;
+        _optMax = 200; //100
+      } else {
+        _optMin = -10;
+        _optMax = 20; //10
+      }
+    } else if (level == 6) {
+      //29
+      _var1min = 0;
+      _var1max = 10; //10
+      _var2min = -10;
+      _var2max = 10; //0
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -100;
+        _optMax = 100; //0
+      } else {
+        _optMin = -10;
+        _optMax = 20; //10
+      }
+    } else if (level == 7) {
+      //38
+      _var1min = -10;
+      _var1max = 20; //10
+      _var2min = -10;
+      _var2max = 20; //10
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -100;
+        _optMax = 500; //400
+      } else {
+        _optMin = -20;
+        _optMax = 60; //40
+      }
+    } else if (level == 8) {
+      //46
+      _var1min = 10;
+      _var1max = 10; //20
+      _var2min = 0;
+      _var2max = 10; //10
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = 0;
+        _optMax = 200;
+      } else {
+        _optMin = 0;
+        _optMax = 20;
+      }
+    } else if (level == 9) {
+      //54
+      _var1min = 0;
+      _var1max = 10;
+      _var2min = -20;
+      _var2max = 10; //-10
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -200;
+        _optMax = 100; //-100
+      } else {
+        _optMin = -20;
+        _optMax = 30; //10
+      }
+    } else if (level == 10) {
+      //64
+      _var1min = -20;
+      _var1max = 40; //20
+      _var2min = -20;
+      _var2max = 40; //20
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -400;
+        _optMax = 800; //400
+      } else {
+        _optMin = -40;
+        _optMax = 80; //40
+      }
+    } else {
+      // 80
+      _var1min = -50;
+      _var1max = 100; //50
+      _var2min = -50;
+      _var2max = 100; //50
+      if (_operation == Constants.divide || _operation == Constants.multiply) {
+        _optMin = -2500;
+        _optMax = 5000; //2500
+      } else {
+        _optMin = -100;
+        _optMax = 200; //100
       }
     }
   }

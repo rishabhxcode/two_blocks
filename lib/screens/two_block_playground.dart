@@ -10,6 +10,7 @@ import 'package:two_blocks/widgets/neu_container.dart';
 import 'package:two_blocks/widgets/next_button.dart';
 import 'package:two_blocks/widgets/playground_indigator.dart';
 import 'package:two_blocks/widgets/two_block_choice_containers.dart';
+import 'package:two_blocks/widgets/two_block_logo.dart';
 
 class TwoBlocksPlayGround extends StatefulWidget {
   @override
@@ -120,11 +121,11 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
         backgroundColor: Constants.BGColor,
         title: Text('Playground'),
         elevation: 0,
-        leading: Center(
-            child: Text(
-          'logo',
-          style: TextStyle(fontSize: 10),
-        )),
+        leading: Container(
+            padding: EdgeInsets.all(8),
+            child: FittedBox(
+              child: LOGO(),
+            )),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.close),
