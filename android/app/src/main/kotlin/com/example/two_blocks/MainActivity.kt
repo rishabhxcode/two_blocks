@@ -1,4 +1,4 @@
-package com.example.two_blocks
+package com.agneeapps.two_blocks
 
 import android.os.Bundle
 
