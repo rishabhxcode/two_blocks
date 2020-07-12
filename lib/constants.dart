@@ -17,7 +17,7 @@ class Constants {
   //
   /*TextStyles*/
   static const TextStyle textStyle1 =
-      TextStyle(fontSize: 14, color: Colors.black);
+      TextStyle(fontSize: 16, color: Colors.black);
   static const TextStyle textStyle2 = TextStyle(fontSize: 50);
   static const TextStyle textStyle3 = TextStyle(fontSize: 40);
   /* shadows */
