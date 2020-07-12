@@ -106,7 +106,7 @@ class _AppDrawerState extends State<AppDrawer> {
   void launchBugReportingApp() async {
     String phone = "+917011205822";
     String message = "Hey, I have found a bug.";
-    String url = "whatsapp://send?   phone=$phone&text=${Uri.parse(message)}";
+    String url = "whatsapp://send?phone=$phone&text=${Uri.parse(message)}";
     Navigator.of(context).pop();
 
     if (!await canLaunch(url)) {
@@ -148,7 +148,7 @@ class _AppDrawerState extends State<AppDrawer> {
     try {
       Share.text(
           "",
-          "Hey I am have found this interesting maths app. This app is awesome, try it $url",
+          "Hey I have found Awesome Mental math app called \"Two Blocks\"., try it $url",
           "text/plain");
     } catch (e) {
       print(e);

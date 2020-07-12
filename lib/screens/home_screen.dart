@@ -36,8 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.only(bottom:15),
-                  width: 100,
-                height: 100,
+                  width: 80,
+                height:80,
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("assets/two_blocks_launcher.png"))),
