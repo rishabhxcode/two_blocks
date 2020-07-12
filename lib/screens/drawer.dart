@@ -1,6 +1,7 @@
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/material.dart';
 import 'package:two_blocks/constants.dart';
+import 'package:two_blocks/screens/home_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -26,26 +27,23 @@ class _AppDrawerState extends State<AppDrawer> {
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(left: 15),
-                      width: 50,
-                      height: 50,
+                      width: 40,
+                      height: 40,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage(
                                   "assets/two_blocks_launcher.png"))),
                     ),
-                    Text(
-                      ' Blocks',
-                      style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.purpleAccent.shade700,
-                          fontWeight: FontWeight.bold),
-                    )
+                    Container(
+                        margin: EdgeInsets.only(left: 10),
+                        width: 100,
+                        child: FittedBox(child: ColorFullBlocks()))
                   ],
                 ),
                 decoration: BoxDecoration(color: Constants.BGColor, boxShadow: [
                   BoxShadow(
                       color: Constants.DarkShadow,
-                      offset: Offset(0, 1),
+                      offset: Offset(0, 0.5),
                       blurRadius: 1,
                       spreadRadius: 0)
                 ]),

@@ -1,8 +1,8 @@
-import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:two_blocks/ad_manager.dart';
 import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/widgets/neu_button_widget.dart';
+import 'package:admob_flutter/admob_flutter.dart';
 
 class GameOverScreen extends StatefulWidget {
   final int score;
@@ -25,47 +25,36 @@ class _GameOverScreenState extends State<GameOverScreen> {
               Navigator.of(context).pop();
             }),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          AdmobBanner(
-            adUnitId: AdManager.bannerGameOverAdUnitId,
-            adSize: AdmobBannerSize.BANNER,
-            listener: (AdmobAdEvent event, map) {
-              if (event == AdmobAdEvent.failedToLoad) {
-                print("Ad failed to load");
-              }
-              if (event == AdmobAdEvent.loaded) {
-                print("Ad loaded");
-              }
-            },
-          ),
-          Expanded(child: Container()),
-          Text('Your Score', style: TextStyle(fontSize: 30)),
-          Text(
-            '${widget.score ?? 0}',
-            style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-          ),
-          PlayAgainButton(),
-          const SizedBox(),
-          const SizedBox(),
-          const SizedBox(),
-          const SizedBox(),
-          Expanded(child: Container()),
-          AdmobBanner(
-            adUnitId: AdManager.bannerGameOverAdUnitId,
-            adSize: AdmobBannerSize.BANNER,
-            listener: (AdmobAdEvent event, map) {
-              if (event == AdmobAdEvent.failedToLoad) {
-                print("Ad failed to load previous wali");
-              }
-              if (event == AdmobAdEvent.loaded) {
-                print("Ad loaded previous wali");
-              }
-            },
-          ),
-        ],
+      body: Container(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 100),
+            Text('Your Score', style: TextStyle(fontSize: 30)),
+            const SizedBox(height: 40),
+            Text(
+              '${widget.score ?? 0}',
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 60),
+            PlayAgainButton(),
+            Spacer(),
+            AdmobBanner(
+              adUnitId: AdManager.bannerGameOverAdUnitId,
+              adSize: AdmobBannerSize.BANNER,
+              listener: (AdmobAdEvent event, map) {
+                if (event == AdmobAdEvent.failedToLoad) {
+                  print("Ad failed to load previous wali");
+                }
+                if (event == AdmobAdEvent.loaded) {
+                  print("Ad loaded previous wali");
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

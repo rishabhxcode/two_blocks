@@ -85,18 +85,6 @@ class _HighScoresScreenState extends State<HighScoresScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          AdmobBanner(
-            adUnitId: AdManager.bannerHighScoreAdUnitId,
-            adSize: AdmobBannerSize.BANNER,
-            listener: (AdmobAdEvent event, map) {
-              if (event == AdmobAdEvent.failedToLoad) {
-                print("Top Ad failed to load");
-              }
-              if (event == AdmobAdEvent.loaded) {
-                print("Top Ad loaded");
-              }
-            },
-          ),
           Expanded(child: Container()),
           Text(
             '1 Block',

@@ -121,10 +121,10 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
         title: Text('Playground'),
         elevation: 0,
         leading: Container(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(16),
             child: FittedBox(
-              child: LOGO(),
-            )),
+                fit: BoxFit.scaleDown,
+                child: Image.asset("assets/two_blocks_launcher.png"))),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.close),

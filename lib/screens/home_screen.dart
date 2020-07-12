@@ -35,78 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.only(bottom:15),
+                  margin: EdgeInsets.only(bottom: 15),
                   width: 80,
-                height:80,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/two_blocks_launcher.png"))),
-            ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(1),
-                      child: Text(
-                        'B',
-                        style: TextStyle(
-                            fontSize: 34,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(1.0),
-                      child: Text(
-                        'L',
-                        style: TextStyle(
-                            fontSize: 34,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(1.0),
-                      child: Text(
-                        'O',
-                        style: TextStyle(
-                            fontSize: 34,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.pink[400]),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(1.0),
-                      child: Text(
-                        'C',
-                        style: TextStyle(
-                            fontSize: 34,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(1.0),
-                      child: Text(
-                        'K',
-                        style: TextStyle(
-                            fontSize: 34,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.teal),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(1.0),
-                      child: Text(
-                        'S',
-                        style: TextStyle(
-                            fontSize: 34,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.amber[900]),
-                      ),
-                    )
-                  ],
-                )
+                  height: 80,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/two_blocks_launcher.png"))),
+                ),
+                ColorFullBlocks()
                 // Text(
                 //   'BLOCKS',
                 //   style: TextStyle(fontSize: 32, letterSpacing: 3),
@@ -220,6 +156,69 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ColorFullBlocks extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(1),
+          child: Text(
+            'B',
+            style: TextStyle(
+                fontSize: 34, fontWeight: FontWeight.bold, color: Colors.red),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(1.0),
+          child: Text(
+            'L',
+            style: TextStyle(
+                fontSize: 34, fontWeight: FontWeight.bold, color: Colors.green),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(1.0),
+          child: Text(
+            'O',
+            style: TextStyle(
+                fontSize: 34,
+                fontWeight: FontWeight.bold,
+                color: Colors.pink[400]),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(1.0),
+          child: Text(
+            'C',
+            style: TextStyle(
+                fontSize: 34, fontWeight: FontWeight.bold, color: Colors.blue),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(1.0),
+          child: Text(
+            'K',
+            style: TextStyle(
+                fontSize: 34, fontWeight: FontWeight.bold, color: Colors.teal),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(1.0),
+          child: Text(
+            'S',
+            style: TextStyle(
+                fontSize: 34,
+                fontWeight: FontWeight.bold,
+                color: Colors.amber[900]),
+          ),
+        )
+      ],
     );
   }
 }
