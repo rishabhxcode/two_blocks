@@ -33,10 +33,11 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
   }
 
   saveHighScore(score) async {
-    if (score > highScore) {
+    if (score >= highScore) {
       sharedPref.saveTwoBlockScore(score);
-      highScore++;
+      highScore = score;
     }
+    // setState(() {});
   }
 
   setTimer(int seconds) {
@@ -236,6 +237,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                                   score: tb.score,
                                                 )));
                                           },
+                                          time: time,
                                           gen: () {
                                             Future.delayed(
                                                 Duration(milliseconds: 300),
@@ -274,6 +276,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                                   score: tb.score,
                                                 )));
                                           },
+                                          time: time,
                                           gen: () {
                                             Future.delayed(
                                                 Duration(milliseconds: 300),
@@ -331,6 +334,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                                   score: tb.score,
                                                 )));
                                           },
+                                          time: time,
                                           gen: () {
                                             Future.delayed(
                                                 Duration(milliseconds: 300),
@@ -369,6 +373,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                                   score: tb.score,
                                                 )));
                                           },
+                                          time: time,
                                           gen: () {
                                             Future.delayed(
                                                 Duration(milliseconds: 300),
@@ -426,6 +431,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                                 score: tb.score,
                                               )));
                                         },
+                                        time: time,
                                         gen: () {
                                           Future.delayed(
                                               Duration(milliseconds: 300), () {
@@ -463,6 +469,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                                 score: tb.score,
                                               )));
                                         },
+                                        time: time,
                                         gen: () {
                                           Future.delayed(
                                               Duration(milliseconds: 300), () {
@@ -518,6 +525,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                                 score: tb.score,
                                               )));
                                         },
+                                        time: time,
                                         gen: () {
                                           Future.delayed(
                                               Duration(milliseconds: 300), () {
@@ -525,6 +533,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                               changeLevel();
                                               timerController.reset();
                                               tb.generate();
+                                          
                                               timerController.forward();
                                             });
                                           });
@@ -555,6 +564,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                                 score: tb.score,
                                               )));
                                         },
+                                        time: time,
                                         gen: () {
                                           Future.delayed(
                                               Duration(milliseconds: 300), () {
@@ -562,6 +572,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
                                               changeLevel();
                                               timerController.reset();
                                               tb.generate();
+                                          
                                               timerController.forward();
                                             });
                                           });
