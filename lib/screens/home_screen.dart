@@ -35,13 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  '2',
-                  style: TextStyle(
-                      fontSize: 100,
-                      color: Colors.purple[700],
-                      fontWeight: FontWeight.w600),
-                ),
+                Container(
+                  margin: EdgeInsets.only(bottom:15),
+                  width: 100,
+                height: 100,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/two_blocks_launcher.png"))),
+            ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[

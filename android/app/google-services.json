@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "310262705422",
+    "firebase_url": "https://twoblocks-18b66.firebaseio.com",
+    "project_id": "twoblocks-18b66",
+    "storage_bucket": "twoblocks-18b66.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310262705422:android:65bad6e7b22b89d6b73b5f",
+        "android_client_info": {
+          "package_name": "com.agneeapps.two_blocks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "310262705422-ooc6rg6a0kqaoh3dqcvvtbptakjfvu8s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.agneeapps.two_blocks",
+            "certificate_hash": "72ae00594c842ec8f28e822acc0d1f61229a9aa6"
+          }
+        },
+        {
+          "client_id": "310262705422-ui6rpua0lgpuf9jlgqupme1kr638rr7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSKEJV62UeFKtkhor2JSPoSis0NBp1LJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "310262705422-ui6rpua0lgpuf9jlgqupme1kr638rr7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
