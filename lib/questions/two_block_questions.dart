@@ -152,9 +152,9 @@ class TwoBlockQuestions {
   }
 
   saveHighScore() async {
-    if (_score > _highScore) {
+    if (_score >= _highScore) {
       sharedPref.saveTwoBlockScore(score);
-      _highScore++;
+      _highScore = _score;
       print('SCORE : $_score');
     }
   }
@@ -248,17 +248,18 @@ class TwoBlockQuestions {
 //
 
   generate() {
-    _count++;
     if (_isInit == false) {
       getHighScore();
     }
     print(_isInit);
     _isInit = true;
     _isInCorrect = false;
-    _operation = operationGenerator();
-    // _operation = Constants.divide;
-    _var1 = var1Generator(_operation);
-    _var2 = var2Generator(_operation, _var1);
+    // _operation = operationGenerator();
+    _operation = Constants.divide;
+    // _var1 = var1Generator(_operation);
+    _var1 = 1;
+    // _var2 = var2Generator(_operation, _var1);
+    _var2 = 1;
     if (_operation == Constants.divide) {
       int temp = _var1;
       _var1 = _var2;
@@ -477,7 +478,11 @@ class TwoBlockQuestions {
       _shadowB4.set(Constants.greenShadow);
   }
 
-  onPressedA1({Function gen, AnimationController controller, Function route}) {
+  onPressedA1(
+      {Function gen,
+      AnimationController controller,
+      int time,
+      Function route}) {
     setATransparent();
     _colorA1.set(Colors.purple[100]);
     _a = _optA1;
@@ -491,12 +496,15 @@ class TwoBlockQuestions {
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
       if (check == true) {
-        _score++;
+        _count++;
+        _score +=
+            time - (controller.duration.inSeconds * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
         gen();
       } else {
+        _isInCorrect = true;
         _lives--;
         controller.stop();
         _choice2Ans = '$_answerB';
@@ -520,7 +528,11 @@ class TwoBlockQuestions {
     }
   }
 
-  onPressedA2({Function gen, AnimationController controller, Function route}) {
+  onPressedA2(
+      {Function gen,
+      AnimationController controller,
+      int time,
+      Function route}) {
     setATransparent();
     _colorA2.set(Colors.purple[100]);
     _a = _optA2;
@@ -534,12 +546,16 @@ class TwoBlockQuestions {
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
       if (check == true) {
-        _score++;
+        _count++;
+        // _score++;
+        _score +=
+            time - (controller.duration.inSeconds * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
         gen();
       } else {
+        _isInCorrect = true;
         controller.stop();
         _lives--;
         _choice2Ans = '$_answerB';
@@ -561,7 +577,11 @@ class TwoBlockQuestions {
     }
   }
 
-  onPressedA3({Function gen, AnimationController controller, Function route}) {
+  onPressedA3(
+      {Function gen,
+      AnimationController controller,
+      int time,
+      Function route}) {
     setATransparent();
     _colorA3.set(Colors.purple[100]);
     _a = _optA3;
@@ -575,12 +595,16 @@ class TwoBlockQuestions {
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
       if (check == true) {
-        _score++;
+        _count++;
+        // _score++;
+        _score +=
+            time - (controller.duration.inSeconds * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
         gen();
       } else {
+        _isInCorrect = true;
         controller.stop();
         _lives--;
         _choice2Ans = '$_answerB';
@@ -602,7 +626,11 @@ class TwoBlockQuestions {
     }
   }
 
-  onPressedA4({Function gen, AnimationController controller, Function route}) {
+  onPressedA4(
+      {Function gen,
+      AnimationController controller,
+      int time,
+      Function route}) {
     setATransparent();
     _colorA4.set(Colors.purple[100]);
     _a = _optA4;
@@ -616,12 +644,16 @@ class TwoBlockQuestions {
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
       if (check == true) {
-        _score++;
+        _count++;
+        // _score++;
+        _score +=
+            time - (controller.duration.inSeconds * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
         gen();
       } else {
+        _isInCorrect = true;
         controller.stop();
         _lives--;
         _choice2Ans = '$_answerB';
@@ -644,7 +676,11 @@ class TwoBlockQuestions {
     }
   }
 
-  onPressedB1({Function gen, AnimationController controller, Function route}) {
+  onPressedB1(
+      {Function gen,
+      AnimationController controller,
+      int time,
+      Function route}) {
     setBTransparent();
     _colorB1.set(Colors.blue[100]);
     _b = _optB1;
@@ -658,12 +694,16 @@ class TwoBlockQuestions {
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
       if (check == true) {
-        _score++;
+        _count++;
+        // _score++;
+        _score +=
+            time - (controller.duration.inSeconds * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
         gen();
       } else {
+        _isInCorrect = true;
         controller.stop();
         _lives--;
         _choice2Ans = '$_answerB';
@@ -686,7 +726,11 @@ class TwoBlockQuestions {
     }
   }
 
-  onPressedB2({Function gen, AnimationController controller, Function route}) {
+  onPressedB2(
+      {Function gen,
+      AnimationController controller,
+      int time,
+      Function route}) {
     setBTransparent();
     _colorB2.set(Colors.blue[100]);
     _b = _optB2;
@@ -700,12 +744,16 @@ class TwoBlockQuestions {
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
       if (check == true) {
-        _score++;
+        _count++;
+        // _score++;
+        _score +=
+            time - (controller.duration.inSeconds * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
         gen();
       } else {
+        _isInCorrect = true;
         controller.stop();
         _lives--;
         _choice2Ans = '$_answerB';
@@ -728,7 +776,11 @@ class TwoBlockQuestions {
     }
   }
 
-  onPressedB3({Function gen, AnimationController controller, Function route}) {
+  onPressedB3(
+      {Function gen,
+      AnimationController controller,
+      int time,
+      Function route}) {
     setBTransparent();
     _colorB3.set(Colors.blue[100]);
     _b = _optB3;
@@ -744,12 +796,16 @@ class TwoBlockQuestions {
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
       if (check == true) {
-        _score++;
+        _count++;
+        // _score++;
+        _score +=
+            time - (controller.duration.inSeconds * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
         gen();
       } else {
+        _isInCorrect = true;
         controller.stop();
         _lives--;
         _choice2Ans = '$_answerB';
@@ -772,7 +828,11 @@ class TwoBlockQuestions {
     }
   }
 
-  onPressedB4({Function gen, AnimationController controller, Function route}) {
+  onPressedB4(
+      {Function gen,
+      AnimationController controller,
+      int time,
+      Function route}) {
     setBTransparent();
     _colorB4.set(Colors.blue[100]);
     _b = _optB4;
@@ -786,12 +846,16 @@ class TwoBlockQuestions {
           _a, _b, _choice1, _choice2, _var1, _var2, _operation, _result);
       print('CHECK : $check');
       if (check == true) {
-        _score++;
+        _count++;
+        // _score++;
+        _score +=
+            time - (controller.duration.inSeconds * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
         gen();
       } else {
+        _isInCorrect = true;
         controller.stop();
         _lives--;
         _choice2Ans = '$_answerB';
@@ -807,7 +871,7 @@ class TwoBlockQuestions {
           Future.delayed(Duration(milliseconds: 1500), () {
             route();
           });
-        } else {
+
           _isInCorrect = true;
         }
       }

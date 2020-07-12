@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:two_blocks/animations/routing_animation_widget.dart';
 import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/main.dart';
-import 'package:two_blocks/screens/game_over_screen.dart';
 import 'package:two_blocks/screens/highscores_screen.dart';
 import 'package:two_blocks/screens/one_block_playground.dart';
 import 'package:two_blocks/screens/two_block_playground.dart';

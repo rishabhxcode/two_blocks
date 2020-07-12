@@ -204,8 +204,8 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                           changeLevel();
                                           timerController.reset();
                                           ob.generate();
+                                          saveScore(ob.score);
                                           timerController.forward();
-
                                           setState(() {});
                                         });
                                       },
@@ -240,7 +240,9 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                         changeLevel();
                                         timerController.reset();
                                         ob.generate();
+                                        saveScore(ob.score);
                                         timerController.forward();
+
                                         setState(() {});
                                       });
                                     },
@@ -293,6 +295,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                           changeLevel();
                                           timerController.reset();
                                           ob.generate();
+                                          saveScore(ob.score);
                                           timerController.forward();
                                           setState(() {});
                                         });
@@ -328,7 +331,9 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
                                         changeLevel();
                                         timerController.reset();
                                         ob.generate();
+                                        saveScore(ob.score);
                                         timerController.forward();
+
                                         setState(() {});
                                       });
                                     },
@@ -351,7 +356,6 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
             child: ob.isInCorrect
                 ? NextButton(
                     onTap: () {
-                      time = 13;
                       ob.generate();
                       ob.setIsInCorrect(false);
                       saveScore(ob.score);

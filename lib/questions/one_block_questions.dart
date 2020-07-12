@@ -77,8 +77,8 @@ class OneBlockQuestions {
   int get count => _count;
 
   generate() {
-    _count++;
     _operation = operationGenerator();
+    _operation = Constants.divide;
     _var1 = var1Generator(_operation, min: _var1min, max: _var1max);
     _var2 = var2Generator(_operation, _var1, min: _var2min, max: _var2max);
     if (_operation == Constants.divide) {
@@ -88,7 +88,8 @@ class OneBlockQuestions {
     }
     _result = resultGenerator(_operation, _var1, _var2);
     _buttonSelected = buttonSelected();
-    _choice = getChoiceSelected();
+    // _choice = getChoiceSelected();
+    _choice = 3;
     _answer = answerGenerator(_choice, _var1, _operation, _var2, _result);
     _opt1 = opt1Generator(_buttonSelected, _choice, _answer,
         max: _optMax, min: _optMin);
@@ -299,11 +300,13 @@ class OneBlockQuestions {
     try {
       int res = a ~/ b;
       if (res == result) {
+        print('a: $a b: $b result: $result');
         return true;
       }
     } catch (DivideByZeroException) {
       return false;
     }
+
     return false;
   }
 
@@ -338,8 +341,7 @@ class OneBlockQuestions {
           return true;
         else if (operation == Constants.minus && var1 - var2 == ans)
           return true;
-        else if (operation == Constants.divide &&
-            checkDivide(var1, var2, result))
+        else if (operation == Constants.divide && checkDivide(var1, var2, ans))
           return true;
         else if (operation == Constants.multiply && var1 * var2 == ans)
           return true;
@@ -381,6 +383,7 @@ class OneBlockQuestions {
     bool check =
         answerChecker(_opt1, _choice, _var1, _var2, _result, _operation);
     if (check == true) {
+      _count++;
       _message = Constants.pass[random.nextInt(4)];
       _messageSize = 24;
       _messageColor.set(Colors.green);
@@ -421,6 +424,7 @@ class OneBlockQuestions {
     bool check =
         answerChecker(_opt2, _choice, _var1, _var2, _result, _operation);
     if (check == true) {
+      _count++;
       _message = Constants.pass[random.nextInt(4)];
       _messageSize = 24;
       _messageColor.set(Colors.green);
@@ -461,6 +465,7 @@ class OneBlockQuestions {
     bool check =
         answerChecker(_opt3, _choice, _var1, _var2, _result, _operation);
     if (check == true) {
+      _count++;
       _message = Constants.pass[random.nextInt(4)];
       _messageSize = 24;
       _messageColor.set(Colors.green);
@@ -474,7 +479,6 @@ class OneBlockQuestions {
       setGreenShadow(_buttonSelected);
       _lives--;
       _choiceAnswer = '$_answer';
-
       _message = Constants.fail[random.nextInt(3)];
       _messageSize = 24;
       _messageColor.set(Colors.red);
@@ -502,6 +506,7 @@ class OneBlockQuestions {
     bool check =
         answerChecker(_opt4, _choice, _var1, _var2, _result, _operation);
     if (check == true) {
+      _count++;
       _message = Constants.pass[random.nextInt(4)];
       _messageSize = 24;
       _messageColor.set(Colors.green);
