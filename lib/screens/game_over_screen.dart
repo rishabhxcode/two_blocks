@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:two_blocks/animations/routing_animation_widget.dart';
 import 'package:two_blocks/constants.dart';
-import 'package:two_blocks/main.dart';
-import 'package:two_blocks/screens/home_screen.dart';
 import 'package:two_blocks/widgets/neu_button_widget.dart';
 
 class GameOverScreen extends StatefulWidget {

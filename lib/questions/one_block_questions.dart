@@ -78,7 +78,6 @@ class OneBlockQuestions {
 
   generate() {
     _operation = operationGenerator();
-    _operation = Constants.divide;
     _var1 = var1Generator(_operation, min: _var1min, max: _var1max);
     _var2 = var2Generator(_operation, _var1, min: _var2min, max: _var2max);
     if (_operation == Constants.divide) {
@@ -88,8 +87,7 @@ class OneBlockQuestions {
     }
     _result = resultGenerator(_operation, _var1, _var2);
     _buttonSelected = buttonSelected();
-    // _choice = getChoiceSelected();
-    _choice = 3;
+    _choice = getChoiceSelected();
     _answer = answerGenerator(_choice, _var1, _operation, _var2, _result);
     _opt1 = opt1Generator(_buttonSelected, _choice, _answer,
         max: _optMax, min: _optMin);

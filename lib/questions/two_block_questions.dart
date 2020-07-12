@@ -254,20 +254,16 @@ class TwoBlockQuestions {
     print(_isInit);
     _isInit = true;
     _isInCorrect = false;
-    // _operation = operationGenerator();
-    _operation = Constants.divide;
-    // _var1 = var1Generator(_operation);
-    _var1 = 1;
-    // _var2 = var2Generator(_operation, _var1);
-    _var2 = 1;
+    _operation = operationGenerator();
+    _var1 = var1Generator(_operation);
+    _var2 = var2Generator(_operation, _var1);
     if (_operation == Constants.divide) {
       int temp = _var1;
       _var1 = _var2;
       _var2 = temp;
     }
     _result = resultGenerator(_operation, _var1, _var2);
-    // _choice1 = choice1Selection();
-    _choice1 = 2;
+    _choice1 = choice1Selection();
     _choice2 = choice2Selection(_choice1);
     _answerA = ansAGenerator(_choice1, _var1, _operation, _var2, _result);
     _answerB = ansAGenerator(_choice2, _var1, _operation, _var2, _result);
@@ -440,6 +436,7 @@ class TwoBlockQuestions {
       } else
         return false;
     }
+    return false;
   }
 
   setATransparent() {
