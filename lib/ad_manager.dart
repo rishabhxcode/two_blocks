@@ -13,7 +13,7 @@ class AdManager {
     }
   }
 
-  static String get bannerAdUnitId {
+  static String get bannerGameOverAdUnitId {
     if (Platform.isAndroid) {
       return "ca-app-pub-5910340737637404/2923113096";
     } else if (Platform.isIOS) {
@@ -24,6 +24,16 @@ class AdManager {
     }
   }
 
+static String get bannerHighScoreAdUnitId {
+    if (Platform.isAndroid) {
+      return "ca-app-pub-5910340737637404/3770125058";
+    } else if (Platform.isIOS) {
+      //todo: change this id when launching for ios
+      return "ca-app-pub-3940256099942544/4339318960";
+    } else {
+      throw new UnsupportedError("Unsupported platform");
+    }
+  }
   static String get interstitialAdUnitId {
     if (Platform.isAndroid) {
       //todo: change this id when creating this ad
