@@ -22,7 +22,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
   OneBlockQuestions ob = OneBlockQuestions();
   SaveAndGet sharedPref = SaveAndGet();
   AnimationController timerController;
-  int time = 7;
+  int time = 12;
   int highScore;
   getScore() async {
     highScore = await sharedPref.getOneBlockScore() ?? 0;
@@ -59,40 +59,40 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
 
   changeLevel() {
     if (ob.level == 0) {
-      time = 7;
-      setTimer(time);
-    } else if (ob.level == 1) {
-      time = 8;
-      setTimer(time);
-    } else if (ob.level == 2) {
-      time = 9;
-      setTimer(time);
-    } else if (ob.level == 3) {
-      time = 10;
-      setTimer(time);
-    } else if (ob.level == 4) {
-      time = 11;
-      setTimer(time);
-    } else if (ob.level == 5) {
       time = 12;
       setTimer(time);
-    } else if (ob.level == 6) {
-      time = 13;
-      setTimer(time);
-    } else if (ob.level == 7) {
+    } else if (ob.level == 1) {
       time = 15;
       setTimer(time);
-    } else if (ob.level == 8) {
-      time = 16;
-      setTimer(time);
-    } else if (ob.level == 9) {
+    } else if (ob.level == 2) {
       time = 18;
       setTimer(time);
+    } else if (ob.level == 3) {
+      time = 21;
+      setTimer(time);
+    } else if (ob.level == 4) {
+      time = 24;
+      setTimer(time);
+    } else if (ob.level == 5) {
+      time = 27;
+      setTimer(time);
+    } else if (ob.level == 6) {
+      time = 30;
+      setTimer(time);
+    } else if (ob.level == 7) {
+      time = 33;
+      setTimer(time);
+    } else if (ob.level == 8) {
+      time = 36;
+      setTimer(time);
+    } else if (ob.level == 9) {
+      time = 39;
+      setTimer(time);
     } else if (ob.level == 10) {
-      time = 20;
+      time = 42;
       setTimer(time);
     } else {
-      time = 24;
+      time = 45;
       setTimer(time);
     }
   }

@@ -21,7 +21,7 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
     with TickerProviderStateMixin {
   TwoBlockQuestions tb = TwoBlockQuestions();
   AnimationController timerController;
-  int time = 10;
+  int time = 14;
   int highScore = 0;
 
   SaveAndGet sharedPref = SaveAndGet();
@@ -62,40 +62,40 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
 
   changeLevel() {
     if (tb.level == 0) {
-      time = 12;
-      setTimer(time);
-    } else if (tb.level == 1) {
-      time = 13;
-      setTimer(time);
-    } else if (tb.level == 2) {
       time = 14;
       setTimer(time);
-    } else if (tb.level == 3) {
-      time = 15;
-      setTimer(time);
-    } else if (tb.level == 4) {
-      time = 16;
-      setTimer(time);
-    } else if (tb.level == 5) {
+    } else if (tb.level == 1) {
       time = 17;
       setTimer(time);
-    } else if (tb.level == 6) {
-      time = 19;
-      setTimer(time);
-    } else if (tb.level == 7) {
+    } else if (tb.level == 2) {
       time = 20;
       setTimer(time);
-    } else if (tb.level == 8) {
-      time = 21;
-      setTimer(time);
-    } else if (tb.level == 9) {
+    } else if (tb.level == 3) {
       time = 23;
       setTimer(time);
+    } else if (tb.level == 4) {
+      time = 26;
+      setTimer(time);
+    } else if (tb.level == 5) {
+      time = 29;
+      setTimer(time);
+    } else if (tb.level == 6) {
+      time = 32;
+      setTimer(time);
+    } else if (tb.level == 7) {
+      time = 35;
+      setTimer(time);
+    } else if (tb.level == 8) {
+      time = 38;
+      setTimer(time);
+    } else if (tb.level == 9) {
+      time = 41;
+      setTimer(time);
     } else if (tb.level == 10) {
-      time = 25;
+      time = 44;
       setTimer(time);
     } else {
-      time = 29;
+      time = 47;
       setTimer(time);
     }
   }

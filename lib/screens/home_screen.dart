@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:two_blocks/animations/routing_animation_widget.dart';
 import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/main.dart';
+import 'package:two_blocks/screens/endurance.dart';
 import 'package:two_blocks/screens/highscores_screen.dart';
 import 'package:two_blocks/screens/one_block_playground.dart';
 import 'package:two_blocks/screens/two_block_playground.dart';
@@ -54,6 +55,41 @@ class _HomeScreenState extends State<HomeScreen> {
             alignment: WrapAlignment.center,
             direction: Axis.vertical,
             children: <Widget>[
+              NeuButtonWidget(
+                padding: EdgeInsets.all(4),
+                height: 50,
+                width: 166,
+                border: Border.all(width: 2, color: Colors.yellow.shade800),
+                highLightColor: Colors.white,
+                splashColor: Colors.transparent,
+                child: Row(
+                  children: <Widget>[
+                    SizedBox(width: 6),
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.play_arrow,
+                          size: 36,
+                          color: Colors.purple,
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          'Endurance',
+                          style: Constants.textStyle1,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.push(context, ScaleRoute(to: Endurance(1)));
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
               NeuButtonWidget(
                 padding: EdgeInsets.all(4),
                 height: 50,
