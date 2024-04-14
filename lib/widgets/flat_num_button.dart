@@ -7,7 +7,7 @@ class FlatNumButton extends StatelessWidget {
   final double topRightBorder;
   final double bottomRightBorder;
   const FlatNumButton(
-      {Key key,
+      {Key? key,
       this.number = '?',
       this.topLeftBorder = 0,
       this.bottomLeftBorder = 0,
@@ -19,17 +19,26 @@ class FlatNumButton extends StatelessWidget {
     return Container(
       height: 100,
       width: 100,
-      child: FlatButton(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.white,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
+      child: TextButton(
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(topLeftBorder),
                 topRight: Radius.circular(topRightBorder),
                 bottomLeft: Radius.circular(bottomLeftBorder),
-                bottomRight: Radius.circular(bottomRightBorder)),
-            side: BorderSide(
-                color: Colors.grey[300], style: BorderStyle.solid, width: 0.5)),
+                bottomRight: Radius.circular(bottomRightBorder),
+              ),
+            ),
+          ),
+          backgroundColor: MaterialStateProperty.all(Colors.transparent),
+          overlayColor: MaterialStateProperty.resolveWith((states) {
+            if (states.contains(MaterialState.pressed)) {
+              return Colors.white; // the color when button is pressed
+            }
+            return null; // transparent
+          }),
+        ),
         child: Text(
           number,
         ),
