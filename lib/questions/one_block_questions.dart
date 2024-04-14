@@ -6,19 +6,19 @@ class OneBlockQuestions {
   Random random = Random();
   List<String> operations = Constants.symbols;
   /////
-  String _operation;
-  int _var1;
-  int _var2;
-  int _result;
-  dynamic _answer;
-  int _buttonSelected;
-  int _choice;
-  dynamic _opt1;
-  dynamic _opt2;
-  dynamic _opt3;
-  dynamic _opt4;
+  late String _operation;
+  late int _var1;
+  late int _var2;
+  late int _result;
+  late Object _answer;
+  late int _buttonSelected;
+  late int _choice;
+  late Object _opt1;
+  late Object _opt2;
+  late Object _opt3;
+  late Object _opt4;
   bool _isInCorrect = false;
-  dynamic _opt;
+  late Object _opt;
 //
   int _level = 0;
   int _count = 0;
@@ -38,10 +38,10 @@ class OneBlockQuestions {
   Colour _messageColor = Colour();
 
 //
-  Shadows _shadow1 = Shadows();
-  Shadows _shadow2 = Shadows();
-  Shadows _shadow3 = Shadows();
-  Shadows _shadow4 = Shadows();
+  Shadows? _shadow1 = Shadows();
+  Shadows? _shadow2 = Shadows();
+  Shadows? _shadow3 = Shadows();
+  Shadows? _shadow4 = Shadows();
 //
   int _score = 0;
   bool _absorbOptButtons = false;
@@ -51,11 +51,11 @@ class OneBlockQuestions {
   int get level => _level;
   int get score => _score;
   int get lives => _lives;
-  int get choiceSelected => _choice;
-  int get var1 => _var1;
-  int get var2 => _var2;
-  int get result => _result;
-  String get operation => _operation;
+  int? get choiceSelected => _choice;
+  int? get var1 => _var1;
+  int? get var2 => _var2;
+  int? get result => _result;
+  String? get operation => _operation;
   String get choiceAnswer => _choiceAnswer;
   bool get absorbOptButtons => _absorbOptButtons;
   bool get isInCorrect => _isInCorrect;
@@ -65,10 +65,10 @@ class OneBlockQuestions {
   dynamic get opt3 => _opt3;
   dynamic get opt4 => _opt4;
   dynamic get answer => _answer;
-  Shadows get shadows1 => _shadow1;
-  Shadows get shadows2 => _shadow2;
-  Shadows get shadows3 => _shadow3;
-  Shadows get shadows4 => _shadow4;
+  Shadows get shadows1 => _shadow1 ?? Shadows();
+  Shadows get shadows2 => _shadow2 ?? Shadows();
+  Shadows get shadows3 => _shadow3 ?? Shadows();
+  Shadows get shadows4 => _shadow4 ?? Shadows();
 
   String get message => _message;
   double get messageSize => _messageSize;
@@ -102,10 +102,10 @@ class OneBlockQuestions {
     _message = '';
     _messageColor.set(Colors.transparent);
     _messageSize = 0;
-    _shadow1.set(null);
-    _shadow2.set(null);
-    _shadow3.set(null);
-    _shadow4.set(null);
+    _shadow1?.set(null);
+    _shadow2?.set(null);
+    _shadow3?.set(null);
+    _shadow4?.set(null);
     _isInCorrect = false;
     _choiceAnswer = '';
     _absorbOptButtons = false;
@@ -362,20 +362,21 @@ class OneBlockQuestions {
 
   setGreenShadow(selected) {
     if (selected == 0) {
-      _shadow1.set(Constants.greenShadow);
+      _shadow1?.set(Constants.greenShadow);
     } else if (selected == 1) {
-      _shadow2.set(Constants.greenShadow);
+      _shadow2?.set(Constants.greenShadow);
     } else if (selected == 2) {
-      _shadow3.set(Constants.greenShadow);
+      _shadow3?.set(Constants.greenShadow);
     } else
-      _shadow4.set(Constants.greenShadow);
+      _shadow4?.set(Constants.greenShadow);
   }
 
-  onPressed1(
-      {AnimationController controller,
-      Function route,
-      int time,
-      Function generate}) {
+  onPressed1({
+    required AnimationController controller,
+    required Function route,
+    required int time,
+    required Function generate,
+  }) {
     controller.stop();
     _absorbOptButtons = true;
     bool check =
@@ -386,10 +387,10 @@ class OneBlockQuestions {
       _messageSize = 24;
       _messageColor.set(Colors.green);
       _choiceAnswer = '$_opt1';
-      _score +=
-          time - (controller.duration.inSeconds * controller.value).toInt();
+      _score += time -
+          ((controller.duration?.inSeconds ?? 0) * controller.value).toInt();
       print('SCORE : $_score');
-      _shadow1.set(Constants.greenShadow);
+      _shadow1?.set(Constants.greenShadow);
       generate();
     } else {
       setGreenShadow(_buttonSelected);
@@ -398,7 +399,7 @@ class OneBlockQuestions {
       _message = Constants.fail[random.nextInt(3)];
       _messageSize = 24;
       _messageColor.set(Colors.red);
-      _shadow1.set(Constants.redShadow);
+      _shadow1?.set(Constants.redShadow);
       if (_lives == 0) {
         _count = 0;
         _message = Constants.gameOver;
@@ -413,10 +414,10 @@ class OneBlockQuestions {
   }
 
   onPressed2(
-      {AnimationController controller,
-      Function route,
-      int time,
-      Function generate}) {
+      {required AnimationController controller,
+      required Function route,
+      required int time,
+      required Function generate}) {
     controller.stop();
     _absorbOptButtons = true;
     bool check =
@@ -428,9 +429,9 @@ class OneBlockQuestions {
       _messageColor.set(Colors.green);
       _choiceAnswer = '$_opt2';
       _score +=
-          time - (controller.duration.inSeconds * controller.value).toInt();
+          time - ((controller.duration?.inSeconds?? 0) * controller.value).toInt();
       print('SCORE : $_score');
-      _shadow2.set(Constants.greenShadow);
+      _shadow2?.set(Constants.greenShadow);
       generate();
     } else {
       setGreenShadow(_buttonSelected);
@@ -439,7 +440,7 @@ class OneBlockQuestions {
       _message = Constants.fail[random.nextInt(3)];
       _messageSize = 24;
       _messageColor.set(Colors.red);
-      _shadow2.set(Constants.redShadow);
+      _shadow2?.set(Constants.redShadow);
       if (_lives == 0) {
         _count = 0;
         _message = Constants.gameOver;
@@ -454,10 +455,10 @@ class OneBlockQuestions {
   }
 
   onPressed3(
-      {AnimationController controller,
-      Function route,
-      int time,
-      Function generate}) {
+      {required AnimationController controller,
+      required Function route,
+      required int time,
+      required Function generate}) {
     controller.stop();
     _absorbOptButtons = true;
     bool check =
@@ -468,10 +469,10 @@ class OneBlockQuestions {
       _messageSize = 24;
       _messageColor.set(Colors.green);
       _choiceAnswer = '$_opt3';
-      _score +=
-          time - (controller.duration.inSeconds * controller.value).toInt();
+      _score += time -
+          ((controller.duration?.inSeconds ?? 0) * controller.value).toInt();
       print('SCORE : $_score');
-      _shadow3.set(Constants.greenShadow);
+      _shadow3?.set(Constants.greenShadow);
       generate();
     } else {
       setGreenShadow(_buttonSelected);
@@ -480,7 +481,7 @@ class OneBlockQuestions {
       _message = Constants.fail[random.nextInt(3)];
       _messageSize = 24;
       _messageColor.set(Colors.red);
-      _shadow3.set(Constants.redShadow);
+      _shadow3?.set(Constants.redShadow);
       if (_lives == 0) {
         _count = 0;
         _message = Constants.gameOver;
@@ -495,10 +496,10 @@ class OneBlockQuestions {
   }
 
   onPressed4(
-      {AnimationController controller,
-      Function route,
-      int time,
-      Function generate}) {
+      {required AnimationController controller,
+      required Function route,
+      required int time,
+      required Function generate}) {
     controller.stop();
     _absorbOptButtons = true;
     bool check =
@@ -509,9 +510,9 @@ class OneBlockQuestions {
       _messageSize = 24;
       _messageColor.set(Colors.green);
       _choiceAnswer = '$_opt4';
-      _score +=
-          time - (controller.duration.inSeconds * controller.value).toInt();
-      _shadow4.set(Constants.greenShadow);
+      _score += time -
+          ((controller.duration?.inSeconds ?? 0) * controller.value).toInt();
+      _shadow4?.set(Constants.greenShadow);
       generate();
     } else {
       setGreenShadow(_buttonSelected);
@@ -520,7 +521,7 @@ class OneBlockQuestions {
       _message = Constants.fail[random.nextInt(3)];
       _messageSize = 24;
       _messageColor.set(Colors.red);
-      _shadow4.set(Constants.redShadow);
+      _shadow4?.set(Constants.redShadow);
       if (_lives == 0) {
         _count = 0;
         _message = Constants.gameOver;
@@ -534,7 +535,7 @@ class OneBlockQuestions {
     }
   }
 
-  int option1Generator(restrict, {int min, int max}) {
+  int option1Generator(restrict, {required int min, required int max}) {
     int val = min + random.nextInt(max + 1);
     if (val == restrict)
       return option1Generator(restrict, max: max, min: min);
@@ -542,7 +543,8 @@ class OneBlockQuestions {
       return val;
   }
 
-  int option2Generator(restrict1, restrict2, {int min, int max}) {
+  int option2Generator(restrict1, restrict2,
+      {required int min, required int max}) {
     int val = min + random.nextInt(max + 1);
     if (val == restrict1)
       return option2Generator(restrict1, restrict2, max: max, min: min);
@@ -552,7 +554,8 @@ class OneBlockQuestions {
       return val;
   }
 
-  int option3Generator(restrict1, restrict2, restrict3, {int min, int max}) {
+  int option3Generator(restrict1, restrict2, restrict3,
+      {required int min, required int max}) {
     int val = min + random.nextInt(max + 1);
     if (val == restrict1)
       return option3Generator(restrict1, restrict2, restrict3,
@@ -568,7 +571,7 @@ class OneBlockQuestions {
   }
 
   int option4Generator(restrict1, restrict2, restrict3, restrict4,
-      {int min, int max}) {
+      {required int min, required int max}) {
     int val = min + random.nextInt(max + 1);
     if (val == restrict1)
       return option4Generator(restrict1, restrict2, restrict3, restrict4,
@@ -591,7 +594,7 @@ class OneBlockQuestions {
   }
 
   ///////////////////////////////////////////////////////
-  int divideVarGen({int min, int max}) {
+  int divideVarGen({required int min, required int max}) {
     int val = min + random.nextInt(max);
     if (val == 0)
       return divideVarGen(min: min, max: max);
@@ -599,16 +602,16 @@ class OneBlockQuestions {
       return val;
   }
 
-  int var1Generator(operation, {int min, int max}) {
+  int var1Generator(operation, {required int min, required int max}) {
     if (operation == Constants.divide)
       return divideVarGen(min: min, max: max);
     else
       return min + random.nextInt(max + 1);
   }
 
-  int var2Generator(operation, var1, {int min, int max}) {
+  int var2Generator(operation, var1, {required int min, required int max}) {
     if (operation == Constants.divide)
-      return (1 + min + random.nextInt(max)) * var1;
+      return ((1 + min + random.nextInt(max)) * var1).toInt();
     else
       return min + random.nextInt(max + 1);
   }
@@ -645,8 +648,13 @@ class OneBlockQuestions {
       return result;
   }
 
-  dynamic opt1Generator(int buttonSelected, int choiceSelected, dynamic answer,
-      {int min, int max}) {
+  dynamic opt1Generator(
+    int buttonSelected,
+    int choiceSelected,
+    dynamic answer, {
+    required int min,
+    required int max,
+  }) {
     if (buttonSelected == 0) {
       return answer;
     } else {
@@ -661,7 +669,7 @@ class OneBlockQuestions {
 
   dynamic opt2Generator(
       int buttonSelected, int choiceSelected, dynamic answer, opt1,
-      {int min, int max}) {
+      {required int min, required int max}) {
     if (buttonSelected == 1) {
       return answer;
     } else {
@@ -678,7 +686,7 @@ class OneBlockQuestions {
 
   dynamic opt3Generator(
       int buttonSelected, int choiceSelected, dynamic answer, opt1, opt2,
-      {int min, int max}) {
+      {required int min, required int max}) {
     if (buttonSelected == 2) {
       return answer;
     } else {
@@ -696,7 +704,7 @@ class OneBlockQuestions {
 
   dynamic opt4Generator(
       int buttonSelected, int choiceSelected, dynamic answer, opt1, opt2, opt3,
-      {int min, int max}) {
+      {required int min, required int max}) {
     if (buttonSelected == 3) {
       return answer;
     } else {
@@ -713,12 +721,12 @@ class OneBlockQuestions {
     }
   }
 
-  onTimeFinished(double seconds, int time, {Function route}) {
+  onTimeFinished(double seconds, int time, {Function? route}) {
     if (seconds == time) {
-      if (_answer == _opt1) _shadow1.set(Constants.greenShadow);
-      if (_answer == _opt2) _shadow2.set(Constants.greenShadow);
-      if (_answer == _opt3) _shadow3.set(Constants.greenShadow);
-      if (_answer == _opt4) _shadow4.set(Constants.greenShadow);
+      if (_answer == _opt1) _shadow1?.set(Constants.greenShadow);
+      if (_answer == _opt2) _shadow2?.set(Constants.greenShadow);
+      if (_answer == _opt3) _shadow3?.set(Constants.greenShadow);
+      if (_answer == _opt4) _shadow4?.set(Constants.greenShadow);
       _choiceAnswer = '$_answer';
       _lives--;
       if (_lives == 0) {
@@ -726,7 +734,7 @@ class OneBlockQuestions {
         _messageColor.set(Colors.red);
         _messageSize = 30;
         _absorbOptButtons = true;
-        route();
+        route?.call();
       } else {
         _message = Constants.timeUp;
         _messageColor.set(Colors.red);
@@ -739,13 +747,13 @@ class OneBlockQuestions {
 }
 
 class Shadows {
-  List<BoxShadow> _shadow;
-  void set(List<BoxShadow> shadow) => _shadow = shadow;
-  List<BoxShadow> get() => _shadow;
+  List<BoxShadow>? _shadow;
+  void set(List<BoxShadow>? shadow) => _shadow = shadow;
+  List<BoxShadow>? get() => _shadow;
 }
 
 class Colour {
-  Color _color;
+  Color? _color;
   void set(Color color) => _color = color;
-  Color get() => _color;
+  Color? get() => _color;
 }

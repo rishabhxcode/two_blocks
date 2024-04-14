@@ -3,12 +3,12 @@ import 'dart:math' as math;
 
 class DefaultRoute extends MaterialPageRoute {
   final Widget to;
-  DefaultRoute({this.to}) : super(builder: (context) => to);
+  DefaultRoute({required this.to}) : super(builder: (context) => to);
 }
 
 class ScaleRoute extends PageRouteBuilder {
   final Widget to;
-  ScaleRoute({this.to})
+  ScaleRoute({required this.to})
       : super(
             pageBuilder: (
               context,
@@ -35,7 +35,7 @@ class ScaleRoute extends PageRouteBuilder {
 
 class RtoLSlideRoute extends PageRouteBuilder {
   final Widget to;
-  RtoLSlideRoute({this.to})
+  RtoLSlideRoute({required this.to})
       : super(
           pageBuilder: (
             BuildContext context,
@@ -61,7 +61,7 @@ class RtoLSlideRoute extends PageRouteBuilder {
 
 class LtoRSlideRoute extends PageRouteBuilder {
   final Widget to;
-  LtoRSlideRoute({this.to})
+  LtoRSlideRoute({required this.to})
       : super(
           pageBuilder: (
             BuildContext context,
@@ -88,7 +88,7 @@ class LtoRSlideRoute extends PageRouteBuilder {
 class PageSlideRoute extends PageRouteBuilder {
   final Widget to;
   final Widget from;
-  PageSlideRoute({this.to, this.from})
+  PageSlideRoute({required this.to, required this.from})
       : super(
             transitionDuration: Duration(milliseconds: 600),
             pageBuilder: (BuildContext context, Animation<double> animation,
@@ -119,10 +119,10 @@ class PageSlideRoute extends PageRouteBuilder {
 }
 
 class RotateRoute extends PageRouteBuilder {
-  static AnimationController animationController;
+  static late AnimationController animationController;
   final Widget from;
   final Widget to;
-  RotateRoute({this.from, this.to})
+  RotateRoute({required this.from, required this.to})
       : super(pageBuilder: (BuildContext context, Animation<double> animation,
             Animation<double> secondaryAnimation) {
           return to;

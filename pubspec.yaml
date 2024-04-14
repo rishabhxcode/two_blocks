@@ -14,7 +14,7 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.2.2 <3.0.0"
+  sdk: ">=2.12.0 <=3.3.0"
 
 dependencies:
   flutter:
@@ -22,7 +22,6 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
   shared_preferences: ^0.5.7+3
   vibration: ^1.2.4
   esys_flutter_share: ^1.0.2
@@ -31,6 +30,7 @@ dependencies:
   admob_flutter: ^0.3.4
 
  
+  cupertino_icons: ^1.0.6
 
 dev_dependencies:
   flutter_launcher_icons: ^0.7.5
@@ -46,7 +46,6 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -68,10 +67,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts: 
+  fonts:
     - family: varela
       fonts:
-        - asset: fonts/VarelaRound-Regular.ttf 
+        - asset: fonts/VarelaRound-Regular.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

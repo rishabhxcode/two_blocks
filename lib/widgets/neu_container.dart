@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:two_blocks/constants.dart';
 
 class NeuContainer extends StatelessWidget {
-  final Color fillColor;
-  final BorderRadius borderRadius;
+  final Color? fillColor;
+  final BorderRadius? borderRadius;
   final double height;
   final double width;
-  final EdgeInsets padding;
-  final EdgeInsets margin;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
   final Alignment alignment;
-  final Widget child;
-  final Gradient gradient;
-  final List<BoxShadow> boxShadow;
+  final Widget? child;
+  final Gradient? gradient;
+  final List<BoxShadow>? boxShadow;
+
   const NeuContainer({
-    Key key,
+    Key? key,
     this.fillColor,
     this.borderRadius,
     this.height = 60,
@@ -25,6 +26,7 @@ class NeuContainer extends StatelessWidget {
     this.gradient,
     this.boxShadow,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +50,7 @@ class NeuContainer extends StatelessWidget {
                   blurRadius: 4,
                   color: Colors.white),
             ],
-        color: fillColor ?? Theme.of(context).accentColor,
+        color: fillColor ?? Theme.of(context).secondaryHeaderColor,
         borderRadius: borderRadius ?? BorderRadius.circular(4),
         gradient: gradient,
       ),
