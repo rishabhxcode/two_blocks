@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primarySwatch: Colors.green,
         primaryColor: Constants.BGColor,
-        accentColor: Constants.BGColor,
+        // secondary: Constants.BGColor,
       ),
       darkTheme: ThemeData(brightness: Brightness.dark),
       home: MyHomePage(),
