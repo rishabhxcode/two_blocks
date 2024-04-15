@@ -10,7 +10,6 @@ import 'package:two_blocks/widgets/neu_container.dart';
 import 'package:two_blocks/widgets/next_button.dart';
 import 'package:two_blocks/widgets/playground_indigator.dart';
 import 'package:two_blocks/widgets/two_block_choice_containers.dart';
-import 'package:two_blocks/widgets/two_block_logo.dart';
 
 class TwoBlocksPlayGround extends StatefulWidget {
   @override
@@ -20,7 +19,7 @@ class TwoBlocksPlayGround extends StatefulWidget {
 class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
     with TickerProviderStateMixin {
   TwoBlockQuestions tb = TwoBlockQuestions();
-  AnimationController timerController;
+  late AnimationController timerController;
   int time = 14;
   int highScore = 0;
 
@@ -41,23 +40,23 @@ class _TwoBlocksPlayGroundState extends State<TwoBlocksPlayGround>
   }
 
   setTimer(int seconds) {
-    timerController =
-        AnimationController(vsync: this, duration: Duration(seconds: seconds))
-          ..addListener(() {
-            tb.onTimeFinished(
-                timerController.duration.inSeconds * timerController.value,
-                time, route: () {
-              Future.delayed(Duration(milliseconds: 1500), () {
-                Navigator.pushReplacement(
-                    context,
-                    RtoLSlideRoute(
-                        to: GameOverScreen(
-                      score: tb.score,
-                    )));
-              });
-            });
-            setState(() {});
+    timerController = AnimationController(
+        vsync: this, duration: Duration(seconds: seconds))
+      ..addListener(() {
+        tb.onTimeFinished(
+            (timerController.duration?.inSeconds ?? 0) * timerController.value,
+            time, route: () {
+          Future.delayed(Duration(milliseconds: 1500), () {
+            Navigator.pushReplacement(
+                context,
+                RtoLSlideRoute(
+                    to: GameOverScreen(
+                  score: tb.score,
+                )));
           });
+        });
+        setState(() {});
+      });
   }
 
   changeLevel() {

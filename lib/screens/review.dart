@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Review extends StatefulWidget {
   final int score, level, answer;
 
-  Review({@required this.answer, @required this.score, @required this.level});
+  Review({required this.answer, required this.score, required this.level});
 
   @override
   _ReviewState createState() =>
@@ -12,7 +12,7 @@ class Review extends StatefulWidget {
 
 class _ReviewState extends State<Review> {
   final int score, level, answer;
-  int bestScore;
+  late int bestScore;
   Color answerBackColor = Color(0xFF00ADB5);
   Color bestScoreColor = Color(0xFF9365DB);
   Color theme = Color(0xFF634CF3);
@@ -21,7 +21,7 @@ class _ReviewState extends State<Review> {
   int tapped = 0;
 
   _ReviewState(
-      {@required this.answer, @required this.level, @required this.score});
+      {required this.answer, required this.level, required this.score});
 
   @override
   void initState() {
@@ -144,8 +144,15 @@ class _ReviewState extends State<Review> {
                       duration: Duration(milliseconds: 200),
                       height: 20 * bx,
                       width: tapped == 0 ? 84 * bx : 95 * bx,
-                      child: RaisedButton(
-                        color: tutorial,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: tutorial,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: tapped == 0
+                                    ? BorderRadius.all(Radius.circular(5 * bx))
+                                    : BorderRadius.only(
+                                        topLeft: Radius.circular(5 * bx),
+                                        topRight: Radius.circular(5 * bx)))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -177,12 +184,6 @@ class _ReviewState extends State<Review> {
                             }
                           });
                         },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: tapped == 0
-                                ? BorderRadius.all(Radius.circular(5 * bx))
-                                : BorderRadius.only(
-                                    topLeft: Radius.circular(5 * bx),
-                                    topRight: Radius.circular(5 * bx))),
                       ),
                     ),
                     AnimatedContainer(
@@ -206,8 +207,13 @@ class _ReviewState extends State<Review> {
                   margin: EdgeInsets.only(top: 4 * bx, bottom: 6 * bx),
                   height: 20 * bx,
                   width: 84 * bx,
-                  child: RaisedButton(
-                    color: theme,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: theme,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(5 * bx))),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -236,9 +242,6 @@ class _ReviewState extends State<Review> {
                       //       return Difficulty(bx);
                       //     });
                     },
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(5 * bx))),
                   )),
             ],
           ),

@@ -21,7 +21,7 @@ class RoundPainter extends CustomPainter {
     final w = size.width;
 
     Paint paint2 = Paint()
-      ..color = Colors.blueGrey[200]
+      ..color = Colors.blueGrey.shade200
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
       ..strokeWidth = 1.5 * width;
@@ -37,12 +37,15 @@ class RoundPainter extends CustomPainter {
   }
 }
 
-
 class TimerWidget extends StatefulWidget {
   final AnimationController controller;
   final int time;
 
-  const TimerWidget({Key key, this.controller, this.time}) : super(key: key);
+  const TimerWidget({
+    Key? key,
+    required this.controller,
+    required this.time,
+  }) : super(key: key);
   @override
   _TimerWidgetState createState() => _TimerWidgetState();
 }
@@ -51,42 +54,42 @@ class _TimerWidgetState extends State<TimerWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-                      width: 100,
-                      alignment: Alignment.center,
-                      child: NeuContainer(
-                        height: 60,
-                        width: 60,
-                        padding: EdgeInsets.all(2),
-                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                        boxShadow: [
-                          BoxShadow(
-                              offset: Offset(1, 1),
-                              spreadRadius: 1,
-                              blurRadius: 3,
-                              color: Constants.DarkShadow),
-                          BoxShadow(
-                              offset: Offset(-1, -1),
-                              spreadRadius: 1,
-                              blurRadius: 3,
-                              color: Colors.white),
-                        ],
-                        child: AnimatedBuilder(
-                          animation: widget.controller,
-                          builder: (context, child) {
-                            return CustomPaint(
-                              painter: RoundPainter(widget.controller, 3),
-                              child: Align(
-                                  alignment: FractionalOffset.center,
-                                  child: Text(
-                                    '${(widget.time - (widget.controller.duration.inSeconds * widget.controller.value)).toStringAsFixed(0)}',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey[700]),
-                                  )),
-                            );
-                          },
-                        ),
-                      ));
+        width: 100,
+        alignment: Alignment.center,
+        child: NeuContainer(
+          height: 60,
+          width: 60,
+          padding: EdgeInsets.all(2),
+          borderRadius: BorderRadius.all(Radius.circular(100)),
+          boxShadow: [
+            BoxShadow(
+                offset: Offset(1, 1),
+                spreadRadius: 1,
+                blurRadius: 3,
+                color: Constants.DarkShadow),
+            BoxShadow(
+                offset: Offset(-1, -1),
+                spreadRadius: 1,
+                blurRadius: 3,
+                color: Colors.white),
+          ],
+          child: AnimatedBuilder(
+            animation: widget.controller,
+            builder: (context, child) {
+              return CustomPaint(
+                painter: RoundPainter(widget.controller, 3),
+                child: Align(
+                    alignment: FractionalOffset.center,
+                    child: Text(
+                      '${(widget.time - ((widget.controller.duration?.inSeconds ?? 0) * widget.controller.value)).toStringAsFixed(0)}',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[700]),
+                    )),
+              );
+            },
+          ),
+        ));
   }
 }

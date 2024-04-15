@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 class ChoiceContainer extends StatelessWidget {
   final String choiceAnswer;
 
-  const ChoiceContainer({Key key, this.choiceAnswer}) : super(key: key);
+  const ChoiceContainer({Key? key, required this.choiceAnswer})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 60,
-      width: choiceAnswer.length < 3 ? 64 : 70 ?? 64,
+      width: choiceAnswer.length < 3 ? 64 : 70,
       alignment: Alignment.center,
       decoration: BoxDecoration(
           border: Border.all(
@@ -19,7 +20,7 @@ class ChoiceContainer extends StatelessWidget {
       child: FittedBox(
           fit: BoxFit.scaleDown,
           child: Text(
-            choiceAnswer ?? '',
+            choiceAnswer,
             style: TextStyle(fontSize: 44, color: Colors.green[600]),
           )),
     );

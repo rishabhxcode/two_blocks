@@ -11,13 +11,13 @@ class EquationWidget extends StatelessWidget {
   final String choiceAnswer;
 
   const EquationWidget(
-      {Key key,
-      this.var1,
-      this.var2,
-      this.choiceSelected,
-      this.operation,
-      this.choiceAnswer,
-      this.result})
+      {Key? key,
+      required this.var1,
+      required this.var2,
+      required this.choiceSelected,
+      required this.operation,
+      required this.choiceAnswer,
+      required this.result})
       : super(key: key);
   @override
   Widget build(BuildContext context) {

@@ -10,17 +10,17 @@ class TwoBlockQuestions {
 
   int _lives = 3;
 
-  String _operation;
-  int _var1;
-  int _var2;
-  int _result;
+  late String _operation;
+  late int _var1;
+  late int _var2;
+  late int _result;
 
-  int _choice1;
-  int _choice2;
+  late int _choice1;
+  late int _choice2;
   dynamic _answerA;
   dynamic _answerB;
-  int _buttonASelected;
-  int _buttonBSelected;
+  late int _buttonASelected;
+  late int _buttonBSelected;
   dynamic _optA1;
   dynamic _optA2;
   dynamic _optA3;
@@ -30,17 +30,17 @@ class TwoBlockQuestions {
   dynamic _optB3;
   dynamic _optB4;
 
-  bool _isAabsorbed;
-  bool _isBabsorbed;
+  late bool _isAabsorbed;
+  late bool _isBabsorbed;
   dynamic _a;
   dynamic _b;
   //message
-  String _message;
-  double _messageSize;
+  late String _message;
+  late double _messageSize;
   Colour _messageColor = Colour();
   //
-  String _choice1Ans;
-  String _choice2Ans;
+  late String _choice1Ans;
+  late String _choice2Ans;
 
   //colors
   Colour _colorA1 = Colour();
@@ -52,7 +52,7 @@ class TwoBlockQuestions {
   Colour _colorB3 = Colour();
   Colour _colorB4 = Colour();
 
-  bool _isInCorrect;
+  late bool _isInCorrect;
 
   Shadows _shadowA1 = Shadows();
   Shadows _shadowA2 = Shadows();
@@ -66,8 +66,8 @@ class TwoBlockQuestions {
   int _score = 0;
   int _highScore = 0;
 
-  bool _isAPressed;
-  bool _isBPressed;
+  late bool _isAPressed;
+  late bool _isBPressed;
 
   bool _isInit = false;
 
@@ -180,7 +180,7 @@ class TwoBlockQuestions {
   }
 
   choice2Selection(choice1) {
-    return choice1 + 1 + random.nextInt(4 - choice1 - 1);
+    return choice1 + 1 + random.nextInt((4 - choice1 - 1).toInt());
   }
 
   dynamic ansAGenerator(choice1, var1, operand, var2, result) {
@@ -476,12 +476,12 @@ class TwoBlockQuestions {
   }
 
   onPressedA1(
-      {Function gen,
-      AnimationController controller,
-      int time,
-      Function route}) {
+      {required Function gen,
+      required AnimationController controller,
+      required int time,
+      required Function route}) {
     setATransparent();
-    _colorA1.set(Colors.purple[100]);
+    _colorA1.set(Colors.purple.shade100);
     _a = _optA1;
     _isAPressed = true;
     _choice1Ans = '$_optA1';
@@ -494,8 +494,8 @@ class TwoBlockQuestions {
       print('CHECK : $check');
       if (check == true) {
         _count++;
-        _score +=
-            time - (controller.duration.inSeconds * controller.value).toInt();
+        _score += time -
+            ((controller.duration?.inSeconds ?? 0) * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
@@ -526,12 +526,12 @@ class TwoBlockQuestions {
   }
 
   onPressedA2(
-      {Function gen,
-      AnimationController controller,
-      int time,
-      Function route}) {
+      {required Function gen,
+      required AnimationController controller,
+      required int time,
+      required Function route}) {
     setATransparent();
-    _colorA2.set(Colors.purple[100]);
+    _colorA2.set(Colors.purple.shade100);
     _a = _optA2;
     _isAPressed = true;
     _choice1Ans = '$_optA2';
@@ -545,8 +545,8 @@ class TwoBlockQuestions {
       if (check == true) {
         _count++;
         // _score++;
-        _score +=
-            time - (controller.duration.inSeconds * controller.value).toInt();
+        _score += time -
+            ((controller.duration?.inSeconds ?? 0) * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
@@ -575,12 +575,12 @@ class TwoBlockQuestions {
   }
 
   onPressedA3(
-      {Function gen,
-      AnimationController controller,
-      int time,
-      Function route}) {
+      {required Function gen,
+      required AnimationController controller,
+      required int time,
+      required Function route}) {
     setATransparent();
-    _colorA3.set(Colors.purple[100]);
+    _colorA3.set(Colors.purple.shade100);
     _a = _optA3;
     _isAPressed = true;
     _choice1Ans = '$_optA3';
@@ -594,8 +594,8 @@ class TwoBlockQuestions {
       if (check == true) {
         _count++;
         // _score++;
-        _score +=
-            time - (controller.duration.inSeconds * controller.value).toInt();
+        _score += time -
+            ((controller.duration?.inSeconds ?? 0) * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
@@ -624,12 +624,12 @@ class TwoBlockQuestions {
   }
 
   onPressedA4(
-      {Function gen,
-      AnimationController controller,
-      int time,
-      Function route}) {
+      {required Function gen,
+      required AnimationController controller,
+      required int time,
+      required Function route}) {
     setATransparent();
-    _colorA4.set(Colors.purple[100]);
+    _colorA4.set(Colors.purple.shade100);
     _a = _optA4;
     _isAPressed = true;
     _choice1Ans = '$_optA4';
@@ -643,8 +643,8 @@ class TwoBlockQuestions {
       if (check == true) {
         _count++;
         // _score++;
-        _score +=
-            time - (controller.duration.inSeconds * controller.value).toInt();
+        _score += time -
+            ((controller.duration?.inSeconds ?? 0) * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
@@ -674,12 +674,12 @@ class TwoBlockQuestions {
   }
 
   onPressedB1(
-      {Function gen,
-      AnimationController controller,
-      int time,
-      Function route}) {
+      {required Function gen,
+      required AnimationController controller,
+      required int time,
+      required Function route}) {
     setBTransparent();
-    _colorB1.set(Colors.blue[100]);
+    _colorB1.set(Colors.blue.shade100);
     _b = _optB1;
     _isBPressed = true;
     _choice2Ans = '$_optB1';
@@ -693,8 +693,8 @@ class TwoBlockQuestions {
       if (check == true) {
         _count++;
         // _score++;
-        _score +=
-            time - (controller.duration.inSeconds * controller.value).toInt();
+        _score += time -
+            ((controller.duration?.inSeconds ?? 0) * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
@@ -724,12 +724,12 @@ class TwoBlockQuestions {
   }
 
   onPressedB2(
-      {Function gen,
-      AnimationController controller,
-      int time,
-      Function route}) {
+      {required Function gen,
+      required AnimationController controller,
+      required int time,
+      required Function route}) {
     setBTransparent();
-    _colorB2.set(Colors.blue[100]);
+    _colorB2.set(Colors.blue.shade100);
     _b = _optB2;
     _isBPressed = true;
     _choice2Ans = '$_optB2';
@@ -743,8 +743,8 @@ class TwoBlockQuestions {
       if (check == true) {
         _count++;
         // _score++;
-        _score +=
-            time - (controller.duration.inSeconds * controller.value).toInt();
+        _score += time -
+            ((controller.duration?.inSeconds ?? 0) * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
@@ -774,12 +774,12 @@ class TwoBlockQuestions {
   }
 
   onPressedB3(
-      {Function gen,
-      AnimationController controller,
-      int time,
-      Function route}) {
+      {required Function gen,
+      required AnimationController controller,
+      required int time,
+      required Function route}) {
     setBTransparent();
-    _colorB3.set(Colors.blue[100]);
+    _colorB3.set(Colors.blue.shade100);
     _b = _optB3;
     _isBPressed = true;
 
@@ -795,8 +795,8 @@ class TwoBlockQuestions {
       if (check == true) {
         _count++;
         // _score++;
-        _score +=
-            time - (controller.duration.inSeconds * controller.value).toInt();
+        _score += time -
+            ((controller.duration?.inSeconds ?? 0) * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
@@ -826,12 +826,12 @@ class TwoBlockQuestions {
   }
 
   onPressedB4(
-      {Function gen,
-      AnimationController controller,
-      int time,
-      Function route}) {
+      {required Function gen,
+      required AnimationController controller,
+      required int time,
+      required Function route}) {
     setBTransparent();
-    _colorB4.set(Colors.blue[100]);
+    _colorB4.set(Colors.blue.shade100);
     _b = _optB4;
     _isBPressed = true;
     _choice2Ans = '$_optB4';
@@ -845,8 +845,8 @@ class TwoBlockQuestions {
       if (check == true) {
         _count++;
         // _score++;
-        _score +=
-            time - (controller.duration.inSeconds * controller.value).toInt();
+        _score += time -
+            ((controller.duration?.inSeconds ?? 0) * controller.value).toInt();
         _message = Constants.pass[random.nextInt(3)];
         _messageColor.set(Colors.green);
         saveHighScore();
@@ -875,7 +875,7 @@ class TwoBlockQuestions {
     }
   }
 
-  onTimeFinished(double seconds, int time, {Function route}) {
+  onTimeFinished(double seconds, int time, {required Function route}) {
     if (seconds == time) {
       if (_answerA == _optA1) shadowA1.set(Constants.greenShadow);
       if (_answerA == _optA2) shadowA2.set(Constants.greenShadow);

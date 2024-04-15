@@ -4,7 +4,7 @@ import 'package:two_blocks/constants.dart';
 class Choice1Container extends StatelessWidget {
   final String text;
 
-  const Choice1Container({Key key, this.text}) : super(key: key);
+  const Choice1Container({Key? key, required this.text}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,7 +16,7 @@ class Choice1Container extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(6)),
           boxShadow: [
             BoxShadow(
-              color: Colors.purple[200],
+              color: Colors.purple.shade200,
             ),
             BoxShadow(
               color: Constants.BGColor,
@@ -31,7 +31,7 @@ class Choice1Container extends StatelessWidget {
 
 class Choice2Container extends StatelessWidget {
   final String text;
-  const Choice2Container({Key key, this.text}) : super(key: key);
+  const Choice2Container({Key? key, required this.text}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +43,7 @@ class Choice2Container extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(6)),
           boxShadow: [
             BoxShadow(
-              color: Colors.blue[200],
+              color: Colors.blue.shade200,
             ),
             BoxShadow(
               color: Constants.BGColor,

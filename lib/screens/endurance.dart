@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:two_blocks/questions/endurance.dart';
@@ -50,9 +48,9 @@ class Endurance extends StatefulWidget {
 class _EnduranceState extends State<Endurance> with TickerProviderStateMixin {
   final int level;
   _EnduranceState(this.level);
-  EnduranceQuestions _enduranceQuestions;
+  late EnduranceQuestions _enduranceQuestions;
 
-  AnimationController controller;
+  late AnimationController controller;
   Color theme = Color(0xFF634CF3);
   Widget numButton(int num, double b, double w) {
     return Padding(
@@ -60,13 +58,14 @@ class _EnduranceState extends State<Endurance> with TickerProviderStateMixin {
       child: Container(
         height: 20 * b,
         width: w * b,
-        child: OutlineButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(2.5 * b))),
-          borderSide: BorderSide(
-            color: theme,
-            width: 0.4 * b,
-          ),
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(2.5 * b))),
+              side: BorderSide(
+                color: theme,
+                width: 0.4 * b,
+              )),
           onPressed: () {
             setState(() {
               _enduranceQuestions.makeText(num);
@@ -162,7 +161,7 @@ class _EnduranceState extends State<Endurance> with TickerProviderStateMixin {
         vsync: this, duration: Duration(seconds: _enduranceQuestions.timer))
       ..addListener(() {
         setState(() {
-          if (controller.duration.inSeconds * controller.value ==
+          if ((controller.duration?.inSeconds ?? 0) * controller.value ==
               _enduranceQuestions.timer) {
             // Provider.of<PlayerScoreProvider>(context)
             //     .setScore(level, score);
@@ -188,7 +187,7 @@ class _EnduranceState extends State<Endurance> with TickerProviderStateMixin {
     final bx = MediaQuery.of(context).size.width / 100;
     final by = MediaQuery.of(context).size.height / 100;
     _enduranceQuestions.timeleft = _enduranceQuestions.timer -
-        (controller.duration.inSeconds * controller.value).toInt();
+        ((controller.duration?.inSeconds ?? 0) * controller.value).toInt();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -252,7 +251,7 @@ class _EnduranceState extends State<Endurance> with TickerProviderStateMixin {
                                       child: Align(
                                           alignment: FractionalOffset.center,
                                           child: Text(
-                                            '${(_enduranceQuestions.timer - (controller.duration.inSeconds * controller.value)).toStringAsFixed(0)}',
+                                            '${(_enduranceQuestions.timer - ((controller.duration?.inSeconds ?? 0) * controller.value)).toStringAsFixed(0)}',
                                             style: TextStyle(
                                                 fontSize: 6 * bx,
                                                 fontWeight: FontWeight.bold,
@@ -316,7 +315,7 @@ class _EnduranceState extends State<Endurance> with TickerProviderStateMixin {
                               child: Container(
                                 height: 20 * bx,
                                 width: 40 * bx,
-                                child: OutlineButton(
+                                child: OutlinedButton(
                                   onPressed: () {
                                     setState(() {
                                       _enduranceQuestions.ansText =
@@ -327,11 +326,13 @@ class _EnduranceState extends State<Endurance> with TickerProviderStateMixin {
                                                   1);
                                     });
                                   },
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(2.5 * bx))),
-                                  borderSide:
-                                      BorderSide(width: 0.4 * bx, color: theme),
+                                  style: OutlinedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(2.5 * bx))),
+                                    side: BorderSide(
+                                        width: 0.4 * bx, color: theme),
+                                  ),
                                   child: Icon(
                                     Icons.backspace,
                                     size: 28,

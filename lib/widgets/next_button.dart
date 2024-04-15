@@ -3,9 +3,9 @@ import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/widgets/neu_button_widget.dart';
 
 class NextButton extends StatelessWidget {
-  final Function onTap;
+  final Function() onTap;
 
-  const NextButton({Key key, this.onTap}) : super(key: key);
+  const NextButton({Key? key, required this.onTap}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return NeuButtonWidget(

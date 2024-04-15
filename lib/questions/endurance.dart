@@ -3,27 +3,26 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class EnduranceQuestions {
-  EnduranceQuestions(int level) {
-    _level = level;
-  }
-  int _level;
-  int timer;
+  EnduranceQuestions(int level) : this._level = level;
+
+  late int _level;
+  late int timer;
   Random ran = Random();
-  int var1;
-  int var2;
+  late int var1;
+  late int var2;
   String def = '?';
-  String ansText = '';
-  int select;
-  String symbol;
-  var chosed;
+  late String ansText = '';
+  late int select;
+  late String symbol;
+  late var chosed;
   int score = 0;
   int count = 0;
-  String power;
+  late String power;
   String root = '';
-  String v1;
-  String v2;
-  int answer;
-  Color ansColor;
+  late String v1;
+  late String v2;
+  late int answer;
+  late Color ansColor;
   int timeleft = 0;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   makeText(int a) {
@@ -329,7 +328,7 @@ class EnduranceQuestions {
     else if (chu == 7) {
       var1 = 2 + ran.nextInt(9);
       var2 = 2 + ran.nextInt(9);
-      answer = pow(var1, 3);
+      answer = pow(var1, 3).toInt();
       root = '';
       v1 = '$var1';
       power = '\u00b3';
@@ -420,7 +419,7 @@ class EnduranceQuestions {
     else if (chu == 7) {
       var1 = 5 + ran.nextInt(5);
       var2 = 2 + ran.nextInt(9);
-      answer = pow(var1, 3);
+      answer = pow(var1, 3).toInt();
       root = '';
       v1 = '$var1';
       power = '\u00b3';
@@ -516,7 +515,7 @@ class EnduranceQuestions {
     else if (chu == 7) {
       var1 = 10 + ran.nextInt(10);
       var2 = 2 + ran.nextInt(9);
-      answer = pow(var1, 3);
+      answer = pow(var1, 3).toInt();
       root = '';
       v1 = '$var1';
       power = '\u00b3';

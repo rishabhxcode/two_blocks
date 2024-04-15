@@ -51,11 +51,11 @@ class OneBlockQuestions {
   int get level => _level;
   int get score => _score;
   int get lives => _lives;
-  int? get choiceSelected => _choice;
-  int? get var1 => _var1;
-  int? get var2 => _var2;
-  int? get result => _result;
-  String? get operation => _operation;
+  int get choiceSelected => _choice;
+  int get var1 => _var1;
+  int get var2 => _var2;
+  int get result => _result;
+  String get operation => _operation;
   String get choiceAnswer => _choiceAnswer;
   bool get absorbOptButtons => _absorbOptButtons;
   bool get isInCorrect => _isInCorrect;
@@ -428,8 +428,8 @@ class OneBlockQuestions {
       _messageSize = 24;
       _messageColor.set(Colors.green);
       _choiceAnswer = '$_opt2';
-      _score +=
-          time - ((controller.duration?.inSeconds?? 0) * controller.value).toInt();
+      _score += time -
+          ((controller.duration?.inSeconds ?? 0) * controller.value).toInt();
       print('SCORE : $_score');
       _shadow2?.set(Constants.greenShadow);
       generate();
@@ -749,11 +749,11 @@ class OneBlockQuestions {
 class Shadows {
   List<BoxShadow>? _shadow;
   void set(List<BoxShadow>? shadow) => _shadow = shadow;
-  List<BoxShadow>? get() => _shadow;
+  List<BoxShadow> get() => _shadow ?? [];
 }
 
 class Colour {
   Color? _color;
   void set(Color color) => _color = color;
-  Color? get() => _color;
+  Color get() => _color ?? Colors.transparent;
 }

@@ -6,11 +6,11 @@ class LOGO extends StatelessWidget {
   final FontWeight fontWeightOf2;
   final FontWeight fontWeightWord;
   const LOGO(
-      {Key key,
-      this.sizeOf2,
-      this.wordSize,
-      this.fontWeightOf2,
-      this.fontWeightWord})
+      {Key? key,
+      this.sizeOf2 = 100,
+      this.wordSize = 34,
+      this.fontWeightOf2 = FontWeight.w600,
+      required this.fontWeightWord})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,9 @@ class LOGO extends StatelessWidget {
         Text(
           '2',
           style: TextStyle(
-              fontSize: sizeOf2 ?? 100,
+              fontSize: sizeOf2,
               color: Colors.purple[700],
-              fontWeight: fontWeightOf2 ?? FontWeight.w600),
+              fontWeight: fontWeightOf2),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -32,7 +32,7 @@ class LOGO extends StatelessWidget {
               child: Text(
                 'B',
                 style: TextStyle(
-                    fontSize: wordSize ?? 34,
+                    fontSize: wordSize,
                     fontWeight: FontWeight.bold,
                     color: Colors.red),
               ),
@@ -42,7 +42,7 @@ class LOGO extends StatelessWidget {
               child: Text(
                 'L',
                 style: TextStyle(
-                    fontSize: wordSize ?? 34,
+                    fontSize: wordSize,
                     fontWeight: FontWeight.bold,
                     color: Colors.green),
               ),
@@ -52,7 +52,7 @@ class LOGO extends StatelessWidget {
               child: Text(
                 'O',
                 style: TextStyle(
-                    fontSize: wordSize ?? 34,
+                    fontSize: wordSize,
                     fontWeight: FontWeight.bold,
                     color: Colors.pink[400]),
               ),
@@ -62,7 +62,7 @@ class LOGO extends StatelessWidget {
               child: Text(
                 'C',
                 style: TextStyle(
-                    fontSize: wordSize ?? 34,
+                    fontSize: wordSize,
                     fontWeight: FontWeight.bold,
                     color: Colors.blue),
               ),
@@ -72,7 +72,7 @@ class LOGO extends StatelessWidget {
               child: Text(
                 'K',
                 style: TextStyle(
-                    fontSize: wordSize ?? 34,
+                    fontSize: wordSize,
                     fontWeight: FontWeight.bold,
                     color: Colors.teal),
               ),
@@ -82,7 +82,7 @@ class LOGO extends StatelessWidget {
               child: Text(
                 'S',
                 style: TextStyle(
-                    fontSize: wordSize ?? 34,
+                    fontSize: wordSize,
                     fontWeight: FontWeight.bold,
                     color: Colors.amber[900]),
               ),

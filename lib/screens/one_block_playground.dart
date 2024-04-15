@@ -10,7 +10,6 @@ import 'package:two_blocks/widgets/flat_num_button.dart';
 import 'package:two_blocks/widgets/neu_container.dart';
 import 'package:two_blocks/widgets/next_button.dart';
 import 'package:two_blocks/widgets/playground_indigator.dart';
-import 'package:two_blocks/widgets/two_block_logo.dart';
 
 class OneBlockPlayGround extends StatefulWidget {
   @override
@@ -21,9 +20,9 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
     with TickerProviderStateMixin {
   OneBlockQuestions ob = OneBlockQuestions();
   SaveAndGet sharedPref = SaveAndGet();
-  AnimationController timerController;
+  late AnimationController timerController;
   int time = 12;
-  int highScore;
+  late int highScore;
   getScore() async {
     highScore = await sharedPref.getOneBlockScore() ?? 0;
     setState(() {});
@@ -38,23 +37,23 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
   }
 
   setTimer(int seconds) {
-    timerController =
-        AnimationController(vsync: this, duration: Duration(seconds: seconds))
-          ..addListener(() {
-            ob.onTimeFinished(
-                timerController.duration.inSeconds * timerController.value,
-                time, route: () {
-              Future.delayed(Duration(milliseconds: 1500), () {
-                Navigator.pushReplacement(
-                    context,
-                    RtoLSlideRoute(
-                        to: GameOverScreen(
-                      score: ob.score,
-                    )));
-              });
-            });
-            setState(() {});
+    timerController = AnimationController(
+        vsync: this, duration: Duration(seconds: seconds))
+      ..addListener(() {
+        ob.onTimeFinished(
+            (timerController.duration?.inSeconds ?? 0) * timerController.value,
+            time, route: () {
+          Future.delayed(Duration(milliseconds: 1500), () {
+            Navigator.pushReplacement(
+                context,
+                RtoLSlideRoute(
+                    to: GameOverScreen(
+                  score: ob.score,
+                )));
           });
+        });
+        setState(() {});
+      });
   }
 
   changeLevel() {
@@ -175,7 +174,7 @@ class _OneBlockPlayGroundState extends State<OneBlockPlayGround>
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: AbsorbPointer(
-                  absorbing: ob?.absorbOptButtons ?? false,
+                  absorbing: ob.absorbOptButtons,
                   child: NeuContainer(
                     height: 200.5,
                     width: 200.5,

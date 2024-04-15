@@ -1,4 +1,5 @@
-import 'package:esys_flutter_share/esys_flutter_share.dart';
+
+import 'package:esys_flutter_share_plus/esys_flutter_share_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:two_blocks/constants.dart';
 import 'package:two_blocks/screens/home_screen.dart';
@@ -129,7 +130,7 @@ class _AppDrawerState extends State<AppDrawer> {
     String emailUrl = "mailto:$emailAddress?subject=$subject";
 
     if (!await canLaunch(emailUrl)) {
-      Scaffold.of(context).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
               "Either something went wrong or you don't have any app that you can to contact us."),

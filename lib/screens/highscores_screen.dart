@@ -15,7 +15,7 @@ class _HighScoresScreenState extends State<HighScoresScreen> {
   //BannerAd _bannerAdBottom, _bannerAdTop;
   int oneBlockHighScore = 0;
   int twoBlockHighScore = 0;
-  AdmobBannerSize _bannerAdSize;
+  late AdmobBannerSize _bannerAdSize;
 
   get1BHighScore() async {
     oneBlockHighScore = await sharedPref.getOneBlockScore() ?? 0;
@@ -48,7 +48,7 @@ class _HighScoresScreenState extends State<HighScoresScreen> {
 
   Admob _initializeAdmob() {
     //return FirebaseAdMob.instance.initialize(appId: AdManager.appId);
-    return Admob.initialize(AdManager.appId);
+    return Admob.initialize(testDeviceIds: [AdManager.appId]);
   }
 
   // BannerAd _createBannerAd() {

@@ -5,20 +5,20 @@ class FlatNumButton extends StatelessWidget {
   final double width;
   final String text;
   final VoidCallback onTap;
-  final Color borderColor;
-  final BorderRadius borderRadius;
-  final List<BoxShadow> boxShadows;
-  final Color color;
+  final Color? borderColor;
+  final BorderRadius? borderRadius;
+  final List<BoxShadow>? boxShadows;
+  final Color? color;
   const FlatNumButton({
     Key? key,
-    required this.height,
-    required this.width,
+    this.height = 100,
+    this.width = 100,
     required this.text,
     required this.onTap,
-    required this.borderColor,
-    required this.borderRadius,
-    required this.boxShadows,
-    required this.color,
+    this.borderColor,
+    this.borderRadius,
+    this.boxShadows,
+    this.color,
   }) : super(key: key);
 
   @override

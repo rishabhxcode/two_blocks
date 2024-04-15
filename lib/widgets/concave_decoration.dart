@@ -1,6 +1,5 @@
 import 'dart:ui' as ui;
-import 'package:flutter/foundation.dart';
-import 'package:flutter/painting.dart';
+
 import 'package:flutter/material.dart';
 
 class ConcaveDecoration extends Decoration {
@@ -10,30 +9,31 @@ class ConcaveDecoration extends Decoration {
   final double opacity;
 
   ConcaveDecoration({
-    @required this.shape,
-    @required this.depth,
+    required this.shape,
+    required this.depth,
     this.colors = const [Colors.black87, Colors.white],
     this.opacity = 1.0,
-  }) : assert(shape != null), assert(colors == null || colors.length == 2);
+  }) : assert(colors.length == 2);
 
   @override
-  BoxPainter createBoxPainter([onChanged]) => _ConcaveDecorationPainter(shape, depth, colors, opacity);
+  BoxPainter createBoxPainter([VoidCallback? onChanged]) =>
+      _ConcaveDecorationPainter(shape, depth, colors, opacity);
 
   @override
   EdgeInsetsGeometry get padding => shape.dimensions;
 
   @override
-  Decoration lerpFrom(Decoration a, double t) {
+  Decoration? lerpFrom(Decoration? a, double t) {
     if (a is ConcaveDecoration) {
       t = Curves.easeInOut.transform(t);
       return ConcaveDecoration(
-        shape: ShapeBorder.lerp(a.shape, shape, t),
-        depth: ui.lerpDouble(a.depth, depth, t),
+        shape: ShapeBorder.lerp(a.shape, shape, t) ?? shape,
+        depth: ui.lerpDouble(a.depth, depth, t) ?? depth,
         colors: [
-          Color.lerp(a.colors[0], colors[0], t),
-          Color.lerp(a.colors[1], colors[1], t),
+          Color.lerp(a.colors[0], colors[0], t) ?? colors[0],
+          Color.lerp(a.colors[1], colors[1], t) ?? colors[1],
         ],
-        opacity: ui.lerpDouble(a.opacity, opacity, t),
+        opacity: ui.lerpDouble(a.opacity, opacity, t) ?? opacity,
       );
     }
     return null;
@@ -62,8 +62,10 @@ class _ConcaveDecorationPainter extends BoxPainter {
   }
 
   @override
-  void paint(ui.Canvas canvas, ui.Offset offset, ImageConfiguration configuration) {
-    final shapePath = shape.getOuterPath(offset & configuration.size);
+  void paint(
+      ui.Canvas canvas, ui.Offset offset, ImageConfiguration configuration) {
+    final shapePath =
+        shape.getOuterPath(offset & (configuration.size ?? Size.zero));
     final rect = shapePath.getBounds();
     final delta = 16 / rect.longestSide;
     final stops = [0.48 - delta, 0.5 + delta];
@@ -73,11 +75,17 @@ class _ConcaveDecorationPainter extends BoxPainter {
       ..addPath(shapePath, Offset.zero);
     canvas.save();
     canvas.clipPath(shapePath);
-    final paint = Paint()..maskFilter = MaskFilter.blur(BlurStyle.normal, depth);
-    final clipSize = rect.size.aspectRatio > 1? Size(rect.width, rect.height / 2) : Size(rect.width / 2, rect.height);
+    final paint = Paint()
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, depth);
+    final clipSize = rect.size.aspectRatio > 1
+        ? Size(rect.width, rect.height / 2)
+        : Size(rect.width / 2, rect.height);
     for (final alignment in [Alignment.topLeft, Alignment.bottomRight]) {
-      final shaderRect = alignment.inscribe(Size.square(rect.longestSide), rect);
-      paint..shader = ui.Gradient.linear(shaderRect.topLeft, shaderRect.bottomRight, colors, stops);
+      final shaderRect =
+          alignment.inscribe(Size.square(rect.longestSide), rect);
+      paint
+        ..shader = ui.Gradient.linear(
+            shaderRect.topLeft, shaderRect.bottomRight, colors, stops);
 
       canvas.save();
       canvas.clipRect(alignment.inscribe(clipSize, rect));

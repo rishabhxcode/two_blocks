@@ -8,7 +8,7 @@ class SaveAndGet {
 
   getOneBlockScore() async {
     SharedPreferences scorePref = await SharedPreferences.getInstance();
-    int score = scorePref.getInt('ONE_BLOCK_SCORE');
+    int score = scorePref.getInt('ONE_BLOCK_SCORE') ?? 0;
     return score;
   }
 
@@ -16,10 +16,10 @@ class SaveAndGet {
     SharedPreferences scorePref = await SharedPreferences.getInstance();
     scorePref.setInt('TWO_BLOCK_SCORE', score);
   }
-  
+
   getTwoBlockScore() async {
     SharedPreferences scorePref = await SharedPreferences.getInstance();
-    int score = scorePref.getInt('TWO_BLOCK_SCORE');
+    int score = scorePref.getInt('TWO_BLOCK_SCORE') ?? 0;
     return score;
   }
 }

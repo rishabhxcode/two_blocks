@@ -7,7 +7,7 @@ import 'package:admob_flutter/admob_flutter.dart';
 class GameOverScreen extends StatefulWidget {
   final int score;
 
-  const GameOverScreen({Key key, this.score}) : super(key: key);
+  const GameOverScreen({Key? key, required this.score}) : super(key: key);
   @override
   _GameOverScreenState createState() => _GameOverScreenState();
 }
@@ -35,7 +35,7 @@ class _GameOverScreenState extends State<GameOverScreen> {
             Text('Your Score', style: TextStyle(fontSize: 30)),
             const SizedBox(height: 40),
             Text(
-              '${widget.score ?? 0}',
+              '${widget.score}',
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 60),
@@ -63,7 +63,7 @@ class _GameOverScreenState extends State<GameOverScreen> {
 class PlayAgainButton extends StatelessWidget {
   final String text;
 
-  const PlayAgainButton({Key key, this.text = 'Play Again'}) : super(key: key);
+  const PlayAgainButton({Key? key, this.text = 'Play Again'}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return NeuButtonWidget(
